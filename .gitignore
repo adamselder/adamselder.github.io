@@ -2,3 +2,4 @@
 *.xlsx
 **/*.csv
 *.csv
+.Rproj.user
