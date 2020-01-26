@@ -1,6 +1,6 @@
-name: "Seattle HIV/AIDS Modeling Project"
+name: "Third Door Information"
 navbar:
-  title: "SHAMP"
+  title: "Third Door Information"
   left:
     - text: "Introduction"
       href: introduction.html
