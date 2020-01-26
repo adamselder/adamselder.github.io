@@ -1,0 +1,515 @@
+Constructing pseudopopulation network.
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 2500
+Warning:  SAN Metropolis-Hastings algorithm has accepted only 0 steps out of a possible 5000
+Unable to match target stats. Using MCMLE estimation.
+Starting Monte Carlo maximum likelihood estimation (MCMLE):
+Iteration 1 of at most 400:
+Optimizing with step length 0.00787455580543273.
+The log-likelihood improved by 4.324.
+Estimating equations are not within tolerance region.
+Iteration 2 of at most 400:
+Optimizing with step length 0.00789212707535461.
+The log-likelihood improved by 3.791.
+Estimating equations are not within tolerance region.
+Iteration 3 of at most 400:
+Optimizing with step length 0.00868165223379438.
+The log-likelihood improved by 4.156.
+Estimating equations are not within tolerance region.
+Iteration 4 of at most 400:
+Optimizing with step length 0.00949051637544381.
+The log-likelihood improved by 4.632.
+Estimating equations are not within tolerance region.
+Iteration 5 of at most 400:
+Optimizing with step length 0.00951076395733659.
+The log-likelihood improved by 4.227.
+Estimating equations are not within tolerance region.
+Iteration 6 of at most 400:
+Optimizing with step length 0.00951127165088438.
+The log-likelihood improved by 3.981.
+Estimating equations are not within tolerance region.
+Iteration 7 of at most 400:
+Optimizing with step length 0.0110962402935176.
+The log-likelihood improved by 5.042.
+Estimating equations are not within tolerance region.
+Iteration 8 of at most 400:
+Optimizing with step length 0.00955115632042185.
+The log-likelihood improved by 3.552.
+Estimating equations are not within tolerance region.
+Iteration 9 of at most 400:
+Optimizing with step length 0.00951228458506888.
+The log-likelihood improved by 3.572.
+Estimating equations are not within tolerance region.
+Iteration 10 of at most 400:
+Optimizing with step length 0.00792634970722065.
+The log-likelihood improved by 2.753.
+Estimating equations are not within tolerance region.
+Iteration 11 of at most 400:
+Optimizing with step length 0.00789320588460484.
+The log-likelihood improved by 2.541.
+Estimating equations are not within tolerance region.
+Iteration 12 of at most 400:
+Optimizing with step length 0.00868167690946919.
+The log-likelihood improved by 2.385.
+Estimating equations are not within tolerance region.
+Iteration 13 of at most 400:
+Optimizing with step length 0.00711818283371141.
+The log-likelihood improved by 2.584.
+Estimating equations are not within tolerance region.
+Iteration 14 of at most 400:
+Optimizing with step length 0.00866397761181603.
+The log-likelihood improved by 2.809.
+Estimating equations are not within tolerance region.
+Iteration 15 of at most 400:
+Optimizing with step length 0.008699334521383.
+The log-likelihood improved by 2.481.
+Estimating equations are not within tolerance region.
+Iteration 16 of at most 400:
+Optimizing with step length 0.0110726051844699.
+The log-likelihood improved by 3.22.
+Estimating equations are not within tolerance region.
+Iteration 17 of at most 400:
+Optimizing with step length 0.0103462367591407.
+The log-likelihood improved by 2.723.
+Estimating equations are not within tolerance region.
+Iteration 18 of at most 400:
+Optimizing with step length 0.00873806633473423.
+The log-likelihood improved by 2.636.
+Estimating equations are not within tolerance region.
+Iteration 19 of at most 400:
+Optimizing with step length 0.00870103473874335.
+The log-likelihood improved by 2.043.
+Estimating equations are not within tolerance region.
+Iteration 20 of at most 400:
+Optimizing with step length 0.00949100078346275.
+The log-likelihood improved by 2.253.
+Estimating equations are not within tolerance region.
+Iteration 21 of at most 400:
+Optimizing with step length 0.00871834248904745.
+The log-likelihood improved by 2.35.
+Estimating equations are not within tolerance region.
+Iteration 22 of at most 400:
+Optimizing with step length 0.011864041532222.
+The log-likelihood improved by 3.121.
+Estimating equations are not within tolerance region.
+Iteration 23 of at most 400:
+Optimizing with step length 0.0103678713136222.
+The log-likelihood improved by 2.475.
+Estimating equations are not within tolerance region.
+Iteration 24 of at most 400:
+Optimizing with step length 0.00873856617267238.
+The log-likelihood improved by 2.569.
+Estimating equations are not within tolerance region.
+Iteration 25 of at most 400:
+Optimizing with step length 0.0102828367816819.
+The log-likelihood improved by 2.52.
+Estimating equations are not within tolerance region.
+Iteration 26 of at most 400:
+Optimizing with step length 0.00953066201384222.
+The log-likelihood improved by 2.075.
+Estimating equations are not within tolerance region.
+Iteration 27 of at most 400:
+Optimizing with step length 0.00871925565599802.
+The log-likelihood improved by 2.412.
+Estimating equations are not within tolerance region.
+Iteration 28 of at most 400:
+Optimizing with step length 0.0110731841523311.
+The log-likelihood improved by 2.276.
+Estimating equations are not within tolerance region.
+Iteration 29 of at most 400:
+Optimizing with step length 0.00955057446966978.
+The log-likelihood improved by 2.455.
+Estimating equations are not within tolerance region.
+Iteration 30 of at most 400:
+Optimizing with step length 0.0103048255384608.
+The log-likelihood improved by 2.525.
+Estimating equations are not within tolerance region.
+Iteration 31 of at most 400:
+Optimizing with step length 0.0127076383425742.
+The log-likelihood improved by 2.869.
+Estimating equations are not within tolerance region.
+Iteration 32 of at most 400:
+Optimizing with step length 0.0143861295215534.
+The log-likelihood improved by 2.752.
+Estimating equations are not within tolerance region.
+Iteration 33 of at most 400:
+Optimizing with step length 0.0128447453612067.
+The log-likelihood improved by 2.937.
+Estimating equations are not within tolerance region.
+Iteration 34 of at most 400:
+Optimizing with step length 0.0127926989320389.
+The log-likelihood improved by 2.378.
+Estimating equations are not within tolerance region.
+Iteration 35 of at most 400:
+Optimizing with step length 0.0103933457334684.
+The log-likelihood improved by 2.471.
+Estimating equations are not within tolerance region.
+Iteration 36 of at most 400:
+Optimizing with step length 0.0111220050953428.
+The log-likelihood improved by 2.152.
+Estimating equations are not within tolerance region.
+Iteration 37 of at most 400:
+Optimizing with step length 0.0127349103795985.
+The log-likelihood improved by 2.952.
+Estimating equations are not within tolerance region.
+Iteration 38 of at most 400:
+Optimizing with step length 0.0135880774127718.
+The log-likelihood improved by 3.129.
+Estimating equations are not within tolerance region.
+Iteration 39 of at most 400:
+Optimizing with step length 0.0144193990709194.
+The log-likelihood improved by 2.646.
+Estimating equations are not within tolerance region.
+Iteration 40 of at most 400:
+Optimizing with step length 0.0152534423821218.
+The log-likelihood improved by 2.748.
+Estimating equations are not within tolerance region.
+Iteration 41 of at most 400:
+Optimizing with step length 0.0128741737993312.
+The log-likelihood improved by 2.246.
+Estimating equations are not within tolerance region.
+Iteration 42 of at most 400:
+Optimizing with step length 0.0127936895858348.
+The log-likelihood improved by 3.183.
+Estimating equations are not within tolerance region.
+Iteration 43 of at most 400:
+Optimizing with step length 0.0119917855769496.
+The log-likelihood improved by 2.315.
+Estimating equations are not within tolerance region.
+Iteration 44 of at most 400:
+Optimizing with step length 0.0151567525778317.
+The log-likelihood improved by 3.017.
+Estimating equations are not within tolerance region.
+Iteration 45 of at most 400:
+Optimizing with step length 0.0144789675561868.
+The log-likelihood improved by 2.822.
+Estimating equations are not within tolerance region.
+Iteration 46 of at most 400:
+Optimizing with step length 0.0160584756719021.
+The log-likelihood improved by 2.401.
+Estimating equations are not within tolerance region.
+Iteration 47 of at most 400:
+Optimizing with step length 0.0153192592391034.
+The log-likelihood improved by 2.347.
+Estimating equations are not within tolerance region.
+Iteration 48 of at most 400:
+Optimizing with step length 0.0168982527491819.
+The log-likelihood improved by 2.71.
+Estimating equations are not within tolerance region.
+Iteration 49 of at most 400:
+Optimizing with step length 0.0169683366819586.
+The log-likelihood improved by 3.06.
+Estimating equations are not within tolerance region.
+Iteration 50 of at most 400:
+Optimizing with step length 0.0161637226332576.
+The log-likelihood improved by 2.513.
+Estimating equations are not within tolerance region.
+Iteration 51 of at most 400:
+Optimizing with step length 0.0145174044050668.
+The log-likelihood improved by 2.051.
+Estimating equations are not within tolerance region.
+Iteration 52 of at most 400:
+Optimizing with step length 0.0184683634862749.
+The log-likelihood improved by 2.498.
+Estimating equations are not within tolerance region.
+Iteration 53 of at most 400:
+Optimizing with step length 0.0154168176491644.
+The log-likelihood improved by 2.5.
+Estimating equations are not within tolerance region.
+Iteration 54 of at most 400:
+Optimizing with step length 0.0169025701080657.
+The log-likelihood improved by 2.951.
+Estimating equations are not within tolerance region.
+Iteration 55 of at most 400:
+Optimizing with step length 0.0210066546760926.
+The log-likelihood improved by 3.066.
+Estimating equations are not within tolerance region.
+Iteration 56 of at most 400:
+Optimizing with step length 0.0196008375725462.
+The log-likelihood improved by 2.807.
+Estimating equations are not within tolerance region.
+Iteration 57 of at most 400:
+Optimizing with step length 0.0195286968207128.
+The log-likelihood improved by 2.232.
+Estimating equations are not within tolerance region.
+Iteration 58 of at most 400:
+Optimizing with step length 0.0219639352731362.
+The log-likelihood improved by 3.293.
+Estimating equations are not within tolerance region.
+Iteration 59 of at most 400:
+Optimizing with step length 0.0163781245440405.
+The log-likelihood improved by 2.154.
+Estimating equations are not within tolerance region.
+Iteration 60 of at most 400:
+Optimizing with step length 0.0209780173430768.
+The log-likelihood improved by 3.754.
+Estimating equations are not within tolerance region.
+Iteration 61 of at most 400:
+Optimizing with step length 0.0195993639957118.
+The log-likelihood improved by 2.476.
+Estimating equations are not within tolerance region.
+Iteration 62 of at most 400:
+Optimizing with step length 0.021967982036911.
+The log-likelihood improved by 3.223.
+Estimating equations are not within tolerance region.
+Iteration 63 of at most 400:
+Optimizing with step length 0.0212863247731063.
+The log-likelihood improved by 2.35.
+Estimating equations are not within tolerance region.
+Iteration 64 of at most 400:
+Optimizing with step length 0.0212483624067761.
+The log-likelihood improved by 2.781.
+Estimating equations are not within tolerance region.
+Iteration 65 of at most 400:
+Optimizing with step length 0.0187967817774141.
+The log-likelihood improved by 2.486.
+Estimating equations are not within tolerance region.
+Iteration 66 of at most 400:
+Optimizing with step length 0.0211105828266142.
+The log-likelihood improved by 2.029.
+Estimating equations are not within tolerance region.
+Iteration 67 of at most 400:
+Optimizing with step length 0.0212385917069796.
+The log-likelihood improved by 2.569.
+Estimating equations are not within tolerance region.
+Iteration 68 of at most 400:
+Optimizing with step length 0.0253281384342403.
+The log-likelihood improved by 2.897.
+Estimating equations are not within tolerance region.
+Iteration 69 of at most 400:
+Optimizing with step length 0.0264239189032528.
+The log-likelihood improved by 2.758.
+Estimating equations are not within tolerance region.
+Iteration 70 of at most 400:
+Optimizing with step length 0.0215370242359207.
+The log-likelihood improved by 2.699.
+Estimating equations are not within tolerance region.
+Iteration 71 of at most 400:
+Optimizing with step length 0.0245306430650915.
+The log-likelihood improved by 2.34.
+Estimating equations are not within tolerance region.
+Iteration 72 of at most 400:
+Optimizing with step length 0.0247227431097953.
+The log-likelihood improved by 3.066.
+Estimating equations are not within tolerance region.
+Iteration 73 of at most 400:
+Optimizing with step length 0.0255587214988212.
+The log-likelihood improved by 2.797.
+Estimating equations are not within tolerance region.
+Iteration 74 of at most 400:
+Optimizing with step length 0.0231386546823654.
+The log-likelihood improved by 2.288.
+Estimating equations are not within tolerance region.
+Iteration 75 of at most 400:
+Optimizing with step length 0.0328382263248782.
+The log-likelihood improved by 3.095.
+Estimating equations are not within tolerance region.
+Iteration 76 of at most 400:
+Optimizing with step length 0.0252678334191864.
+The log-likelihood improved by 2.427.
+Estimating equations are not within tolerance region.
+Iteration 77 of at most 400:
+Optimizing with step length 0.0313682969952277.
+The log-likelihood improved by 2.71.
+Estimating equations are not within tolerance region.
+Iteration 78 of at most 400:
+Optimizing with step length 0.0293560844243572.
+The log-likelihood improved by 2.413.
+Estimating equations are not within tolerance region.
+Iteration 79 of at most 400:
+Optimizing with step length 0.0283694056118779.
+The log-likelihood improved by 2.957.
+Estimating equations are not within tolerance region.
+Iteration 80 of at most 400:
+Optimizing with step length 0.0266344826026855.
+The log-likelihood improved by 2.522.
+Estimating equations are not within tolerance region.
+Iteration 81 of at most 400:
+Optimizing with step length 0.0397577963973666.
+The log-likelihood improved by 2.688.
+Estimating equations are not within tolerance region.
+Iteration 82 of at most 400:
+Optimizing with step length 0.0325733823794378.
+The log-likelihood improved by 2.989.
+Estimating equations are not within tolerance region.
+Iteration 83 of at most 400:
+Optimizing with step length 0.0319674439467582.
+The log-likelihood improved by 2.468.
+Estimating equations are not within tolerance region.
+Iteration 84 of at most 400:
+Optimizing with step length 0.0344321360571962.
+The log-likelihood improved by 2.743.
+Estimating equations are not within tolerance region.
+Iteration 85 of at most 400:
+Optimizing with step length 0.0346526629424927.
+The log-likelihood improved by 2.365.
+Estimating equations are not within tolerance region.
+Iteration 86 of at most 400:
+Optimizing with step length 0.0321410820880123.
+The log-likelihood improved by 2.711.
+Estimating equations are not within tolerance region.
+Iteration 87 of at most 400:
+Optimizing with step length 0.0344476041033122.
+The log-likelihood improved by 3.082.
+Estimating equations are not within tolerance region.
+Iteration 88 of at most 400:
+Optimizing with step length 0.042245335033281.
+The log-likelihood improved by 3.089.
+Estimating equations are not within tolerance region.
+Iteration 89 of at most 400:
+Optimizing with step length 0.0430990891845104.
+The log-likelihood improved by 2.854.
+Estimating equations are not within tolerance region.
+Iteration 90 of at most 400:
+Optimizing with step length 0.0569738511697866.
+The log-likelihood improved by 3.344.
+Estimating equations are not within tolerance region.
+Iteration 91 of at most 400:
+Optimizing with step length 0.0430022116917839.
+The log-likelihood improved by 2.944.
+Estimating equations are not within tolerance region.
+Iteration 92 of at most 400:
+Optimizing with step length 0.056960007865646.
+The log-likelihood improved by 2.697.
+Estimating equations are not within tolerance region.
+Iteration 93 of at most 400:
+Optimizing with step length 0.0421107588115994.
+The log-likelihood improved by 2.606.
+Estimating equations are not within tolerance region.
+Iteration 94 of at most 400:
+Optimizing with step length 0.0533939019011637.
+The log-likelihood improved by 2.529.
+Estimating equations are not within tolerance region.
+Iteration 95 of at most 400:
+Optimizing with step length 0.0602365615550822.
+The log-likelihood improved by 2.701.
+Estimating equations are not within tolerance region.
+Iteration 96 of at most 400:
+Optimizing with step length 0.0630821567746682.
+The log-likelihood improved by 3.099.
+Estimating equations are not within tolerance region.
+Iteration 97 of at most 400:
+Optimizing with step length 0.0689468715015194.
+The log-likelihood improved by 3.42.
+Estimating equations are not within tolerance region.
+Iteration 98 of at most 400:
+Optimizing with step length 0.0736262081392589.
+The log-likelihood improved by 3.362.
+Estimating equations are not within tolerance region.
+Iteration 99 of at most 400:
+Optimizing with step length 0.0652768799347985.
+The log-likelihood improved by 2.594.
+Estimating equations are not within tolerance region.
+Iteration 100 of at most 400:
+Optimizing with step length 0.085643466144506.
+The log-likelihood improved by 3.009.
+Estimating equations are not within tolerance region.
+Iteration 101 of at most 400:
+Optimizing with step length 0.106140517456399.
+The log-likelihood improved by 2.889.
+Estimating equations are not within tolerance region.
+Iteration 102 of at most 400:
+Optimizing with step length 0.105634245032841.
+The log-likelihood improved by 3.321.
+Estimating equations are not within tolerance region.
+Iteration 103 of at most 400:
+Optimizing with step length 0.110424263506382.
+The log-likelihood improved by 3.347.
+Estimating equations are not within tolerance region.
+Iteration 104 of at most 400:
+Optimizing with step length 0.115702097592401.
+The log-likelihood improved by 2.499.
+Estimating equations are not within tolerance region.
+Iteration 105 of at most 400:
+Optimizing with step length 0.164240767363462.
+The log-likelihood improved by 3.247.
+Estimating equations are not within tolerance region.
+Iteration 106 of at most 400:
+Optimizing with step length 0.208813894148101.
+The log-likelihood improved by 3.312.
+Estimating equations are not within tolerance region.
+Iteration 107 of at most 400:
+Optimizing with step length 0.238955842589788.
+The log-likelihood improved by 2.863.
+Estimating equations are not within tolerance region.
+Iteration 108 of at most 400:
+Optimizing with step length 0.391315430907578.
+The log-likelihood improved by 3.22.
+Estimating equations are not within tolerance region.
+Iteration 109 of at most 400:
+Optimizing with step length 0.478478151193718.
+The log-likelihood improved by 2.977.
+Estimating equations are not within tolerance region.
+Iteration 110 of at most 400:
+Optimizing with step length 0.55600988106334.
+The log-likelihood improved by 2.76.
+Estimating equations are not within tolerance region.
+Iteration 111 of at most 400:
+Optimizing with step length 0.673200808672196.
+The log-likelihood improved by 3.129.
+Estimating equations are not within tolerance region.
+Iteration 112 of at most 400:
+Optimizing with step length 0.671113541519282.
+The log-likelihood improved by 2.436.
+Estimating equations are not within tolerance region.
+Iteration 113 of at most 400:
+Optimizing with step length 0.678971590139738.
+The log-likelihood improved by 2.657.
+Estimating equations are not within tolerance region.
+Iteration 114 of at most 400:
+Optimizing with step length 0.329523507551565.
+The log-likelihood improved by 2.15.
+Estimating equations are not within tolerance region.
+Iteration 115 of at most 400:
+Optimizing with step length 0.609870099937882.
+The log-likelihood improved by 1.976.
+Estimating equations are not within tolerance region.
+Estimating equations did not move closer to tolerance region more than 1 time(s) in 4 steps; increasing sample size.
+Iteration 116 of at most 400:
+Optimizing with step length 0.484578834763888.
+The log-likelihood improved by 2.825.
+Estimating equations are not within tolerance region.
+Iteration 117 of at most 400:
+Optimizing with step length 0.587877530322191.
+The log-likelihood improved by 1.855.
+Estimating equations are not within tolerance region.
+Iteration 118 of at most 400:
+Optimizing with step length 0.621501868325751.
+The log-likelihood improved by 2.235.
+Estimating equations are not within tolerance region.
+Estimating equations did not move closer to tolerance region more than 1 time(s) in 4 steps; increasing sample size.
+Iteration 119 of at most 400:
+Optimizing with step length 1.
+The log-likelihood improved by 3.925.
+Estimating equations are not within tolerance region.
+Iteration 120 of at most 400:
+Optimizing with step length 1.
+The log-likelihood improved by 3.363.
+Convergence test p-value: 1. Not converged with 99% confidence; increasing sample size.
+Iteration 121 of at most 400:
+Optimizing with step length 1.
+The log-likelihood improved by 3.547.
+Estimating equations are not within tolerance region.
+Estimating equations did not move closer to tolerance region more than 1 time(s) in 4 steps; increasing sample size.
+Iteration 122 of at most 400:
+Optimizing with step length 1.
+The log-likelihood improved by 0.6383.
+Convergence test p-value: 8.51563016832972e-09. Converged with 99% confidence.
+Finished MCMLE.
+This model was fit using MCMC.  To examine model diagnostics and
+check for degeneracy, use the mcmc.diagnostics() function.

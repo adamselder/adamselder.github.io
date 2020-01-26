@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Data: Mixing | SHAMP: Seattle HIV/AIDS Modeling Project</title>
+  <meta name="description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Data: Mixing | SHAMP: Seattle HIV/AIDS Modeling Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Data: Mixing | SHAMP: Seattle HIV/AIDS Modeling Project" />
+  
+  <meta name="twitter:description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  
+
+<meta name="author" content="Jeanette Birnbaum" />
+
+
+<meta name="date" content="2019-08-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="degree.html">
+<link rel="next" href="one-times.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.6/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SHAMP</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#abstract"><i class="fa fa-check"></i><b>2.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.2</b> Terminology</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#previous-presentations"><i class="fa fa-check"></i><b>2.3</b> Previous presentations</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#review-of-local-behavioral-surveys"><i class="fa fa-check"></i><b>2.4</b> Review of local behavioral surveys</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction.html"><a href="introduction.html#public-health-seattle-king-county-phskc-washington-department-of-health-wadoh-surveillance"><i class="fa fa-check"></i><b>2.4.1</b> Public Health Seattle King County (PHSKC) Washington Department of Health (WADOH) Surveillance</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#national-population-based-surveys"><i class="fa fa-check"></i><b>2.5</b> National Population based surveys</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#nsfg---national-survey-of-family-growth---cdc.-used-in-final-models"><i class="fa fa-check"></i><b>2.5.1</b> NSFG - National Survey of Family Growth - CDC. <em>used in final models</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#nhsls---national-health-and-social-life-survey---icpsr.-did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.2</b> NHSLS - National Health and Social Life Survey - ICPSR. <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction.html"><a href="introduction.html#nhbs---did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.3</b> NHBS - <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction.html"><a href="introduction.html#add-health---national-longitudinal-study-of-adolescent-to-adult-health---did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.4</b> Add Health - National Longitudinal Study of Adolescent to Adult Health - <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction.html"><a href="introduction.html#nhanes---national-health-and-nutrition-examination-survey-used-for-weighting-parameters"><i class="fa fa-check"></i><b>2.5.5</b> NHANES - National Health and Nutrition Examination Survey <em>used for weighting parameters</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#confirm-input-parameters"><i class="fa fa-check"></i><b>3.1</b> Confirm input parameters</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#load-packages"><i class="fa fa-check"></i><b>3.2</b> Load Packages</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#sessioninfo"><i class="fa fa-check"></i><b>3.3</b> SessionInfo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>4</b> Data: Preparation</a><ul>
+<li class="chapter" data-level="4.1" data-path="data.html"><a href="data.html#kc-population-weights"><i class="fa fa-check"></i><b>4.1</b> KC population weights</a></li>
+<li class="chapter" data-level="4.2" data-path="data.html"><a href="data.html#kc-mortality."><i class="fa fa-check"></i><b>4.2</b> KC mortality.</a></li>
+<li class="chapter" data-level="4.3" data-path="data.html"><a href="data.html#network-data"><i class="fa fa-check"></i><b>4.3</b> Network data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-king-county-population.html"><a href="data-king-county-population.html"><i class="fa fa-check"></i><b>5</b> Data: King County Population</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#nsfg-kc-weights"><i class="fa fa-check"></i><b>5.1</b> NSFG-KC Diagnostics</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#compare-kc-and-nsfg-weights"><i class="fa fa-check"></i><b>5.1.1</b> Compare KC and NSFG weights</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#population-composition"><i class="fa fa-check"></i><b>5.1.2</b> Population composition</a></li>
+<li class="chapter" data-level="5.1.3" data-path="data-king-county-population.html"><a href="data-king-county-population.html#kc-as-a-percent-of-nsfg"><i class="fa fa-check"></i><b>5.1.3</b> KC as a percent of NSFG</a></li>
+<li class="chapter" data-level="5.1.4" data-path="data-king-county-population.html"><a href="data-king-county-population.html#ratio-of-kc-percent-to-nsfg-percent"><i class="fa fa-check"></i><b>5.1.4</b> Ratio of KC percent to NSFG percent</a></li>
+<li class="chapter" data-level="5.1.5" data-path="data-king-county-population.html"><a href="data-king-county-population.html#ratio-of-kc-to-usa-and-nsfg-to-usa"><i class="fa fa-check"></i><b>5.1.5</b> Ratio of KC to USA and NSFG to USA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#test-intervals"><i class="fa fa-check"></i><b>5.2</b> Test intervals</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#exclusions-reminder"><i class="fa fa-check"></i><b>5.2.1</b> Exclusions reminder</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#test-intervals-versus-ratio-of-kc-to-nsfg"><i class="fa fa-check"></i><b>5.2.2</b> Test intervals versus ratio of KC % to NSFG %</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="kcmort.html"><a href="kcmort.html"><i class="fa fa-check"></i><b>6</b> Data: King County Mortality</a><ul>
+<li class="chapter" data-level="6.1" data-path="kcmort.html"><a href="kcmort.html#mortality-get-and-subset-data"><i class="fa fa-check"></i><b>6.1</b> MORTALITY: Get and subset data</a></li>
+<li class="chapter" data-level="6.2" data-path="kcmort.html"><a href="kcmort.html#mortality-recode-variables"><i class="fa fa-check"></i><b>6.2</b> MORTALITY: Recode variables</a></li>
+<li class="chapter" data-level="6.3" data-path="kcmort.html"><a href="kcmort.html#collapse-to-strata-counts"><i class="fa fa-check"></i><b>6.3</b> Collapse to strata counts</a></li>
+<li class="chapter" data-level="6.4" data-path="kcmort.html"><a href="kcmort.html#histograms-of-cell-counts-panel-by-raceimm-group-by-sex"><i class="fa fa-check"></i><b>6.4</b> Histograms of cell counts: panel by raceimm, group by sex</a></li>
+<li class="chapter" data-level="6.5" data-path="kcmort.html"><a href="kcmort.html#mortality-save"><i class="fa fa-check"></i><b>6.5</b> MORTALITY: Save</a></li>
+<li class="chapter" data-level="6.6" data-path="kcmort.html"><a href="kcmort.html#population-get-and-subset-data"><i class="fa fa-check"></i><b>6.6</b> POPULATION: Get and subset data</a></li>
+<li class="chapter" data-level="6.7" data-path="kcmort.html"><a href="kcmort.html#population-recode-variables"><i class="fa fa-check"></i><b>6.7</b> POPULATION: Recode variables</a></li>
+<li class="chapter" data-level="6.8" data-path="kcmort.html"><a href="kcmort.html#collapse-to-strata-counts-1"><i class="fa fa-check"></i><b>6.8</b> Collapse to strata counts</a></li>
+<li class="chapter" data-level="6.9" data-path="kcmort.html"><a href="kcmort.html#compute-rates-per-1-person-and-a-strata-id"><i class="fa fa-check"></i><b>6.9</b> Compute rates (per 1 person) and a strata ID</a></li>
+<li class="chapter" data-level="6.10" data-path="kcmort.html"><a href="kcmort.html#mortality-save-1"><i class="fa fa-check"></i><b>6.10</b> MORTALITY: Save</a></li>
+<li class="chapter" data-level="6.11" data-path="kcmort.html"><a href="kcmort.html#graph-rates"><i class="fa fa-check"></i><b>6.11</b> GRAPH RATES</a></li>
+<li class="chapter" data-level="6.12" data-path="kcmort.html"><a href="kcmort.html#test-for-differences-by-raceimm"><i class="fa fa-check"></i><b>6.12</b> TEST FOR DIFFERENCES BY RACEIMM</a></li>
+<li class="chapter" data-level="6.13" data-path="kcmort.html"><a href="kcmort.html#population-growth-rate"><i class="fa fa-check"></i><b>6.13</b> Population growth rate</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="targets.html"><a href="targets.html"><i class="fa fa-check"></i><b>7</b> Data: Target statistics for HIV Incidence and Prevalence</a><ul>
+<li class="chapter" data-level="7.1" data-path="targets.html"><a href="targets.html#the-rationale-for-simulating-large-population-sizes"><i class="fa fa-check"></i><b>7.1</b> The rationale for simulating large population sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="egos.html"><a href="egos.html"><i class="fa fa-check"></i><b>8</b> Data: Ego Characteristics</a><ul>
+<li class="chapter" data-level="8.1" data-path="egos.html"><a href="egos.html#one-way-margins"><i class="fa fa-check"></i><b>8.1</b> One-way margins</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="egos.html"><a href="egos.html#egos-1way-sex"><i class="fa fa-check"></i><b>8.1.1</b> sex</a></li>
+<li class="chapter" data-level="8.1.2" data-path="egos.html"><a href="egos.html#egos-1way-sex.ident"><i class="fa fa-check"></i><b>8.1.2</b> sex.ident</a></li>
+<li class="chapter" data-level="8.1.3" data-path="egos.html"><a href="egos.html#egos-1way-agecat"><i class="fa fa-check"></i><b>8.1.3</b> agecat</a></li>
+<li class="chapter" data-level="8.1.4" data-path="egos.html"><a href="egos.html#egos-1way-race"><i class="fa fa-check"></i><b>8.1.4</b> race</a></li>
+<li class="chapter" data-level="8.1.5" data-path="egos.html"><a href="egos.html#egos-1way-sb"><i class="fa fa-check"></i><b>8.1.5</b> sb</a></li>
+<li class="chapter" data-level="8.1.6" data-path="egos.html"><a href="egos.html#egos-1way-dsb.cohab"><i class="fa fa-check"></i><b>8.1.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="8.1.7" data-path="egos.html"><a href="egos.html#egos-1way-dsb.pers"><i class="fa fa-check"></i><b>8.1.7</b> dsb.pers</a></li>
+<li class="chapter" data-level="8.1.8" data-path="egos.html"><a href="egos.html#egos-1way-contage"><i class="fa fa-check"></i><b>8.1.8</b> age</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="egos.html"><a href="egos.html#cross-tabs"><i class="fa fa-check"></i><b>8.2</b> Cross-tabs</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="egos.html"><a href="egos.html#egos-2way-sex_by_race"><i class="fa fa-check"></i><b>8.2.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="8.2.2" data-path="egos.html"><a href="egos.html#egos-2way-sex.ident_by_race"><i class="fa fa-check"></i><b>8.2.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="8.2.3" data-path="egos.html"><a href="egos.html#egos-2way-sex_by_agecat"><i class="fa fa-check"></i><b>8.2.3</b> sex_by_agecat</a></li>
+<li class="chapter" data-level="8.2.4" data-path="egos.html"><a href="egos.html#egos-2way-sex.ident_by_agecat"><i class="fa fa-check"></i><b>8.2.4</b> sex.ident_by_agecat</a></li>
+<li class="chapter" data-level="8.2.5" data-path="egos.html"><a href="egos.html#egos-2way-agecat_by_race"><i class="fa fa-check"></i><b>8.2.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="8.2.6" data-path="egos.html"><a href="egos.html#egos-2way-deg.cohab.c_by_deg.pers.c2"><i class="fa fa-check"></i><b>8.2.6</b> deg.cohab.c_by_deg.pers.c2</a></li>
+<li class="chapter" data-level="8.2.7" data-path="egos.html"><a href="egos.html#egos-2way-cont-age_by_race"><i class="fa fa-check"></i><b>8.2.7</b> age_by_race</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="degree.html"><a href="degree.html"><i class="fa fa-check"></i><b>9</b> Data: Degree</a><ul>
+<li class="chapter" data-level="9.1" data-path="degree.html"><a href="degree.html#mean-degree-overview"><i class="fa fa-check"></i><b>9.1</b> Mean degree overview</a></li>
+<li class="chapter" data-level="9.2" data-path="degree.html"><a href="degree.html#one-way-mean-degree"><i class="fa fa-check"></i><b>9.2</b> One-way mean degree</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="degree.html"><a href="degree.html#degree-1way-sex"><i class="fa fa-check"></i><b>9.2.1</b> sex</a></li>
+<li class="chapter" data-level="9.2.2" data-path="degree.html"><a href="degree.html#degree-1way-sex.ident"><i class="fa fa-check"></i><b>9.2.2</b> sex.ident</a></li>
+<li class="chapter" data-level="9.2.3" data-path="degree.html"><a href="degree.html#degree-1way-agecat"><i class="fa fa-check"></i><b>9.2.3</b> agecat</a></li>
+<li class="chapter" data-level="9.2.4" data-path="degree.html"><a href="degree.html#degree-1way-race"><i class="fa fa-check"></i><b>9.2.4</b> race</a></li>
+<li class="chapter" data-level="9.2.5" data-path="degree.html"><a href="degree.html#degree-1way-sb"><i class="fa fa-check"></i><b>9.2.5</b> sb</a></li>
+<li class="chapter" data-level="9.2.6" data-path="degree.html"><a href="degree.html#degree-1way-dsb.cohab"><i class="fa fa-check"></i><b>9.2.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="9.2.7" data-path="degree.html"><a href="degree.html#degree-1way-ds.pers"><i class="fa fa-check"></i><b>9.2.7</b> ds.pers</a></li>
+<li class="chapter" data-level="9.2.8" data-path="degree.html"><a href="degree.html#degree-1way-dsb.pers"><i class="fa fa-check"></i><b>9.2.8</b> dsb.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="degree.html"><a href="degree.html#two-way-mean-degree"><i class="fa fa-check"></i><b>9.3</b> Two-way mean degree</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="degree.html"><a href="degree.html#degree-2way-sex_by_race"><i class="fa fa-check"></i><b>9.3.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="9.3.2" data-path="degree.html"><a href="degree.html#degree-2way-sex.ident_by_race"><i class="fa fa-check"></i><b>9.3.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="9.3.3" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_sex"><i class="fa fa-check"></i><b>9.3.3</b> agecat_by_sex</a></li>
+<li class="chapter" data-level="9.3.4" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_sex.ident"><i class="fa fa-check"></i><b>9.3.4</b> agecat_by_sex.ident</a></li>
+<li class="chapter" data-level="9.3.5" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_race"><i class="fa fa-check"></i><b>9.3.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="9.3.6" data-path="degree.html"><a href="degree.html#degree-2way-sb_by_race"><i class="fa fa-check"></i><b>9.3.6</b> sb_by_race</a></li>
+<li class="chapter" data-level="9.3.7" data-path="degree.html"><a href="degree.html#degree-2way-dsb.cohab_by_race"><i class="fa fa-check"></i><b>9.3.7</b> dsb.cohab_by_race</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="degree.html"><a href="degree.html#degree-overview-deg.cohab-deg.pers"><i class="fa fa-check"></i><b>9.4</b> Cross of deg.cohab-deg.pers</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="degree.html"><a href="degree.html#overview-1"><i class="fa fa-check"></i><b>9.4.1</b> Overview</a></li>
+<li class="chapter" data-level="9.4.2" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sex"><i class="fa fa-check"></i><b>9.4.2</b> sex</a></li>
+<li class="chapter" data-level="9.4.3" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sex.ident"><i class="fa fa-check"></i><b>9.4.3</b> sex.ident</a></li>
+<li class="chapter" data-level="9.4.4" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-agecat"><i class="fa fa-check"></i><b>9.4.4</b> agecat</a></li>
+<li class="chapter" data-level="9.4.5" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-race"><i class="fa fa-check"></i><b>9.4.5</b> race</a></li>
+<li class="chapter" data-level="9.4.6" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sb"><i class="fa fa-check"></i><b>9.4.6</b> sb</a></li>
+<li class="chapter" data-level="9.4.7" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-dsb.cohab"><i class="fa fa-check"></i><b>9.4.7</b> dsb.cohab</a></li>
+<li class="chapter" data-level="9.4.8" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-ds.pers"><i class="fa fa-check"></i><b>9.4.8</b> ds.pers</a></li>
+<li class="chapter" data-level="9.4.9" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-dsb.pers"><i class="fa fa-check"></i><b>9.4.9</b> dsb.pers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mixing.html"><a href="mixing.html"><i class="fa fa-check"></i><b>10</b> Data: Mixing</a><ul>
+<li class="chapter" data-level="10.1" data-path="mixing.html"><a href="mixing.html#one-way-mixing"><i class="fa fa-check"></i><b>10.1</b> One-way mixing</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="mixing.html"><a href="mixing.html#mixing-1way-sex"><i class="fa fa-check"></i><b>10.1.1</b> sex</a></li>
+<li class="chapter" data-level="10.1.2" data-path="mixing.html"><a href="mixing.html#mixing-1way-agecat"><i class="fa fa-check"></i><b>10.1.2</b> agecat</a></li>
+<li class="chapter" data-level="10.1.3" data-path="mixing.html"><a href="mixing.html#mixing-1way-race"><i class="fa fa-check"></i><b>10.1.3</b> race</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="one-times.html"><a href="one-times.html"><i class="fa fa-check"></i><b>11</b> Data: One-Times</a><ul>
+<li class="chapter" data-level="11.1" data-path="one-times.html"><a href="one-times.html#one-way-margins-1"><i class="fa fa-check"></i><b>11.1</b> One-way margins</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sex"><i class="fa fa-check"></i><b>11.1.1</b> sex</a></li>
+<li class="chapter" data-level="11.1.2" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sex.ident"><i class="fa fa-check"></i><b>11.1.2</b> sex.ident</a></li>
+<li class="chapter" data-level="11.1.3" data-path="one-times.html"><a href="one-times.html#onetimes-1way-agecat"><i class="fa fa-check"></i><b>11.1.3</b> agecat</a></li>
+<li class="chapter" data-level="11.1.4" data-path="one-times.html"><a href="one-times.html#onetimes-1way-race"><i class="fa fa-check"></i><b>11.1.4</b> race</a></li>
+<li class="chapter" data-level="11.1.5" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sb"><i class="fa fa-check"></i><b>11.1.5</b> sb</a></li>
+<li class="chapter" data-level="11.1.6" data-path="one-times.html"><a href="one-times.html#onetimes-1way-dsb.cohab"><i class="fa fa-check"></i><b>11.1.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="11.1.7" data-path="one-times.html"><a href="one-times.html#onetimes-1way-dsb.pers"><i class="fa fa-check"></i><b>11.1.7</b> dsb.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="one-times.html"><a href="one-times.html#cross-tabs-1"><i class="fa fa-check"></i><b>11.2</b> Cross-tabs</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="one-times.html"><a href="one-times.html#sex_by_race"><i class="fa fa-check"></i><b>11.2.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="11.2.2" data-path="one-times.html"><a href="one-times.html#sex.ident_by_race"><i class="fa fa-check"></i><b>11.2.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="11.2.3" data-path="one-times.html"><a href="one-times.html#sex_by_agecat"><i class="fa fa-check"></i><b>11.2.3</b> sex_by_agecat</a></li>
+<li class="chapter" data-level="11.2.4" data-path="one-times.html"><a href="one-times.html#sex.ident_by_agecat"><i class="fa fa-check"></i><b>11.2.4</b> sex.ident_by_agecat</a></li>
+<li class="chapter" data-level="11.2.5" data-path="one-times.html"><a href="one-times.html#agecat_by_race"><i class="fa fa-check"></i><b>11.2.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="11.2.6" data-path="one-times.html"><a href="one-times.html#deg.cohab.c_by_deg.pers.c2"><i class="fa fa-check"></i><b>11.2.6</b> deg.cohab.c_by_deg.pers.c2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="edgeage.html"><a href="edgeage.html"><i class="fa fa-check"></i><b>12</b> Data: Edge age</a><ul>
+<li class="chapter" data-level="12.1" data-path="edgeage.html"><a href="edgeage.html#networks-overview"><i class="fa fa-check"></i><b>12.1</b> Networks overview</a></li>
+<li class="chapter" data-level="12.2" data-path="edgeage.html"><a href="edgeage.html#one-way-median-edge-age"><i class="fa fa-check"></i><b>12.2</b> One-way median edge age</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-sex"><i class="fa fa-check"></i><b>12.2.1</b> sex</a></li>
+<li class="chapter" data-level="12.2.2" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-sex.ident"><i class="fa fa-check"></i><b>12.2.2</b> sex.ident</a></li>
+<li class="chapter" data-level="12.2.3" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-agecat"><i class="fa fa-check"></i><b>12.2.3</b> agecat</a></li>
+<li class="chapter" data-level="12.2.4" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-race"><i class="fa fa-check"></i><b>12.2.4</b> race</a></li>
+<li class="chapter" data-level="12.2.5" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-deg.cohab"><i class="fa fa-check"></i><b>12.2.5</b> deg.cohab</a></li>
+<li class="chapter" data-level="12.2.6" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-deg.pers"><i class="fa fa-check"></i><b>12.2.6</b> deg.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="edgeage.html"><a href="edgeage.html#two-way-median-edge-age"><i class="fa fa-check"></i><b>12.3</b> Two-way median edge age</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="edgeage.html"><a href="edgeage.html#edgeage-2way-nonetdeg.cohab_by_deg.pers"><i class="fa fa-check"></i><b>12.3.1</b> deg.cohab_by_deg.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="edgeage.html"><a href="edgeage.html#correlation-with-age"><i class="fa fa-check"></i><b>12.4</b> Correlation with age</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="edgeage.html"><a href="edgeage.html#deg.cohab-deg.pers-and-agecat"><i class="fa fa-check"></i><b>12.4.1</b> deg.cohab, deg.pers and agecat</a></li>
+<li class="chapter" data-level="12.4.2" data-path="edgeage.html"><a href="edgeage.html#non-exponential-distribution-in-cohabs"><i class="fa fa-check"></i><b>12.4.2</b> Non-exponential distribution in Cohabs</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="edgeage.html"><a href="edgeage.html#target-stat-decisions"><i class="fa fa-check"></i><b>12.5</b> Target stat decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html"><i class="fa fa-check"></i><b>13</b> Data: Epidemic Parameters</a><ul>
+<li class="chapter" data-level="13.1" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#parameters-that-were-reweighted-with-kc-data"><i class="fa fa-check"></i><b>13.1</b> Parameters that were reweighted with KC data</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#testing-rate"><i class="fa fa-check"></i><b>13.1.1</b> Testing Rate</a></li>
+<li class="chapter" data-level="13.1.2" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#condom-use"><i class="fa fa-check"></i><b>13.1.2</b> Condom Use</a></li>
+<li class="chapter" data-level="13.1.3" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#coital-frequency"><i class="fa fa-check"></i><b>13.1.3</b> Coital Frequency</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="data-duration.html"><a href="data-duration.html"><i class="fa fa-check"></i><b>14</b> Data: Durations</a></li>
+<li class="chapter" data-level="15" data-path="decisions.html"><a href="decisions.html"><i class="fa fa-check"></i><b>15</b> Data &amp; Modeling: Decisions</a><ul>
+<li class="chapter" data-level="15.1" data-path="decisions.html"><a href="decisions.html#data-prep"><i class="fa fa-check"></i><b>15.1</b> Data prep</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="decisions.html"><a href="decisions.html#definition-of-partnernetwork-type"><i class="fa fa-check"></i><b>15.1.1</b> Definition of partner/network type</a></li>
+<li class="chapter" data-level="15.1.2" data-path="decisions.html"><a href="decisions.html#construction-of-sex.ident"><i class="fa fa-check"></i><b>15.1.2</b> Construction of sex.ident</a></li>
+<li class="chapter" data-level="15.1.3" data-path="decisions.html"><a href="decisions.html#race-grouping-for-asians-and-other-race"><i class="fa fa-check"></i><b>15.1.3</b> Race grouping for Asians and Other race</a></li>
+<li class="chapter" data-level="15.1.4" data-path="decisions.html"><a href="decisions.html#active-one-times-persistent"><i class="fa fa-check"></i><b>15.1.4</b> Active one-times = Persistent</a></li>
+<li class="chapter" data-level="15.1.5" data-path="decisions.html"><a href="decisions.html#capping-degree"><i class="fa fa-check"></i><b>15.1.5</b> Capping degree</a></li>
+<li class="chapter" data-level="15.1.6" data-path="decisions.html"><a href="decisions.html#imputing-partner-race-immigration"><i class="fa fa-check"></i><b>15.1.6</b> Imputing partner race-immigration</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="decisions.html"><a href="decisions.html#model-specification"><i class="fa fa-check"></i><b>15.2</b> Model specification</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="decisions.html"><a href="decisions.html#one-time-rates-per-time-step"><i class="fa fa-check"></i><b>15.2.1</b> One-time rates per time step</a></li>
+<li class="chapter" data-level="15.2.2" data-path="decisions.html"><a href="decisions.html#nodematchrace-not-nodemix"><i class="fa fa-check"></i><b>15.2.2</b> Nodematch(race), not nodemix</a></li>
+<li class="chapter" data-level="15.2.3" data-path="decisions.html"><a href="decisions.html#msmf-as-higher-activity"><i class="fa fa-check"></i><b>15.2.3</b> MSMF as higher activity</a></li>
+<li class="chapter" data-level="15.2.4" data-path="decisions.html"><a href="decisions.html#xnet-concurrency"><i class="fa fa-check"></i><b>15.2.4</b> xnet concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="decisions.html"><a href="decisions.html#ergm.ego-pseudopop"><i class="fa fa-check"></i><b>15.3</b> ergm.ego pseudopop</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="decisions.html"><a href="decisions.html#pseudopop-size-in-ergm.ego-fits"><i class="fa fa-check"></i><b>15.3.1</b> Pseudopop size in ergm.ego fits</a></li>
+<li class="chapter" data-level="15.3.2" data-path="decisions.html"><a href="decisions.html#pseudopop-nodal-attribution"><i class="fa fa-check"></i><b>15.3.2</b> Pseudopop nodal attribution</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="decisions.html"><a href="decisions.html#mean-age-targets"><i class="fa fa-check"></i><b>15.4</b> Mean age targets</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="decisions.html"><a href="decisions.html#decisions-target-nodefactor-race"><i class="fa fa-check"></i><b>15.4.1</b> Target stats for nodefactor(race) dissolution</a></li>
+<li class="chapter" data-level="15.4.2" data-path="decisions.html"><a href="decisions.html#hitting-cohab-duration-targets"><i class="fa fa-check"></i><b>15.4.2</b> Hitting cohab duration targets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ergms.html"><a href="ergms.html"><i class="fa fa-check"></i><b>16</b> Modeling: Overview</a><ul>
+<li class="chapter" data-level="16.1" data-path="ergms.html"><a href="ergms.html#final-models"><i class="fa fa-check"></i><b>16.1</b> Final models</a></li>
+<li class="chapter" data-level="16.2" data-path="ergms.html"><a href="ergms.html#history"><i class="fa fa-check"></i><b>16.2</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="duration.html"><a href="duration.html"><i class="fa fa-check"></i><b>17</b> Modeling: Durations</a></li>
+<li class="chapter" data-level="18" data-path="cohaberg.html"><a href="cohaberg.html"><i class="fa fa-check"></i><b>18</b> Modeling: Cohab ERGM</a><ul>
+<li class="chapter" data-level="18.1" data-path="cohaberg.html"><a href="cohaberg.html#model-info"><i class="fa fa-check"></i><b>18.1</b> Model info</a></li>
+<li class="chapter" data-level="18.2" data-path="cohaberg.html"><a href="cohaberg.html#fit-results"><i class="fa fa-check"></i><b>18.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="cohaberg.html"><a href="cohaberg.html#target-statistics-includes-base0"><i class="fa fa-check"></i><b>18.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="18.2.2" data-path="cohaberg.html"><a href="cohaberg.html#fit-call-summary"><i class="fa fa-check"></i><b>18.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="18.2.3" data-path="cohaberg.html"><a href="cohaberg.html#mcmc-diagnostics"><i class="fa fa-check"></i><b>18.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="cohaberg.html"><a href="cohaberg.html#goodness-of-fit"><i class="fa fa-check"></i><b>18.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="cohaberg.html"><a href="cohaberg.html#model"><i class="fa fa-check"></i><b>18.3.1</b> Model</a></li>
+<li class="chapter" data-level="18.3.2" data-path="cohaberg.html"><a href="cohaberg.html#degree-1"><i class="fa fa-check"></i><b>18.3.2</b> Degree</a></li>
+<li class="chapter" data-level="18.3.3" data-path="cohaberg.html"><a href="cohaberg.html#degree-by-ego-attributes"><i class="fa fa-check"></i><b>18.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="18.3.4" data-path="cohaberg.html"><a href="cohaberg.html#degree-by-ego-attributes-historical-model-comparison"><i class="fa fa-check"></i><b>18.3.4</b> Degree, by ego attributes, historical model comparison</a></li>
+<li class="chapter" data-level="18.3.5" data-path="cohaberg.html"><a href="cohaberg.html#component-size-concurrency"><i class="fa fa-check"></i><b>18.3.5</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="cohaberg.html"><a href="cohaberg.html#static-netdx"><i class="fa fa-check"></i><b>18.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="18.4.1" data-path="cohaberg.html"><a href="cohaberg.html#settings"><i class="fa fa-check"></i><b>18.4.1</b> Settings</a></li>
+<li class="chapter" data-level="18.4.2" data-path="cohaberg.html"><a href="cohaberg.html#results"><i class="fa fa-check"></i><b>18.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="cohaberg.html"><a href="cohaberg.html#dynamic-netdx-homogeneous-dissolution"><i class="fa fa-check"></i><b>18.5</b> Dynamic netdx, homogeneous dissolution</a><ul>
+<li class="chapter" data-level="18.5.1" data-path="cohaberg.html"><a href="cohaberg.html#settings-1"><i class="fa fa-check"></i><b>18.5.1</b> Settings</a></li>
+<li class="chapter" data-level="18.5.2" data-path="cohaberg.html"><a href="cohaberg.html#results-1"><i class="fa fa-check"></i><b>18.5.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="cohaberg.html"><a href="cohaberg.html#historical-static-and-dynamic-homogeneous-netdx"><i class="fa fa-check"></i><b>18.6</b> Historical static and dynamic homogeneous netdx</a></li>
+<li class="chapter" data-level="18.7" data-path="cohaberg.html"><a href="cohaberg.html#historical-dynamic-netdx-nodefactorrace-dissolution"><i class="fa fa-check"></i><b>18.7</b> Historical dynamic netdx, nodefactor(race) dissolution</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="perserg.html"><a href="perserg.html"><i class="fa fa-check"></i><b>19</b> Modeling: Pers ERGM</a><ul>
+<li class="chapter" data-level="19.1" data-path="perserg.html"><a href="perserg.html#model-info-1"><i class="fa fa-check"></i><b>19.1</b> Model info</a></li>
+<li class="chapter" data-level="19.2" data-path="perserg.html"><a href="perserg.html#fit-results-1"><i class="fa fa-check"></i><b>19.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="perserg.html"><a href="perserg.html#target-statistics-includes-base0-1"><i class="fa fa-check"></i><b>19.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="19.2.2" data-path="perserg.html"><a href="perserg.html#fit-call-summary-1"><i class="fa fa-check"></i><b>19.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="19.2.3" data-path="perserg.html"><a href="perserg.html#mcmc-diagnostics-1"><i class="fa fa-check"></i><b>19.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="perserg.html"><a href="perserg.html#goodness-of-fit-1"><i class="fa fa-check"></i><b>19.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="perserg.html"><a href="perserg.html#model-1"><i class="fa fa-check"></i><b>19.3.1</b> Model</a></li>
+<li class="chapter" data-level="19.3.2" data-path="perserg.html"><a href="perserg.html#degree-2"><i class="fa fa-check"></i><b>19.3.2</b> Degree</a></li>
+<li class="chapter" data-level="19.3.3" data-path="perserg.html"><a href="perserg.html#degree-by-ego-attributes-1"><i class="fa fa-check"></i><b>19.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="19.3.4" data-path="perserg.html"><a href="perserg.html#degree-by-ego-attributes-historical-model-comparison-1"><i class="fa fa-check"></i><b>19.3.4</b> Degree, by ego attributes, historical model comparison</a></li>
+<li class="chapter" data-level="19.3.5" data-path="perserg.html"><a href="perserg.html#component-size-concurrency-1"><i class="fa fa-check"></i><b>19.3.5</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="perserg.html"><a href="perserg.html#static-netdx-1"><i class="fa fa-check"></i><b>19.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="perserg.html"><a href="perserg.html#settings-2"><i class="fa fa-check"></i><b>19.4.1</b> Settings</a></li>
+<li class="chapter" data-level="19.4.2" data-path="perserg.html"><a href="perserg.html#results-2"><i class="fa fa-check"></i><b>19.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="perserg.html"><a href="perserg.html#dynamic-netdx-homogeneous-dissolution-1"><i class="fa fa-check"></i><b>19.5</b> Dynamic netdx, homogeneous dissolution</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="perserg.html"><a href="perserg.html#settings-3"><i class="fa fa-check"></i><b>19.5.1</b> Settings</a></li>
+<li class="chapter" data-level="19.5.2" data-path="perserg.html"><a href="perserg.html#results-3"><i class="fa fa-check"></i><b>19.5.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="perserg.html"><a href="perserg.html#dynamic-netdx-nodefactorrace-dissolution"><i class="fa fa-check"></i><b>19.6</b> Dynamic netdx, nodefactor(race) dissolution</a><ul>
+<li class="chapter" data-level="19.6.1" data-path="perserg.html"><a href="perserg.html#settings-4"><i class="fa fa-check"></i><b>19.6.1</b> Settings</a></li>
+<li class="chapter" data-level="19.6.2" data-path="perserg.html"><a href="perserg.html#results-4"><i class="fa fa-check"></i><b>19.6.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="perserg.html"><a href="perserg.html#historical-static-and-dynamic-homogeneous-netdx-1"><i class="fa fa-check"></i><b>19.7</b> Historical static and dynamic homogeneous netdx</a></li>
+<li class="chapter" data-level="19.8" data-path="perserg.html"><a href="perserg.html#historical-dynamic-netdx-nodefactorrace-dissolution-1"><i class="fa fa-check"></i><b>19.8</b> Historical dynamic netdx, nodefactor(race) dissolution</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="oterg.html"><a href="oterg.html"><i class="fa fa-check"></i><b>20</b> Modeling: One-Time ERGM</a><ul>
+<li class="chapter" data-level="20.1" data-path="oterg.html"><a href="oterg.html#model-info-2"><i class="fa fa-check"></i><b>20.1</b> Model info</a></li>
+<li class="chapter" data-level="20.2" data-path="oterg.html"><a href="oterg.html#fit-results-2"><i class="fa fa-check"></i><b>20.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="oterg.html"><a href="oterg.html#target-statistics-includes-base0-2"><i class="fa fa-check"></i><b>20.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="20.2.2" data-path="oterg.html"><a href="oterg.html#fit-call-summary-2"><i class="fa fa-check"></i><b>20.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="20.2.3" data-path="oterg.html"><a href="oterg.html#mcmc-diagnostics-2"><i class="fa fa-check"></i><b>20.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="oterg.html"><a href="oterg.html#goodness-of-fit-2"><i class="fa fa-check"></i><b>20.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="oterg.html"><a href="oterg.html#model-2"><i class="fa fa-check"></i><b>20.3.1</b> Model</a></li>
+<li class="chapter" data-level="20.3.2" data-path="oterg.html"><a href="oterg.html#degree-3"><i class="fa fa-check"></i><b>20.3.2</b> Degree</a></li>
+<li class="chapter" data-level="20.3.3" data-path="oterg.html"><a href="oterg.html#degree-by-ego-attributes-2"><i class="fa fa-check"></i><b>20.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="20.3.4" data-path="oterg.html"><a href="oterg.html#component-size-concurrency-2"><i class="fa fa-check"></i><b>20.3.4</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="oterg.html"><a href="oterg.html#static-netdx-2"><i class="fa fa-check"></i><b>20.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="20.4.1" data-path="oterg.html"><a href="oterg.html#settings-5"><i class="fa fa-check"></i><b>20.4.1</b> Settings</a></li>
+<li class="chapter" data-level="20.4.2" data-path="oterg.html"><a href="oterg.html#results-5"><i class="fa fa-check"></i><b>20.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="oterg.html"><a href="oterg.html#historical-static-netdx"><i class="fa fa-check"></i><b>20.5</b> Historical static netdx</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="params.html"><a href="params.html"><i class="fa fa-check"></i><b>21</b> Modeling: Epidemic Parameters</a></li>
+<li class="chapter" data-level="22" data-path="future.html"><a href="future.html"><i class="fa fa-check"></i><b>22</b> Future Work</a><ul>
+<li class="chapter" data-level="22.1" data-path="future.html"><a href="future.html#nsfg-high-risk-population"><i class="fa fa-check"></i><b>22.1</b> NSFG / High-risk population</a></li>
+<li class="chapter" data-level="22.2" data-path="future.html"><a href="future.html#modelling-immigrant-spouses-who-live-in-home-country"><i class="fa fa-check"></i><b>22.2</b> Modelling immigrant spouses who live in home country</a></li>
+<li class="chapter" data-level="22.3" data-path="future.html"><a href="future.html#life-expectancy-for-hiv"><i class="fa fa-check"></i><b>22.3</b> Life expectancy for HIV +</a></li>
+<li class="chapter" data-level="22.4" data-path="future.html"><a href="future.html#nodematched-cohabs-too-low-for-bbihhi"><i class="fa fa-check"></i><b>22.4</b> Nodematched Cohabs too low for B/BI/H/HI</a></li>
+<li class="chapter" data-level="22.5" data-path="future.html"><a href="future.html#age-related-within-and-cross-net-concurrency"><i class="fa fa-check"></i><b>22.5</b> Age related within and cross-net concurrency</a></li>
+<li class="chapter" data-level="22.6" data-path="future.html"><a href="future.html#removing-alters-with-missing-data"><i class="fa fa-check"></i><b>22.6</b> Removing alters with missing data</a></li>
+<li class="chapter" data-level="22.7" data-path="future.html"><a href="future.html#add-10-year-death-rate-data"><i class="fa fa-check"></i><b>22.7</b> Add 10 year death rate data</a></li>
+<li class="chapter" data-level="22.8" data-path="future.html"><a href="future.html#simulation-run-limitations"><i class="fa fa-check"></i><b>22.8</b> Simulation run limitations</a></li>
+<li class="chapter" data-level="22.9" data-path="future.html"><a href="future.html#dynamic-epimodel-parameter-application"><i class="fa fa-check"></i><b>22.9</b> Dynamic EpiModel Parameter application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SHAMP: Seattle HIV/AIDS Modeling Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mixing" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Data: Mixing</h1>
+<div id="one-way-mixing" class="section level2">
+<h2><span class="header-section-number">10.1</span> One-way mixing</h2>
+<div id="mixing-1way-sex" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> sex</h3>
+<div id="htmlwidget-d4a8c8074a4ef31233b8" class="plotly html-widget" style="width:600px;height:900px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-d4a8c8074a4ef31233b8">{"x":{"data":[{"x":[2,1],"y":[1,2],"text":"prop:   0","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":0,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2,1],"y":[1,2],"text":"prop:   0","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":0,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[2,1],"y":[1,2],"text":"prop:   0","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":0,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"x":[2,1],"y":[2,1],"text":"prop: 100","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":75.5905511811024,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2,1],"y":[2,1],"text":"prop: 100","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":75.5905511811024,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[2,1],"y":[2,1],"text":"prop: 100","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":75.5905511811024,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":50.0943683409437,"r":18.9954337899543,"b":34.8249619482496,"l":31.4155251141553},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Ego/row conditional %","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,2.6],"tickmode":"array","ticktext":["F","M"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["F","M"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"annotations":[{"text":"alter","x":0.5,"y":-0.0188736681887367,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis"},{"text":"ego","x":-0.0210045662100457,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis"},{"text":"Cohab","x":1,"y":0.836377473363775,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"Persistent","x":1,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"One-Time","x":1,"y":0.163622526636225,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"}],"yaxis":{"domain":[0.67275494672755,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,2.6],"tickmode":"array","ticktext":["M","F"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["M","F"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.67275494672755,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.67275494672755,"y1":1,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.339421613394216,"y1":0.660578386605784},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.339421613394216,"y1":0.660578386605784,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.327245053272451},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0,"y1":0.327245053272451,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"}],"yaxis2":{"type":"linear","autorange":false,"range":[0.4,2.6],"tickmode":"array","ticktext":["M","F"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["M","F"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.339421613394216,0.660578386605784],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[0.4,2.6],"tickmode":"array","ticktext":["M","F"],"tickvals":[1,2],"categoryorder":"array","categoryarray":["M","F"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.327245053272451],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.965354330708661},"hovermode":"closest","width":600,"height":900,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"168cddf5d22":{"x":{},"y":{},"size":{},"colour":{},"type":"scatter"}},"cur_data":"168cddf5d22","visdat":{"168cddf5d22":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e54e20bd8841f98b8cd5" style="width:100%;height:100%;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e54e20bd8841f98b8cd5">{"x":{"filter":"none","data":[["Cohab","Cohab","Persistent","Persistent","One-Time","One-Time","Cohab","Cohab","Persistent","Persistent","One-Time","One-Time"],["F","M","F","M","F","M","F","M","F","M","F","M"],[10308,0,5855,0,359,0,0,7274,0,5570,0,2117],[0,0,0,0,0,0,0,0,0,0,0,0],[100,0,100,0,100,0,0,100,0,100,0,100],[100,0,100,0,100,0,0,100,0,100,0,100],[100,0,100,0,100,0,0,100,0,100,0,100],["M","M","M","M","M","M","F","F","F","F","F","F"],["Unmatched","Matched","Unmatched","Matched","Unmatched","Matched","Matched","Unmatched","Matched","Unmatched","Matched","Unmatched"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>network<\/th>\n      <th>ego<\/th>\n      <th>Nobs<\/th>\n      <th>miss_N<\/th>\n      <th>prop<\/th>\n      <th>prop_low<\/th>\n      <th>prop_upp<\/th>\n      <th>alter<\/th>\n      <th>homophily<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"lengthMenu":[5,20,100],"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="mixing-1way-agecat" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> agecat</h3>
+<div id="htmlwidget-294ccfb6095a25f9a341" class="plotly html-widget" style="width:600px;height:900px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-294ccfb6095a25f9a341">{"x":{"data":[{"x":[3,2,1],"y":[1,2,3],"text":["prop: 65.92","prop: 69.26","prop: 68.11"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[66.5563157488129,68.2233512751776,67.6540089023053],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[3,2,1],"y":[1,2,3],"text":["prop: 52.73","prop: 56.88","prop: 83.05"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[59.5184772040908,61.8192566273351,74.7133309463442],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[3,2,1],"y":[1,2,3],"text":["prop: 45.72","prop: 46.03","prop: 85.01"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[55.4155661695045,55.6034058149499,75.5905511811024],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"x":[3,3,4,4,4,2,2,1,1],"y":[3,2,3,2,1,3,1,2,1],"text":["prop:  2.19","prop: 18.27","prop:  0.64","prop:  1.73","prop: 15.22","prop: 29.05","prop: 18.17","prop: 10.73","prop:  0.69"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[11.9420617972863,34.9902526012989,6.19225470195437,10.5673338408972,31.9240292589564,44.1530362977417,34.8939931270326,26.7787305954374,6.45813662526055],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[3,3,4,4,4,2,2,1,1],"y":[3,2,3,2,1,3,1,2,1],"text":["prop:  1.62","prop: 14.53","prop:  0.07","prop:  1.94","prop: 14.82","prop: 15.25","prop: 26.41","prop: 26.65","prop:  6.04"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[10.2112105881883,31.1885748460691,0,11.2158498602169,31.499770810491,31.9556215766913,42.0939100871168,42.2852470281328,20.0400383974857],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[3,3,4,4,4,2,2,1,1],"y":[3,2,3,2,1,3,1,2,1],"text":["prop:  0.32","prop:  8.89","prop:  0.85","prop:  1.28","prop:  4.22","prop: 13.82","prop: 38.68","prop: 43.81","prop: 11.37"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[4.10092085796336,24.3582271613121,7.24367046985369,9.02202588751939,16.7084218663053,30.4132430625269,50.963739196154,54.243883318753,27.5708785700458],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":50.0943683409437,"r":18.9954337899543,"b":34.8249619482496,"l":54.7945205479452},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Ego/row conditional %","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":["18-25","26-35","36-45","46-60"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["18-25","26-35","36-45","46-60"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"annotations":[{"text":"alter","x":0.5,"y":-0.0188736681887367,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis"},{"text":"ego","x":-0.0502283105022831,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis"},{"text":"Cohab","x":1,"y":0.836377473363775,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"Persistent","x":1,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"One-Time","x":1,"y":0.163622526636225,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"}],"yaxis":{"domain":[0.67275494672755,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,3.6],"tickmode":"array","ticktext":["36-45","26-35","18-25"],"tickvals":[1,2,3],"categoryorder":"array","categoryarray":["36-45","26-35","18-25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.67275494672755,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.67275494672755,"y1":1,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.339421613394216,"y1":0.660578386605784},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.339421613394216,"y1":0.660578386605784,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.327245053272451},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0,"y1":0.327245053272451,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"}],"yaxis2":{"type":"linear","autorange":false,"range":[0.4,3.6],"tickmode":"array","ticktext":["36-45","26-35","18-25"],"tickvals":[1,2,3],"categoryorder":"array","categoryarray":["36-45","26-35","18-25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.339421613394216,0.660578386605784],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[0.4,3.6],"tickmode":"array","ticktext":["36-45","26-35","18-25"],"tickvals":[1,2,3],"categoryorder":"array","categoryarray":["36-45","26-35","18-25"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.327245053272451],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.965354330708661},"hovermode":"closest","width":600,"height":900,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"168c13e5c6c":{"x":{},"y":{},"size":{},"colour":{},"type":"scatter"}},"cur_data":"168c13e5c6c","visdat":{"168c13e5c6c":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2e6dd1855ff0e2baf4bf" style="width:100%;height:100%;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2e6dd1855ff0e2baf4bf">{"x":{"filter":"none","data":[["Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time"],["18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45","18-25","26-35","36-45"],[67,1476,3795,79,733,1082,6,79,123,18,249,1449,18,116,404,4,10,16,920,5513,1153,865,2379,612,142,337,135,1989,893,60,4051,952,134,1279,303,42],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[2.19,18.27,65.92,1.62,14.53,52.73,0.32,8.89,45.72,0.64,1.73,15.22,0.07,1.94,14.82,0.85,1.28,4.22,29.05,69.26,18.17,15.25,56.88,26.41,13.82,46.03,38.68,68.11,10.73,0.69,83.05,26.65,6.04,85.01,43.81,11.37],[1.42,16.85,64.1,1,12.82,48.77,0.1,6.29,36.35,0.32,1.42,14.01,0.04,1.42,12.47,0.26,0.48,2.18,26.48,67.55,16.73,13.58,53.97,23.15,10.61,40.15,30.15,65.33,9.68,0.43,81.1,24.05,4.36,80.94,37.97,7.34],[3.37,19.79,67.7,2.61,16.42,56.66,1.02,12.41,55.41,1.27,2.11,16.52,0.14,2.65,17.53,2.72,3.35,8.02,31.76,70.93,19.7,17.09,59.74,29.94,17.81,52.02,47.98,70.77,11.88,1.11,84.85,29.44,8.32,88.34,49.83,17.21],["36-45","36-45","36-45","36-45","36-45","36-45","36-45","36-45","36-45","46-60","46-60","46-60","46-60","46-60","46-60","46-60","46-60","46-60","26-35","26-35","26-35","26-35","26-35","26-35","26-35","26-35","26-35","18-25","18-25","18-25","18-25","18-25","18-25","18-25","18-25","18-25"],["Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>network<\/th>\n      <th>ego<\/th>\n      <th>Nobs<\/th>\n      <th>miss_N<\/th>\n      <th>prop<\/th>\n      <th>prop_low<\/th>\n      <th>prop_upp<\/th>\n      <th>alter<\/th>\n      <th>homophily<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"lengthMenu":[5,20,100],"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="mixing-1way-race" class="section level3">
+<h3><span class="header-section-number">10.1.3</span> race</h3>
+<div id="htmlwidget-07a0d01435c45c1fa45e" class="plotly html-widget" style="width:600px;height:900px;">
+
+</div>
+<script type="application/json" data-for="htmlwidget-07a0d01435c45c1fa45e">{"x":{"data":[{"x":[5,3,1,2,4],"y":[1,3,5,4,2],"text":["prop: 93.10","prop: 38.19","prop: 71.08","prop: 71.64","prop: 75.65"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[75.5905511811024,48.4136137246378,66.0490204547674,66.3086918539518,68.1392168537769],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[5,3,1,2,4],"y":[1,3,5,4,2],"text":["prop: 86.19","prop: 33.59","prop: 71.49","prop: 70.22","prop: 67.10"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[72.7312600959149,45.4043720316767,66.2392368313781,65.6482395188809,64.1732348323378],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[5,3,1,2,4],"y":[1,3,5,4,2],"text":["prop: 89.48","prop: 76.96","prop: 79.62","prop: 30.42","prop: 21.68"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,139,69,1)","opacity":1,"size":[74.1063902790064,68.7266540920536,69.9042785982518,43.2088070889406,36.4772685504681],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,139,69,1)"}},"hoveron":"points","name":"Matched","legendgroup":"Matched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null},{"x":[5,5,5,5,3,3,3,3,1,1,1,1,2,2,2,2,4,4,4,4],"y":[5,4,3,2,5,4,2,1,4,3,2,1,5,3,2,1,5,4,3,1],"text":["prop: 15.31","prop: 10.36","prop: 32.75","prop:  8.14","prop:  3.88","prop:  1.68","prop: 15.52","prop:  3.51","prop: 12.89","prop:  4.54","prop:  0.31","prop:  1.00","prop:  8.71","prop:  0.80","prop:  0.38","prop:  0.73","prop:  1.02","prop:  3.43","prop: 23.73","prop:  1.66"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[30.653513957521,25.2157882771662,44.8330540011367,22.3514073747168,15.4315139007362,10.154237393529,30.8630278014723,14.6773019818775,28.1267226191929,16.6924697554303,4.36187804160225,7.83416423065929,23.1207410190617,7.00708950666061,4.82930316850348,6.69351285281857,7.91211803354831,14.5090751990535,38.1629150583194,10.0936145389193],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[5,5,5,5,3,3,3,3,1,1,1,1,2,2,2,2,4,4,4,4],"y":[5,4,3,2,5,4,2,1,4,3,2,1,5,3,2,1,5,4,3,1],"text":["prop: 12.08","prop:  9.28","prop: 35.40","prop: 15.41","prop:  5.43","prop:  1.92","prop: 15.08","prop:  6.72","prop: 12.72","prop:  8.01","prop:  0.86","prop:  2.10","prop:  9.58","prop:  2.28","prop:  1.55","prop:  2.12","prop:  1.42","prop:  5.87","prop: 20.72","prop:  2.86"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[27.2286518331469,23.8652869019104,46.6116313105445,30.7534604697297,18.2554518300061,10.8553363858725,30.4223909025829,20.3084747870579,27.9406321212355,22.1722072612418,7.26510503061929,11.3527825358005,24.2479722382796,11.8293285760396,9.75345581058628,11.4067152979741,9.33548410388968,18.9806780269454,35.660509767497,13.2487738863569],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y2","hoverinfo":"text","frame":null},{"x":[5,5,5,5,3,3,3,3,1,1,1,1,2,2,2,2,4,4,4,4],"y":[5,4,3,2,5,4,2,1,4,3,2,1,5,3,2,1,5,4,3,1],"text":["prop: 14.29","prop:  4.33","prop: 19.90","prop: 35.09","prop:  6.09","prop: 28.08","prop: 41.45","prop:  9.24","prop: 37.16","prop:  3.14","prop:  1.78","prop:  1.28","prop:  0.00","prop:  0.00","prop:  0.00","prop:  0.00","prop:  0.00","prop:  0.00","prop:  0.00","prop:  0.00"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(173,173,173,1)","opacity":1,"size":[29.6147987696546,16.3018397552373,34.9477491541235,46.4070920590842,19.3330920130489,41.5136790436333,50.4376610782799,23.8137975497983,47.756283783495,13.8821743853705,10.4520787388651,8.86334504388525,0,0,0,0,0,0,0,0],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(173,173,173,1)"}},"hoveron":"points","name":"Unmatched","legendgroup":"Unmatched","showlegend":false,"xaxis":"x","yaxis":"y3","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":50.0943683409437,"r":18.9954337899543,"b":34.8249619482496,"l":37.2602739726027},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Ego/row conditional %","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["B","BI","H","HI","W"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["B","BI","H","HI","W"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y3","title":"","hoverformat":".2f"},"annotations":[{"text":"alter","x":0.5,"y":-0.0188736681887367,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"center","yanchor":"top","annotationType":"axis"},{"text":"ego","x":-0.028310502283105,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-90,"xanchor":"right","yanchor":"center","annotationType":"axis"},{"text":"Cohab","x":1,"y":0.836377473363775,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"Persistent","x":1,"y":0.5,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"},{"text":"One-Time","x":1,"y":0.163622526636225,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(26,26,26,1)","family":"","size":11.689497716895},"xref":"paper","yref":"paper","textangle":90,"xanchor":"left","yanchor":"middle"}],"yaxis":{"domain":[0.67275494672755,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["W","HI","H","BI","B"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["W","HI","H","BI","B"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.67275494672755,"y1":1},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.67275494672755,"y1":1,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0.339421613394216,"y1":0.660578386605784},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0.339421613394216,"y1":0.660578386605784,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"},{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":0.327245053272451},{"type":"rect","fillcolor":"rgba(217,217,217,1)","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","y0":0,"y1":0.327245053272451,"x0":0,"x1":23.37899543379,"xanchor":1,"xsizemode":"pixel"}],"yaxis2":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["W","HI","H","BI","B"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["W","HI","H","BI","B"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0.339421613394216,0.660578386605784],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"yaxis3":{"type":"linear","autorange":false,"range":[0.4,5.6],"tickmode":"array","ticktext":["W","HI","H","BI","B"],"tickvals":[1,2,3,4,5],"categoryorder":"array","categoryarray":["W","HI","H","BI","B"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"domain":[0,0.327245053272451],"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":"","hoverformat":".2f"},"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.965354330708661},"hovermode":"closest","width":600,"height":900,"barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"168c2dbd662a":{"x":{},"y":{},"size":{},"colour":{},"type":"scatter"}},"cur_data":"168c2dbd662a","visdat":{"168c2dbd662a":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dd067e77d1159a961372" style="width:100%;height:100%;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dd067e77d1159a961372">{"x":{"filter":"none","data":[["Cohab","Cohab","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","One-Time","One-Time","Cohab","Cohab","Cohab","Cohab","Cohab","Persistent","Persistent","Persistent","Persistent","Persistent","One-Time","One-Time","One-Time","One-Time","One-Time"],["B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W","B","BI","H","HI","W"],[284,28,615,192,10021,390,30,442,97,4305,86,3,98,45,1230,85,6,757,339,412,175,8,588,95,394,43,6,258,72,135,1422,36,81,12,123,2793,19,145,6,185,407,11,20,4,13,214,209,11,13,97,411,150,31,17,155,0,13,0,0,0,22,10,510,1912,171,43,16,356,412,162,0,0,0,32,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[15.31,10.36,32.75,8.14,93.1,12.08,9.28,35.4,15.41,86.19,14.29,4.33,19.9,35.09,89.48,3.88,1.68,38.19,15.52,3.51,5.43,1.92,33.59,15.08,6.72,6.09,28.08,76.96,41.45,9.24,71.08,12.89,4.54,0.31,1,71.49,12.72,8.01,0.86,2.1,79.62,37.16,3.14,1.78,1.28,8.71,71.64,0.8,0.38,0.73,9.58,70.22,2.28,1.55,2.12,0,30.42,0,0,0,1.02,3.43,23.73,75.65,1.66,1.42,5.87,20.72,67.1,2.86,0,0,0,21.68,0],[12.9,5.83,29.64,6.4,92.39,10.54,5.63,31.35,11.27,84.81,10.85,1.14,15.02,24.74,86.63,2.92,0.71,34.98,13.24,3.07,4.24,0.81,30.08,10.76,5.84,4.14,12.36,70.68,30.89,7.08,67.88,8.33,3.27,0.14,0.76,69.17,7.06,6.34,0.32,1.67,74.89,18.87,1.73,0.48,0.62,7.04,63.22,0.24,0.18,0.54,8.27,60.71,1.39,0.89,1.67,0,14.86,0,0,0,0.57,1.51,20.91,72.65,1.32,0.9,3.09,17.92,60.64,2.22,0,0,0,13.74,0],[18.07,17.75,36.02,10.3,93.75,13.81,14.9,39.68,20.71,87.47,18.58,15.14,25.88,47.05,91.79,5.14,3.9,41.51,18.1,4.01,6.91,4.47,37.28,20.74,7.72,8.88,51.95,82.24,52.87,11.97,74.09,19.41,6.27,0.7,1.3,73.71,21.84,10.07,2.32,2.64,83.65,60.05,5.6,6.4,2.62,10.74,78.78,2.6,0.79,1.01,11.08,78.25,3.73,2.68,2.7,0,52.27,0,0,0,1.82,7.61,26.79,78.43,2.07,2.22,10.87,23.83,72.96,3.69,0,0,0,32.49,0],["W","W","W","W","W","W","W","W","W","W","W","W","W","W","W","H","H","H","H","H","H","H","H","H","H","H","H","H","H","H","B","B","B","B","B","B","B","B","B","B","B","B","B","B","B","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","BI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI","HI"],["Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched","Unmatched","Unmatched","Unmatched","Matched","Unmatched"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>network<\/th>\n      <th>ego<\/th>\n      <th>Nobs<\/th>\n      <th>miss_N<\/th>\n      <th>prop<\/th>\n      <th>prop_low<\/th>\n      <th>prop_upp<\/th>\n      <th>alter<\/th>\n      <th>homophily<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"lengthMenu":[5,20,100],"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="degree.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="one-times.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["SHAMP.pdf", "SHAMP.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

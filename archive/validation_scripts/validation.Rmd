@@ -1,0 +1,715 @@
+---
+title: "Validation"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F,
+                      warning = F,
+                      message = F, error = F)
+
+```
+
+```{r data, echo = F, eval = T,  cache.lazy = FALSE}
+suppressWarnings(source("setup.R"))
+```
+
+# Network Structure 
+
+## Cumulative Lifetime Partners
+### Simulation
+
+```{r}
+
+race.color<-c("B" = "dodgerblue2",
+              "BI" = "forestgreen",
+              "H" = "antiquewhite2",
+              "HI" = "darkmagenta",
+              "W" = "gold")
+
+## boxplot
+ggplot(names_age1, aes(x = sex, y = number.rel, fill = race)) +                                       
+  geom_boxplot() +   
+  scale_fill_manual("Race Category", values =race.color)+
+  # scale_fill_manual(values=c('#999999','#E69F00'))+
+  # facet_wrap(~sex)+
+  xlab("Sex")+ylab("Mean lifetime partners")+
+  theme_bw()
+
+
+```
+
+
+### Cumulative lifetime partners - NSFG
+
+```{r table5, echo=FALSE, out.width="100%", out.height="100%"}
+knitr::include_graphics("/net/proj/SHAMPnetdat/Figs/nsfg-cumulative-lifetime.png")
+
+```
+
+<!-- ## Mean degree over time - over 10 sims -->
+
+<!-- ```{r, warnings=F} -->
+
+<!-- meanDegree<-list() -->
+
+<!-- for (sim in 1:10){ -->
+
+<!--   meanDegree[[sim]] <-list() -->
+
+<!-- for (i in 1:3380){ -->
+
+<!--   sim<-1 -->
+<!--   totalNum<-epi$nCohabs[[sim]][[i]]+epi$nPers[[sim]][[i]]+epi$nOT[[sim]][[i]] -->
+<!--   overallNum<-epi$num[[sim]][[i]] -->
+
+<!--   meanDegree[[sim]][i]<-totalNum*2/overallNum -->
+
+<!-- } -->
+<!-- } -->
+
+
+<!-- dd  <-  as.data.frame(matrix(unlist(meanDegree), nrow=length(unlist(meanDegree[1])))) %>%  -->
+<!--   rownames_to_column() %>%  -->
+<!--   gather(key, degree, -rowname) %>%  -->
+<!--   rename(time = rowname) %>%  -->
+<!--   mutate(time = as.numeric(time)) -->
+
+<!-- dd2<-dd%>%  -->
+<!--   group_by(time) %>% -->
+<!--   summarise(`25%`=quantile(degree, probs=0.25), -->
+<!--             `50%`=quantile(degree, probs=0.5), -->
+<!--             `75%`=quantile(degree, probs=0.75), -->
+<!--             avg=mean(degree), -->
+<!--             n=n()) -->
+
+<!--   ggplot(dd2 %>% mutate(time=as.numeric(time)), aes(x=time))+ -->
+<!--     geom_ribbon(aes(ymin = `25%`, ymax =`75%`))+ -->
+<!--     geom_line(aes(y=avg), color="blue")+ -->
+<!--  ##   xlim(1, 3380)+ -->
+<!--     scale_x_continuous(breaks=c(1,1000,2000,3000,3800), -->
+<!--                      labels = c(1,1000,2000,3000,3800))+ -->
+<!--     ylim(.1,1)+ -->
+<!--     xlab("Time (weeks)")+ -->
+<!--     ylab("Mean Degree")+ -->
+<!--     theme_bw() -->
+
+<!-- ``` -->
+
+# Epidemic Output 
+
+## Mixing Matrices - 1 sim
+
+```{r, echo = F, warning = F}
+
+
+suppressWarnings(names_age1<-data.table(age = attr1$age,
+                       uid = attr1$uid,
+                       active = attr1$active,
+                       arrival.time = attr1$arrival.time,
+                       race = attr1$race,
+                       sex = attr1$sex,
+                       cohab.lt = attr1$cohab.lt,
+                       pers.lt = attr1$pers.lt,
+                       onetime.lt = attr1$onetime.lt,
+                       inf.class = attr1$inf.class,
+                       infector =  attr1$infector,
+                       infected.gen = attr1$infected.gen,
+                       inf.role =  attr1$inf.role,
+                       inf.type =  attr1$inf.type,
+                       inf.tx =  attr1$inf.tx,
+                       deg.cohab = attr1$deg.cohab,
+                       deg.pers = attr1$deg.pers,
+                       deg.inst = attr1$deg.inst) %>% 
+ ## filter(43<age, age<46, !arrival.time>2500) %>% 
+  dplyr::rowwise() %>% 
+  mutate(number.rel = sum(cohab.lt, pers.lt, onetime.lt, na.rm=T),
+         age.cat = age.cat(age)))
+
+trim <- .9 * length(cel.complete1[[1]])
+matrix <- tail(cel.complete1,trim)
+matrix <-as.data.frame(matrix)
+
+
+############ cross sectional look at partners
+matrix<-matrix %>% 
+  filter(end >= 1900 & start < 1900) %>% 
+ ## filter(end == max(end)) %>% 
+  mutate(f = "F",
+         r1 = as.character(r1),
+         r2 = as.character(r2),
+         r_f = ifelse(s1=="F", r1, r2),
+         r_m = ifelse(s1=="M", r1, r2),
+         m = "M") %>%
+  ungroup() 
+
+matrix<-matrix%>% 
+ ## rowwise() %>% 
+     mutate(
+       age1 = round(age1,0),
+       age2 = round(age2,0),
+       ##ag3=age.cat.5level(age1),
+      age1 =
+        cut(age1, breaks=c(18, 20, 25, 30, 35, 40), right = FALSE),
+      age2 =
+        cut(age2, breaks=c(18, 20, 25, 30, 35, 40), right = FALSE))%>% 
+  filter(!is.na(age1) , !is.na(age2)) %>% 
+  mutate(
+       age_f = ifelse(s1 =="F", age1, age2),
+       age_m = ifelse(s1 =="M", age1, age2)
+            )
+## 
+## matrix<-matrix %>% ungroup() %>% 
+##    mutate(age3 = as.character(age3),
+##           age4 = as.character(age4),
+##           age_f = ifelse(s1 =="F", age3,age4),
+##     age_m = ifelse(s1 =="M", age3,age4))
+
+matrix$r_f<-factor(matrix$r_f,levels=c("H", "W", "B", "BI", "HI"))
+
+matrix$r_m<-factor(matrix$r_m,levels=c("H", "W", "B", "BI", "HI"))
+
+matrix<-matrix %>% dplyr::mutate(r_f_new = new_race_cat(r_f),
+                          r_m_new = new_race_cat(r_m))
+
+
+## by race of partnership =============
+matrix_race<-table(matrix$r_f_new, matrix$r_m_new, matrix$type)
+##
+```
+#### Race 
+
+###### Cohab
+
+```{r, warnings=F, results='asis'}
+
+matrix %>%
+  filter(type == "cohab") %>% 
+ group_by(r_f_new) %>% 
+  dplyr::count(r_f_new,r_m_new) %>% 
+  ungroup() %>% 
+ ## group_by(r_m_new) %>% 
+ mutate(prop = n / sum(n),
+        prop = round(prop,4)*100) %>%
+  select(-n) %>%
+  ungroup() %>% 
+  spread(r_f_new, prop) %>%
+  ##mutate(BI = 0) %>% 
+##  select(1:4, 6, 5) %>% 
+  janitor::adorn_totals("row") %>% 
+  janitor::adorn_totals("col") %>% 
+ ## rename(` `= r_m_new) %>% 
+  kable(caption="Cohab - Race") %>%
+  kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+  row_spec(4, bold = T, color = "black", background = "grey") %>% 
+  column_spec(5, bold = T, color = "black", background = "grey") %>% 
+  column_spec(1, bold = T, color = "black", background = "##D7261E")
+
+# 
+# matrix %>%
+#   filter(type == "cohab") %>% 
+#  group_by(r_f_new) %>% 
+#   dplyr::count(r_f_new,r_m_new) %>% 
+#   ungroup() %>% 
+#  ## group_by(r_m_new) %>% 
+# ## mutate(prop = n / sum(n),
+#  ##       prop = round(prop,4)*100) %>%
+# ##  select(-n) %>%
+# ##  ungroup() %>% 
+#   spread(r_f_new, n) %>%
+#   ##mutate(BI = 0) %>% 
+# ##  select(1:4, 6, 5) %>% 
+#   janitor::adorn_totals("row") %>% 
+#   janitor::adorn_totals("col") %>% 
+#  ## rename(` `= r_m_new) %>% 
+#   kable(caption="Cohab - Race") %>%
+#   kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+#   row_spec(4, bold = T, color = "black", background = "grey") %>% 
+#   column_spec(5, bold = T, color = "black", background = "grey") %>% 
+#   column_spec(1, bold = T, color = "black", background = "##D7261E")
+
+```
+
+```{r cohabmixmat, echo=FALSE, out.width="100%", out.height="100%"}
+knitr::include_graphics("/net/proj/SHAMPnetdat/Figs/cohab-mix-mat.PNG")
+
+```
+
+###### Pers 
+
+```{r, warnings=F, results='asis'}
+
+matrix %>%
+  filter(type == "pers") %>% 
+  group_by(r_f_new) %>% 
+  dplyr::count(r_f_new,r_m_new) %>% 
+  ungroup() %>% 
+  ## group_by(r_m_new) %>% 
+  mutate(prop = n / sum(n),
+         prop = round(prop,4)*100) %>%
+  select(-n) %>%
+  ungroup() %>% 
+  spread(r_f_new, prop) %>%
+  ##mutate(BI = 0) %>% 
+  ##  select(1:4, 6, 5) %>% 
+  janitor::adorn_totals("row") %>% 
+  janitor::adorn_totals("col") %>% 
+  rename(` `= r_m_new) %>% 
+  kable(caption="Pers - Race") %>%
+  kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+  row_spec(4, bold = T, color = "black", background = "grey") %>% 
+  column_spec(5, bold = T, color = "black", background = "grey") %>% 
+  column_spec(1, bold = T, color = "black", background = "##D7261E")
+
+
+# matrix %>%
+#   filter(type == "pers") %>% 
+#   group_by(r_f_new) %>% 
+#   dplyr::count(r_f_new,r_m_new) %>% 
+#   ungroup() %>% 
+#   ## group_by(r_m_new) %>% 
+# ##  mutate(prop = n / sum(n),
+#  ##        prop = round(prop,4)*100) %>%
+# ##  select(-n) %>%
+#  ## ungroup() %>% 
+#   spread(r_f_new, n) %>%
+#   ##mutate(BI = 0) %>% 
+#   ##  select(1:4, 6, 5) %>% 
+#   janitor::adorn_totals("row") %>% 
+#   janitor::adorn_totals("col") %>% 
+#   rename(` `= r_m_new) %>% 
+#   kable(caption="Pers - Race") %>%
+#   kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+#   row_spec(4, bold = T, color = "black", background = "grey") %>% 
+#   column_spec(5, bold = T, color = "black", background = "grey") %>% 
+#   column_spec(1, bold = T, color = "black", background = "##D7261E")
+
+```
+
+```{r persmixmat, echo=FALSE, out.width="100%", out.height="100%"}
+knitr::include_graphics("/net/proj/SHAMPnetdat/Figs/pers-mix-mat.PNG")
+
+```
+
+<!-- #### Age -->
+
+<!-- ```{r, warnings=F, results='asis'} -->
+
+<!-- matrix<-matrix %>%  -->
+<!--   filter(end >= 1900 & start < 1900) %>%  -->
+<!--   ## filter(end == max(end)) %>%  -->
+<!--   mutate(f = "F", -->
+<!--          r1 = as.character(r1), -->
+<!--          r2 = as.character(r2), -->
+<!--          r_f = ifelse(s1=="F", r1, r2), -->
+<!--          r_m = ifelse(s1=="M", r1, r2), -->
+<!--          m = "M") %>% -->
+<!--   ungroup() %>%  -->
+<!--   mutate( -->
+<!--     age1 = as.character(age1), -->
+<!--     age2=as.character(age2), -->
+<!--     age_f = ifelse(s1 =="F", age1, age2), -->
+<!--     age_m = ifelse(s1 =="M", age1, age2), -->
+<!--     age1 = age.cat(age1), -->
+<!--       age2 = age.cat(age2) -->
+<!--   ) -->
+<!--   ## mutate(age1 = age.cat(age1), -->
+<!--   ##        age2 = age.cat(age2), -->
+<!--   ##        age_f = ifelse(s1 =="F", age1,age2), -->
+<!--   ##        age_m = ifelse(s1 =="M", age1,age2)) -->
+
+
+
+<!-- matrix %>% -->
+<!--   filter(type == "cohab") %>%  -->
+<!--   group_by(age_f) %>%  -->
+<!--   dplyr::count(age_f,age_m) %>%  -->
+<!--   ungroup() %>%  -->
+<!--  ## mutate(prop = n / sum(n)*100, -->
+<!--  ##        prop=round(prop,2)) %>% -->
+<!--  ## select(-n) %>% -->
+<!--   spread(age_f, n, fill = 0) %>% -->
+<!--   janitor::adorn_totals("row") %>%  -->
+<!--   janitor::adorn_totals("col") %>%    -->
+<!--   ###### kable pics -->
+<!--   rename(` `= age_m) %>%  -->
+<!--   kable(caption="Cohab - Age Category") %>% -->
+<!--   kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>% -->
+<!--   row_spec(6, bold = T, color = "black", background = "grey") %>%  -->
+<!--   column_spec(7, bold = T, color = "black", background = "grey") %>%  -->
+<!--   column_spec(1, bold = T, color = "black", background = "##D7261E") -->
+
+
+<!-- matrix %>% -->
+<!--   filter(type == "pers") %>%  -->
+<!--   group_by(age_f) %>%  -->
+<!--   dplyr::count(age_f,age_m) %>%  -->
+<!--  ungroup() %>%  -->
+<!--  ## mutate(prop = n / sum(n)*100, -->
+<!--  ##        prop=round(prop,2)) %>% -->
+<!--  ## select(-n) %>% -->
+<!--   spread(age_f, n, fill = 0) %>% -->
+<!--   janitor::adorn_totals("row") %>%  -->
+<!--   janitor::adorn_totals("col") %>%    -->
+<!--   ###### kable pics -->
+<!--   rename(` `= age_m) %>%  -->
+<!--   kable(caption="Pers - Age Category") %>% -->
+<!--   kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>% -->
+<!--   row_spec(6, bold = T, color = "black", background = "grey") %>%  -->
+<!--   column_spec(7, bold = T, color = "black", background = "grey") %>%  -->
+<!--   column_spec(1, bold = T, color = "black", background = "##D7261E") -->
+
+
+<!-- ``` -->
+
+## Degree distribution, vs NSFG - 1 sim
+
+#### By Age Category
+
+```{r, warnings=F}
+
+###### load NSFG data ========
+
+##nsfg_race_deg<-read_rds("nsfg_race_deg.rds")
+## Load the data and create svy object
+library(tidyverse)
+library(egonet)
+library(srvyr)
+load("/net/proj/SHAMPnetdat/validation_scripts/nsfg.obj_c.rda")
+egos <- as_tibble(nsfg.obj_c$egos) %>% 
+  unite("deg.cohab-deg.pers", c("deg.cohab", "deg.pers"), remove=FALSE)
+svy <- egos %>% as_survey(ids=1, weights=weight)
+
+######## One way frequency histograms===========
+
+
+##and re: the degree distribution, it's implicitly recoverable from the cross-net concurrency plots, 
+##but i'd like to see a simple histogram
+##of the one way frequencies of degree for cohab and pers, sim vs. KC wtd NSFG.
+
+
+make_prop<-function(df, grouping_var, type){
+    quo_group_var <- enquo(grouping_var)
+  type_var <- enquo(type)
+  
+    df<- df %>% group_by(!!quo_group_var, !!type_var) %>% 
+      summarise(n=n()) %>% ungroup() %>% group_by(!!type_var) %>% 
+    ##  group_by(!!quo_group_var) %>% 
+    dplyr::mutate(sum =sum(n),
+                  prop = round(n/sum,3)*100)
+  }
+
+
+```
+
+
+######  Pers
+```{r, warnings=F}
+
+
+###### race
+
+nsfg.pers <- prop_kvar(svy, "deg.pers", char_input=TRUE, binary=FALSE, 'agecat') 
+nsfg.cohab <- prop_kvar(svy, "deg.cohab", char_input=TRUE, binary=FALSE, 'agecat') 
+sim.pers<-make_prop(names_age1, grouping_var=deg.pers, type=age.cat) %>% rename(agecat = age.cat)
+sim.cohab<-make_prop(names_age1, grouping_var=deg.cohab, type=age.cat) %>% rename(agecat = age.cat)
+
+
+
+ggplot(nsfg.pers, aes(x= as.factor(deg.pers),  group=agecat)) + 
+  geom_bar(aes(y = prop/100, fill = "N: NSFG"), stat="identity") +
+  geom_bar(data=sim.pers, aes(x= as.factor(deg.pers),  group=agecat,
+                              y = prop/100, fill = "S: SIM"), alpha=.3, stat="identity") +
+  
+  facet_grid(~agecat) +
+  geom_text(data=sim.pers, aes( label = paste0("S: ",scales::percent(prop/100)),
+                                y=  prop/100), stat= "identity", size=3.2, vjust = -1) +
+  geom_text(data=nsfg.pers,aes( label = paste0("N: ",scales::percent(prop/100)),
+                                y=  prop/100), stat= "identity", size=3.2, vjust = -3.2) +
+  labs(y = "Percent", fill="Data", x="deg.pers") +
+  facet_wrap(~agecat, nrow=2##, scales = "free_y"
+  ) +
+  scale_y_continuous(labels = scales::percent,expand = c(1,0))+
+  scale_color_manual(values=c('springgreen4', 'gray68')) +
+  theme_bw() + 
+  guides(size=FALSE) + 
+  labs(color='') 
+
+##degree distn
+
+```
+
+###### Cohab 
+```{r, warnings=F}
+
+
+ggplot(nsfg.cohab, aes(x= as.factor(deg.cohab),  group=agecat)) + 
+  geom_bar(aes(y = prop/100, fill = "N: NSFG"), stat="identity") +
+  geom_bar(data=sim.cohab, aes(x= as.factor(deg.cohab),  group=agecat,
+                              y = prop/100, fill = "S: SIM"), alpha=.3, stat="identity") +
+  
+  facet_grid(~agecat) +
+  geom_text(data=sim.cohab, aes( label = paste0("S: ",scales::percent(prop/100)),
+                 y=  prop/100), stat= "identity", size=3.2, vjust = -1) +
+  geom_text(data=nsfg.cohab,aes( label = paste0("N: ",scales::percent(prop/100)),
+                 y=  prop/100), stat= "identity", size=3.2, vjust = -3.2) +
+  labs(y = "Percent", fill="Data", x="deg.cohab") +
+  facet_wrap(~agecat, nrow=2##, scales = "free_y"
+             ) +
+  scale_y_continuous(labels = scales::percent,expand = c(1,0))+
+  scale_color_manual(values=c('springgreen4', 'gray68')) +
+  theme_bw() + 
+  guides(size=FALSE) + 
+  labs(color='') 
+
+```
+
+
+#### By Sex Category
+
+###### Pers
+```{r, warnings=F}
+
+
+###### race
+
+nsfg.pers <- prop_kvar(svy, "deg.pers", char_input=TRUE, binary=FALSE, 'sex') 
+nsfg.cohab <- prop_kvar(svy, "deg.cohab", char_input=TRUE, binary=FALSE, 'sex') 
+sim.pers<-make_prop(names_age1, grouping_var=deg.pers, type=sex) 
+sim.cohab<-make_prop(names_age1, grouping_var=deg.cohab, type=sex)
+
+
+ggplot(nsfg.pers, aes(x= as.factor(deg.pers),  group=sex)) + 
+  geom_bar(aes(y = prop/100, fill = "N: NSFG"), stat="identity") +
+  geom_bar(data=sim.pers, aes(x= as.factor(deg.pers),  group=sex,
+                              y = prop/100, fill = "S: SIM"), alpha=.3, stat="identity") +
+  
+  facet_grid(~sex) +
+  geom_text(data=sim.pers, aes( label = paste0("S: ",scales::percent(prop/100)),
+                                y=  prop/100), stat= "identity", size=3.2, vjust = -1) +
+  geom_text(data=nsfg.pers,aes( label = paste0("N: ",scales::percent(prop/100)),
+                                y=  prop/100), stat= "identity", size=3.2, vjust = -3.2) +
+  labs(y = "Percent", fill="Data", x="deg.pers") +
+  facet_wrap(~sex, nrow=2##, scales = "free_y"
+  ) +
+  scale_y_continuous(labels = scales::percent,expand = c(1,0))+
+  scale_color_manual(values=c('springgreen4', 'gray68')) +
+  theme_bw() + 
+  guides(size=FALSE) + 
+  labs(color='') 
+
+##degree distn
+
+```
+
+######  Cohab 
+```{r, warnings=F}
+
+
+ggplot(nsfg.cohab, aes(x= as.factor(deg.cohab),  group=sex)) + 
+  geom_bar(aes(y = prop/100, fill = "N: NSFG"), stat="identity") +
+  geom_bar(data=sim.cohab, aes(x= as.factor(deg.cohab),  group=sex,
+                              y = prop/100, fill = "S: SIM"), alpha=.3, stat="identity") +
+  
+  facet_grid(~sex) +
+  geom_text(data=sim.cohab, aes( label = paste0("S: ",scales::percent(prop/100)),
+                 y=  prop/100), stat= "identity", size=3.2, vjust = -1) +
+  geom_text(data=nsfg.cohab,aes( label = paste0("N: ",scales::percent(prop/100)),
+                 y=  prop/100), stat= "identity", size=3.2, vjust = -3.2) +
+  labs(y = "Percent", fill="Data", x="deg.cohab") +
+  facet_wrap(~sex, nrow=2##, scales = "free_y"
+             ) +
+  scale_y_continuous(labels = scales::percent,expand = c(1,0))+
+  scale_color_manual(values=c('springgreen4', 'gray68')) +
+  theme_bw() + 
+  guides(size=FALSE) + 
+  labs(color='') 
+
+```
+
+
+## Chain length- over 1 sim
+
+
+```{r,message=FALSE, warning=FALSE, include=FALSE}
+
+#### this dataframe is just of the 'trans.el1' related attributes in a smaller df
+trans <- data.table(infected = trans.el1$infected,
+                    infector = trans.el1$infector,
+                    infected.sex.ident = trans.el1$infected.sex.ident,
+                    infected.race =  trans.el1$infected.race,
+                    infected.gen = trans.el1$infected.gen,
+                    infected.age = as.numeric(trans.el1$infected.age),
+                    infector.age = trans.el1$infector.age,
+                    infector.sex = trans.el1$infector.sex,
+                    infector.race = trans.el1$infector.race,
+                    infector.gen = trans.el1$infector.gen)%>%
+  rowwise() %>%
+  ## create a vector of sex+race, sep by a comma
+  mutate(infected_race_sex = paste0(infected.race,",", infected.sex.ident),
+         infector.age.cat = age.cat(as.numeric(infector.age)),
+         infected.age.cat = age.cat(infected.age))
+
+######## Set up a new transmission df =-======
+
+
+zero_gen_seed<-  trans %>% filter(infector %in% c("SEED")) %>% 
+  mutate(final_gen = infected.gen -1 ,
+         type="SEED") %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen, type) 
+
+first_gen_from_seed<-zero_gen_seed %>% 
+  select(infected.1=infected) %>% 
+  inner_join(trans %>% mutate(infector = as.numeric(infector)), by=c("infected.1"="infector")) %>% 
+  mutate(final_gen = infected.gen) %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen)
+
+second_gen_from_seed<-first_gen_from_seed %>% 
+  select(infected.1=infected) %>% 
+  inner_join(trans %>% mutate(infector = as.numeric(infector)), by=c("infected.1"="infector")) %>% 
+  mutate(final_gen = infected.gen) %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen)
+
+seeds<-bind_rows(zero_gen_seed,
+                 first_gen_from_seed,
+                 second_gen_from_seed)
+
+##################################
+zero_gen_exo<-  trans %>% filter(infector %in% c("MSM", "FA")) %>% 
+  mutate(final_gen = infector.gen,
+         type="EXO") %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen, type) 
+
+first_gen_from_exo<-zero_gen_exo %>% 
+  select(infected.1=infected) %>% 
+  inner_join(trans %>% mutate(infector = as.numeric(infector)), by=c("infected.1"="infector")) %>% 
+  mutate(final_gen = infector.gen) %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen)
+
+second_gen_from_exo<-first_gen_from_exo %>% 
+  select(infected.1=infected) %>% 
+  inner_join(trans %>% mutate(infector = as.numeric(infector)), by=c("infected.1"="infector")) %>% 
+  mutate(final_gen = infector.gen) %>% 
+  select(infected, infected.sex.ident, infected.race, infected.age.cat,final_gen)
+
+exo<-bind_rows(zero_gen_exo,
+               first_gen_from_exo,
+               second_gen_from_exo)
+
+new_trans<-rbind(exo,seeds)
+
+```
+
+#### By Race
+
+```{r,message=FALSE, warning=FALSE, include=T, results='asis'}
+######## race ======
+
+
+  #### take all of the unique "sex-race" combinations as a vector 
+  race<-
+    unlist(  c( c((trans %>%
+                     select(infector.race) %>% 
+                     unique()))), use.names  = F)
+
+  trans_list<-list()
+for (i in 1:length(race)){
+  
+  trans_list[[i]]<-new_trans %>% filter(infected.race==race[i]) %>% 
+                            group_by(final_gen) %>% 
+                            summarise(n=n()) %>% 
+    mutate(race = race[i])
+
+}
+  
+  names(trans_list)<-race
+  race_list<-trans_list
+  
+  race.df <-do.call(rbind.data.frame, race_list)
+  
+  
+print(race.df %>% spread(final_gen, n) %>% 
+    mutate(`1`=ifelse(is.na(`2`),`1`,`1`-`2`),
+           `0`=`0`-`1`,
+           `2` = ifelse(is.na(`2`),0,`2`)) %>% 
+    kable(caption="Number of people infected") %>%
+    kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+    column_spec(1, bold = T, color = "black", background = "#D7261E"))
+  
+```
+
+#### By Sex
+```{r,message=FALSE, warning=FALSE, include=T, results='asis'}
+  ########## sex ======
+  
+  #### take all of the unique "sex-sex.ident" combinations as a vector 
+  sex.ident<-
+    unlist(  c( c((trans %>%
+                     select(infected.sex.ident) %>% 
+                     unique()))), use.names  = F)
+  
+  trans_list<-list()
+  for (i in 1:length(sex.ident)){
+    
+    trans_list[[i]]<-(new_trans %>% filter(infected.sex.ident==sex.ident[i]) %>% 
+                            group_by(final_gen) %>% 
+                              summarise(n=n()) %>% 
+                        mutate(sex = sex.ident[i]))
+    
+  }
+  
+  names(trans_list)<-sex.ident
+  sex.ident_list<-trans_list
+  
+   sex.df <-do.call(rbind.data.frame, sex.ident_list)
+
+
+   
+ print(  sex.df %>% spread(final_gen, n) %>% 
+     mutate(`1`=ifelse(is.na(`2`),`1`,`1`-`2`),
+            `0`=`0`-`1`,
+            `2` = ifelse(is.na(`2`),0,`2`)) %>% 
+     kable(caption="Number of people infected") %>%
+      kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+      column_spec(1, bold = T, color = "black", background = "#D7261E"))
+
+  
+  ########## age cat ======
+  
+  #### take all of the unique "sex-age.cat" combinations as a vector 
+  age.cat<-
+    unlist(  c( c((trans %>%
+                     select(infected.age.cat) %>% 
+                     unique()))), use.names  = F)
+  
+  trans_list<-list()
+  for (i in 1:length(age.cat)){
+    
+    trans_list[[i]]<-new_trans %>% filter(infected.age.cat==age.cat[i]) %>% 
+                              group_by(final_gen) %>% 
+      summarise(n=n()) %>% 
+      mutate(age = age.cat[i])
+
+  }
+```
+
+#### By Age
+```{r,message=FALSE, warning=FALSE, include=T, results='asis'}
+  names(trans_list)<-age.cat
+  age.cat_list<-trans_list
+  
+  age.df <-do.call(rbind.data.frame, age.cat_list)
+  
+ print( age.df %>% spread(final_gen, n) %>% 
+    mutate(`1`=ifelse(is.na(`2`),`1`,`1`-`2`),
+           `0`=`0`-`1`,
+           `2` = ifelse(is.na(`2`),0,`2`)) %>% 
+    kable(caption="Number of people infected") %>%
+    kableExtra::kable_styling(bootstrap_options = "striped", full_width = F) %>%
+    column_spec(1, bold = T, color = "black", background = "#D7261E"))
+  
+
+```

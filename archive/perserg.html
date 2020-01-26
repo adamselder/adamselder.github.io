@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 19 Modeling: Pers ERGM | SHAMP: Seattle HIV/AIDS Modeling Project</title>
+  <meta name="description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 19 Modeling: Pers ERGM | SHAMP: Seattle HIV/AIDS Modeling Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 19 Modeling: Pers ERGM | SHAMP: Seattle HIV/AIDS Modeling Project" />
+  
+  <meta name="twitter:description" content="Egocentric data analysis and network model estimation and diagnostics for the Seattle HIV/AIDS Modeling Project (SHAMP)." />
+  
+
+<meta name="author" content="Jeanette Birnbaum" />
+
+
+<meta name="date" content="2019-08-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="cohaberg.html">
+<link rel="next" href="oterg.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.6/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<script src="libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libs/selectize-0.12.0/selectize.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">SHAMP</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#abstract"><i class="fa fa-check"></i><b>2.1</b> Abstract</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.2</b> Terminology</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#previous-presentations"><i class="fa fa-check"></i><b>2.3</b> Previous presentations</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#review-of-local-behavioral-surveys"><i class="fa fa-check"></i><b>2.4</b> Review of local behavioral surveys</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction.html"><a href="introduction.html#public-health-seattle-king-county-phskc-washington-department-of-health-wadoh-surveillance"><i class="fa fa-check"></i><b>2.4.1</b> Public Health Seattle King County (PHSKC) Washington Department of Health (WADOH) Surveillance</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#national-population-based-surveys"><i class="fa fa-check"></i><b>2.5</b> National Population based surveys</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#nsfg---national-survey-of-family-growth---cdc.-used-in-final-models"><i class="fa fa-check"></i><b>2.5.1</b> NSFG - National Survey of Family Growth - CDC. <em>used in final models</em></a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#nhsls---national-health-and-social-life-survey---icpsr.-did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.2</b> NHSLS - National Health and Social Life Survey - ICPSR. <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction.html"><a href="introduction.html#nhbs---did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.3</b> NHBS - <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.4" data-path="introduction.html"><a href="introduction.html#add-health---national-longitudinal-study-of-adolescent-to-adult-health---did-not-use-in-final-models"><i class="fa fa-check"></i><b>2.5.4</b> Add Health - National Longitudinal Study of Adolescent to Adult Health - <em>did not use in final models</em></a></li>
+<li class="chapter" data-level="2.5.5" data-path="introduction.html"><a href="introduction.html#nhanes---national-health-and-nutrition-examination-survey-used-for-weighting-parameters"><i class="fa fa-check"></i><b>2.5.5</b> NHANES - National Health and Nutrition Examination Survey <em>used for weighting parameters</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup.html"><a href="setup.html#confirm-input-parameters"><i class="fa fa-check"></i><b>3.1</b> Confirm input parameters</a></li>
+<li class="chapter" data-level="3.2" data-path="setup.html"><a href="setup.html#load-packages"><i class="fa fa-check"></i><b>3.2</b> Load Packages</a></li>
+<li class="chapter" data-level="3.3" data-path="setup.html"><a href="setup.html#sessioninfo"><i class="fa fa-check"></i><b>3.3</b> SessionInfo</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>4</b> Data: Preparation</a><ul>
+<li class="chapter" data-level="4.1" data-path="data.html"><a href="data.html#kc-population-weights"><i class="fa fa-check"></i><b>4.1</b> KC population weights</a></li>
+<li class="chapter" data-level="4.2" data-path="data.html"><a href="data.html#kc-mortality."><i class="fa fa-check"></i><b>4.2</b> KC mortality.</a></li>
+<li class="chapter" data-level="4.3" data-path="data.html"><a href="data.html#network-data"><i class="fa fa-check"></i><b>4.3</b> Network data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data-king-county-population.html"><a href="data-king-county-population.html"><i class="fa fa-check"></i><b>5</b> Data: King County Population</a><ul>
+<li class="chapter" data-level="5.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#nsfg-kc-weights"><i class="fa fa-check"></i><b>5.1</b> NSFG-KC Diagnostics</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#compare-kc-and-nsfg-weights"><i class="fa fa-check"></i><b>5.1.1</b> Compare KC and NSFG weights</a></li>
+<li class="chapter" data-level="5.1.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#population-composition"><i class="fa fa-check"></i><b>5.1.2</b> Population composition</a></li>
+<li class="chapter" data-level="5.1.3" data-path="data-king-county-population.html"><a href="data-king-county-population.html#kc-as-a-percent-of-nsfg"><i class="fa fa-check"></i><b>5.1.3</b> KC as a percent of NSFG</a></li>
+<li class="chapter" data-level="5.1.4" data-path="data-king-county-population.html"><a href="data-king-county-population.html#ratio-of-kc-percent-to-nsfg-percent"><i class="fa fa-check"></i><b>5.1.4</b> Ratio of KC percent to NSFG percent</a></li>
+<li class="chapter" data-level="5.1.5" data-path="data-king-county-population.html"><a href="data-king-county-population.html#ratio-of-kc-to-usa-and-nsfg-to-usa"><i class="fa fa-check"></i><b>5.1.5</b> Ratio of KC to USA and NSFG to USA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#test-intervals"><i class="fa fa-check"></i><b>5.2</b> Test intervals</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="data-king-county-population.html"><a href="data-king-county-population.html#exclusions-reminder"><i class="fa fa-check"></i><b>5.2.1</b> Exclusions reminder</a></li>
+<li class="chapter" data-level="5.2.2" data-path="data-king-county-population.html"><a href="data-king-county-population.html#test-intervals-versus-ratio-of-kc-to-nsfg"><i class="fa fa-check"></i><b>5.2.2</b> Test intervals versus ratio of KC % to NSFG %</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="kcmort.html"><a href="kcmort.html"><i class="fa fa-check"></i><b>6</b> Data: King County Mortality</a><ul>
+<li class="chapter" data-level="6.1" data-path="kcmort.html"><a href="kcmort.html#mortality-get-and-subset-data"><i class="fa fa-check"></i><b>6.1</b> MORTALITY: Get and subset data</a></li>
+<li class="chapter" data-level="6.2" data-path="kcmort.html"><a href="kcmort.html#mortality-recode-variables"><i class="fa fa-check"></i><b>6.2</b> MORTALITY: Recode variables</a></li>
+<li class="chapter" data-level="6.3" data-path="kcmort.html"><a href="kcmort.html#collapse-to-strata-counts"><i class="fa fa-check"></i><b>6.3</b> Collapse to strata counts</a></li>
+<li class="chapter" data-level="6.4" data-path="kcmort.html"><a href="kcmort.html#histograms-of-cell-counts-panel-by-raceimm-group-by-sex"><i class="fa fa-check"></i><b>6.4</b> Histograms of cell counts: panel by raceimm, group by sex</a></li>
+<li class="chapter" data-level="6.5" data-path="kcmort.html"><a href="kcmort.html#mortality-save"><i class="fa fa-check"></i><b>6.5</b> MORTALITY: Save</a></li>
+<li class="chapter" data-level="6.6" data-path="kcmort.html"><a href="kcmort.html#population-get-and-subset-data"><i class="fa fa-check"></i><b>6.6</b> POPULATION: Get and subset data</a></li>
+<li class="chapter" data-level="6.7" data-path="kcmort.html"><a href="kcmort.html#population-recode-variables"><i class="fa fa-check"></i><b>6.7</b> POPULATION: Recode variables</a></li>
+<li class="chapter" data-level="6.8" data-path="kcmort.html"><a href="kcmort.html#collapse-to-strata-counts-1"><i class="fa fa-check"></i><b>6.8</b> Collapse to strata counts</a></li>
+<li class="chapter" data-level="6.9" data-path="kcmort.html"><a href="kcmort.html#compute-rates-per-1-person-and-a-strata-id"><i class="fa fa-check"></i><b>6.9</b> Compute rates (per 1 person) and a strata ID</a></li>
+<li class="chapter" data-level="6.10" data-path="kcmort.html"><a href="kcmort.html#mortality-save-1"><i class="fa fa-check"></i><b>6.10</b> MORTALITY: Save</a></li>
+<li class="chapter" data-level="6.11" data-path="kcmort.html"><a href="kcmort.html#graph-rates"><i class="fa fa-check"></i><b>6.11</b> GRAPH RATES</a></li>
+<li class="chapter" data-level="6.12" data-path="kcmort.html"><a href="kcmort.html#test-for-differences-by-raceimm"><i class="fa fa-check"></i><b>6.12</b> TEST FOR DIFFERENCES BY RACEIMM</a></li>
+<li class="chapter" data-level="6.13" data-path="kcmort.html"><a href="kcmort.html#population-growth-rate"><i class="fa fa-check"></i><b>6.13</b> Population growth rate</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="targets.html"><a href="targets.html"><i class="fa fa-check"></i><b>7</b> Data: Target statistics for HIV Incidence and Prevalence</a><ul>
+<li class="chapter" data-level="7.1" data-path="targets.html"><a href="targets.html#the-rationale-for-simulating-large-population-sizes"><i class="fa fa-check"></i><b>7.1</b> The rationale for simulating large population sizes</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="egos.html"><a href="egos.html"><i class="fa fa-check"></i><b>8</b> Data: Ego Characteristics</a><ul>
+<li class="chapter" data-level="8.1" data-path="egos.html"><a href="egos.html#one-way-margins"><i class="fa fa-check"></i><b>8.1</b> One-way margins</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="egos.html"><a href="egos.html#egos-1way-sex"><i class="fa fa-check"></i><b>8.1.1</b> sex</a></li>
+<li class="chapter" data-level="8.1.2" data-path="egos.html"><a href="egos.html#egos-1way-sex.ident"><i class="fa fa-check"></i><b>8.1.2</b> sex.ident</a></li>
+<li class="chapter" data-level="8.1.3" data-path="egos.html"><a href="egos.html#egos-1way-agecat"><i class="fa fa-check"></i><b>8.1.3</b> agecat</a></li>
+<li class="chapter" data-level="8.1.4" data-path="egos.html"><a href="egos.html#egos-1way-race"><i class="fa fa-check"></i><b>8.1.4</b> race</a></li>
+<li class="chapter" data-level="8.1.5" data-path="egos.html"><a href="egos.html#egos-1way-sb"><i class="fa fa-check"></i><b>8.1.5</b> sb</a></li>
+<li class="chapter" data-level="8.1.6" data-path="egos.html"><a href="egos.html#egos-1way-dsb.cohab"><i class="fa fa-check"></i><b>8.1.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="8.1.7" data-path="egos.html"><a href="egos.html#egos-1way-dsb.pers"><i class="fa fa-check"></i><b>8.1.7</b> dsb.pers</a></li>
+<li class="chapter" data-level="8.1.8" data-path="egos.html"><a href="egos.html#egos-1way-contage"><i class="fa fa-check"></i><b>8.1.8</b> age</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="egos.html"><a href="egos.html#cross-tabs"><i class="fa fa-check"></i><b>8.2</b> Cross-tabs</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="egos.html"><a href="egos.html#egos-2way-sex_by_race"><i class="fa fa-check"></i><b>8.2.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="8.2.2" data-path="egos.html"><a href="egos.html#egos-2way-sex.ident_by_race"><i class="fa fa-check"></i><b>8.2.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="8.2.3" data-path="egos.html"><a href="egos.html#egos-2way-sex_by_agecat"><i class="fa fa-check"></i><b>8.2.3</b> sex_by_agecat</a></li>
+<li class="chapter" data-level="8.2.4" data-path="egos.html"><a href="egos.html#egos-2way-sex.ident_by_agecat"><i class="fa fa-check"></i><b>8.2.4</b> sex.ident_by_agecat</a></li>
+<li class="chapter" data-level="8.2.5" data-path="egos.html"><a href="egos.html#egos-2way-agecat_by_race"><i class="fa fa-check"></i><b>8.2.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="8.2.6" data-path="egos.html"><a href="egos.html#egos-2way-deg.cohab.c_by_deg.pers.c2"><i class="fa fa-check"></i><b>8.2.6</b> deg.cohab.c_by_deg.pers.c2</a></li>
+<li class="chapter" data-level="8.2.7" data-path="egos.html"><a href="egos.html#egos-2way-cont-age_by_race"><i class="fa fa-check"></i><b>8.2.7</b> age_by_race</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="degree.html"><a href="degree.html"><i class="fa fa-check"></i><b>9</b> Data: Degree</a><ul>
+<li class="chapter" data-level="9.1" data-path="degree.html"><a href="degree.html#mean-degree-overview"><i class="fa fa-check"></i><b>9.1</b> Mean degree overview</a></li>
+<li class="chapter" data-level="9.2" data-path="degree.html"><a href="degree.html#one-way-mean-degree"><i class="fa fa-check"></i><b>9.2</b> One-way mean degree</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="degree.html"><a href="degree.html#degree-1way-sex"><i class="fa fa-check"></i><b>9.2.1</b> sex</a></li>
+<li class="chapter" data-level="9.2.2" data-path="degree.html"><a href="degree.html#degree-1way-sex.ident"><i class="fa fa-check"></i><b>9.2.2</b> sex.ident</a></li>
+<li class="chapter" data-level="9.2.3" data-path="degree.html"><a href="degree.html#degree-1way-agecat"><i class="fa fa-check"></i><b>9.2.3</b> agecat</a></li>
+<li class="chapter" data-level="9.2.4" data-path="degree.html"><a href="degree.html#degree-1way-race"><i class="fa fa-check"></i><b>9.2.4</b> race</a></li>
+<li class="chapter" data-level="9.2.5" data-path="degree.html"><a href="degree.html#degree-1way-sb"><i class="fa fa-check"></i><b>9.2.5</b> sb</a></li>
+<li class="chapter" data-level="9.2.6" data-path="degree.html"><a href="degree.html#degree-1way-dsb.cohab"><i class="fa fa-check"></i><b>9.2.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="9.2.7" data-path="degree.html"><a href="degree.html#degree-1way-ds.pers"><i class="fa fa-check"></i><b>9.2.7</b> ds.pers</a></li>
+<li class="chapter" data-level="9.2.8" data-path="degree.html"><a href="degree.html#degree-1way-dsb.pers"><i class="fa fa-check"></i><b>9.2.8</b> dsb.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="degree.html"><a href="degree.html#two-way-mean-degree"><i class="fa fa-check"></i><b>9.3</b> Two-way mean degree</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="degree.html"><a href="degree.html#degree-2way-sex_by_race"><i class="fa fa-check"></i><b>9.3.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="9.3.2" data-path="degree.html"><a href="degree.html#degree-2way-sex.ident_by_race"><i class="fa fa-check"></i><b>9.3.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="9.3.3" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_sex"><i class="fa fa-check"></i><b>9.3.3</b> agecat_by_sex</a></li>
+<li class="chapter" data-level="9.3.4" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_sex.ident"><i class="fa fa-check"></i><b>9.3.4</b> agecat_by_sex.ident</a></li>
+<li class="chapter" data-level="9.3.5" data-path="degree.html"><a href="degree.html#degree-2way-agecat_by_race"><i class="fa fa-check"></i><b>9.3.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="9.3.6" data-path="degree.html"><a href="degree.html#degree-2way-sb_by_race"><i class="fa fa-check"></i><b>9.3.6</b> sb_by_race</a></li>
+<li class="chapter" data-level="9.3.7" data-path="degree.html"><a href="degree.html#degree-2way-dsb.cohab_by_race"><i class="fa fa-check"></i><b>9.3.7</b> dsb.cohab_by_race</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="degree.html"><a href="degree.html#degree-overview-deg.cohab-deg.pers"><i class="fa fa-check"></i><b>9.4</b> Cross of deg.cohab-deg.pers</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="degree.html"><a href="degree.html#overview-1"><i class="fa fa-check"></i><b>9.4.1</b> Overview</a></li>
+<li class="chapter" data-level="9.4.2" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sex"><i class="fa fa-check"></i><b>9.4.2</b> sex</a></li>
+<li class="chapter" data-level="9.4.3" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sex.ident"><i class="fa fa-check"></i><b>9.4.3</b> sex.ident</a></li>
+<li class="chapter" data-level="9.4.4" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-agecat"><i class="fa fa-check"></i><b>9.4.4</b> agecat</a></li>
+<li class="chapter" data-level="9.4.5" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-race"><i class="fa fa-check"></i><b>9.4.5</b> race</a></li>
+<li class="chapter" data-level="9.4.6" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-sb"><i class="fa fa-check"></i><b>9.4.6</b> sb</a></li>
+<li class="chapter" data-level="9.4.7" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-dsb.cohab"><i class="fa fa-check"></i><b>9.4.7</b> dsb.cohab</a></li>
+<li class="chapter" data-level="9.4.8" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-ds.pers"><i class="fa fa-check"></i><b>9.4.8</b> ds.pers</a></li>
+<li class="chapter" data-level="9.4.9" data-path="degree.html"><a href="degree.html#degree-deg.cohab-deg.pers-xnet-dsb.pers"><i class="fa fa-check"></i><b>9.4.9</b> dsb.pers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="mixing.html"><a href="mixing.html"><i class="fa fa-check"></i><b>10</b> Data: Mixing</a><ul>
+<li class="chapter" data-level="10.1" data-path="mixing.html"><a href="mixing.html#one-way-mixing"><i class="fa fa-check"></i><b>10.1</b> One-way mixing</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="mixing.html"><a href="mixing.html#mixing-1way-sex"><i class="fa fa-check"></i><b>10.1.1</b> sex</a></li>
+<li class="chapter" data-level="10.1.2" data-path="mixing.html"><a href="mixing.html#mixing-1way-agecat"><i class="fa fa-check"></i><b>10.1.2</b> agecat</a></li>
+<li class="chapter" data-level="10.1.3" data-path="mixing.html"><a href="mixing.html#mixing-1way-race"><i class="fa fa-check"></i><b>10.1.3</b> race</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="one-times.html"><a href="one-times.html"><i class="fa fa-check"></i><b>11</b> Data: One-Times</a><ul>
+<li class="chapter" data-level="11.1" data-path="one-times.html"><a href="one-times.html#one-way-margins-1"><i class="fa fa-check"></i><b>11.1</b> One-way margins</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sex"><i class="fa fa-check"></i><b>11.1.1</b> sex</a></li>
+<li class="chapter" data-level="11.1.2" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sex.ident"><i class="fa fa-check"></i><b>11.1.2</b> sex.ident</a></li>
+<li class="chapter" data-level="11.1.3" data-path="one-times.html"><a href="one-times.html#onetimes-1way-agecat"><i class="fa fa-check"></i><b>11.1.3</b> agecat</a></li>
+<li class="chapter" data-level="11.1.4" data-path="one-times.html"><a href="one-times.html#onetimes-1way-race"><i class="fa fa-check"></i><b>11.1.4</b> race</a></li>
+<li class="chapter" data-level="11.1.5" data-path="one-times.html"><a href="one-times.html#onetimes-1way-sb"><i class="fa fa-check"></i><b>11.1.5</b> sb</a></li>
+<li class="chapter" data-level="11.1.6" data-path="one-times.html"><a href="one-times.html#onetimes-1way-dsb.cohab"><i class="fa fa-check"></i><b>11.1.6</b> dsb.cohab</a></li>
+<li class="chapter" data-level="11.1.7" data-path="one-times.html"><a href="one-times.html#onetimes-1way-dsb.pers"><i class="fa fa-check"></i><b>11.1.7</b> dsb.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="one-times.html"><a href="one-times.html#cross-tabs-1"><i class="fa fa-check"></i><b>11.2</b> Cross-tabs</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="one-times.html"><a href="one-times.html#sex_by_race"><i class="fa fa-check"></i><b>11.2.1</b> sex_by_race</a></li>
+<li class="chapter" data-level="11.2.2" data-path="one-times.html"><a href="one-times.html#sex.ident_by_race"><i class="fa fa-check"></i><b>11.2.2</b> sex.ident_by_race</a></li>
+<li class="chapter" data-level="11.2.3" data-path="one-times.html"><a href="one-times.html#sex_by_agecat"><i class="fa fa-check"></i><b>11.2.3</b> sex_by_agecat</a></li>
+<li class="chapter" data-level="11.2.4" data-path="one-times.html"><a href="one-times.html#sex.ident_by_agecat"><i class="fa fa-check"></i><b>11.2.4</b> sex.ident_by_agecat</a></li>
+<li class="chapter" data-level="11.2.5" data-path="one-times.html"><a href="one-times.html#agecat_by_race"><i class="fa fa-check"></i><b>11.2.5</b> agecat_by_race</a></li>
+<li class="chapter" data-level="11.2.6" data-path="one-times.html"><a href="one-times.html#deg.cohab.c_by_deg.pers.c2"><i class="fa fa-check"></i><b>11.2.6</b> deg.cohab.c_by_deg.pers.c2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="edgeage.html"><a href="edgeage.html"><i class="fa fa-check"></i><b>12</b> Data: Edge age</a><ul>
+<li class="chapter" data-level="12.1" data-path="edgeage.html"><a href="edgeage.html#networks-overview"><i class="fa fa-check"></i><b>12.1</b> Networks overview</a></li>
+<li class="chapter" data-level="12.2" data-path="edgeage.html"><a href="edgeage.html#one-way-median-edge-age"><i class="fa fa-check"></i><b>12.2</b> One-way median edge age</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-sex"><i class="fa fa-check"></i><b>12.2.1</b> sex</a></li>
+<li class="chapter" data-level="12.2.2" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-sex.ident"><i class="fa fa-check"></i><b>12.2.2</b> sex.ident</a></li>
+<li class="chapter" data-level="12.2.3" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-agecat"><i class="fa fa-check"></i><b>12.2.3</b> agecat</a></li>
+<li class="chapter" data-level="12.2.4" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-race"><i class="fa fa-check"></i><b>12.2.4</b> race</a></li>
+<li class="chapter" data-level="12.2.5" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-deg.cohab"><i class="fa fa-check"></i><b>12.2.5</b> deg.cohab</a></li>
+<li class="chapter" data-level="12.2.6" data-path="edgeage.html"><a href="edgeage.html#edgeage-1way-deg.pers"><i class="fa fa-check"></i><b>12.2.6</b> deg.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="edgeage.html"><a href="edgeage.html#two-way-median-edge-age"><i class="fa fa-check"></i><b>12.3</b> Two-way median edge age</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="edgeage.html"><a href="edgeage.html#edgeage-2way-nonetdeg.cohab_by_deg.pers"><i class="fa fa-check"></i><b>12.3.1</b> deg.cohab_by_deg.pers</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="edgeage.html"><a href="edgeage.html#correlation-with-age"><i class="fa fa-check"></i><b>12.4</b> Correlation with age</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="edgeage.html"><a href="edgeage.html#deg.cohab-deg.pers-and-agecat"><i class="fa fa-check"></i><b>12.4.1</b> deg.cohab, deg.pers and agecat</a></li>
+<li class="chapter" data-level="12.4.2" data-path="edgeage.html"><a href="edgeage.html#non-exponential-distribution-in-cohabs"><i class="fa fa-check"></i><b>12.4.2</b> Non-exponential distribution in Cohabs</a></li>
+</ul></li>
+<li class="chapter" data-level="12.5" data-path="edgeage.html"><a href="edgeage.html#target-stat-decisions"><i class="fa fa-check"></i><b>12.5</b> Target stat decisions</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html"><i class="fa fa-check"></i><b>13</b> Data: Epidemic Parameters</a><ul>
+<li class="chapter" data-level="13.1" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#parameters-that-were-reweighted-with-kc-data"><i class="fa fa-check"></i><b>13.1</b> Parameters that were reweighted with KC data</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#testing-rate"><i class="fa fa-check"></i><b>13.1.1</b> Testing Rate</a></li>
+<li class="chapter" data-level="13.1.2" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#condom-use"><i class="fa fa-check"></i><b>13.1.2</b> Condom Use</a></li>
+<li class="chapter" data-level="13.1.3" data-path="data-epidemic-parameters.html"><a href="data-epidemic-parameters.html#coital-frequency"><i class="fa fa-check"></i><b>13.1.3</b> Coital Frequency</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="data-duration.html"><a href="data-duration.html"><i class="fa fa-check"></i><b>14</b> Data: Durations</a></li>
+<li class="chapter" data-level="15" data-path="decisions.html"><a href="decisions.html"><i class="fa fa-check"></i><b>15</b> Data &amp; Modeling: Decisions</a><ul>
+<li class="chapter" data-level="15.1" data-path="decisions.html"><a href="decisions.html#data-prep"><i class="fa fa-check"></i><b>15.1</b> Data prep</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="decisions.html"><a href="decisions.html#definition-of-partnernetwork-type"><i class="fa fa-check"></i><b>15.1.1</b> Definition of partner/network type</a></li>
+<li class="chapter" data-level="15.1.2" data-path="decisions.html"><a href="decisions.html#construction-of-sex.ident"><i class="fa fa-check"></i><b>15.1.2</b> Construction of sex.ident</a></li>
+<li class="chapter" data-level="15.1.3" data-path="decisions.html"><a href="decisions.html#race-grouping-for-asians-and-other-race"><i class="fa fa-check"></i><b>15.1.3</b> Race grouping for Asians and Other race</a></li>
+<li class="chapter" data-level="15.1.4" data-path="decisions.html"><a href="decisions.html#active-one-times-persistent"><i class="fa fa-check"></i><b>15.1.4</b> Active one-times = Persistent</a></li>
+<li class="chapter" data-level="15.1.5" data-path="decisions.html"><a href="decisions.html#capping-degree"><i class="fa fa-check"></i><b>15.1.5</b> Capping degree</a></li>
+<li class="chapter" data-level="15.1.6" data-path="decisions.html"><a href="decisions.html#imputing-partner-race-immigration"><i class="fa fa-check"></i><b>15.1.6</b> Imputing partner race-immigration</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="decisions.html"><a href="decisions.html#model-specification"><i class="fa fa-check"></i><b>15.2</b> Model specification</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="decisions.html"><a href="decisions.html#one-time-rates-per-time-step"><i class="fa fa-check"></i><b>15.2.1</b> One-time rates per time step</a></li>
+<li class="chapter" data-level="15.2.2" data-path="decisions.html"><a href="decisions.html#nodematchrace-not-nodemix"><i class="fa fa-check"></i><b>15.2.2</b> Nodematch(race), not nodemix</a></li>
+<li class="chapter" data-level="15.2.3" data-path="decisions.html"><a href="decisions.html#msmf-as-higher-activity"><i class="fa fa-check"></i><b>15.2.3</b> MSMF as higher activity</a></li>
+<li class="chapter" data-level="15.2.4" data-path="decisions.html"><a href="decisions.html#xnet-concurrency"><i class="fa fa-check"></i><b>15.2.4</b> xnet concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="decisions.html"><a href="decisions.html#ergm.ego-pseudopop"><i class="fa fa-check"></i><b>15.3</b> ergm.ego pseudopop</a><ul>
+<li class="chapter" data-level="15.3.1" data-path="decisions.html"><a href="decisions.html#pseudopop-size-in-ergm.ego-fits"><i class="fa fa-check"></i><b>15.3.1</b> Pseudopop size in ergm.ego fits</a></li>
+<li class="chapter" data-level="15.3.2" data-path="decisions.html"><a href="decisions.html#pseudopop-nodal-attribution"><i class="fa fa-check"></i><b>15.3.2</b> Pseudopop nodal attribution</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="decisions.html"><a href="decisions.html#mean-age-targets"><i class="fa fa-check"></i><b>15.4</b> Mean age targets</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="decisions.html"><a href="decisions.html#decisions-target-nodefactor-race"><i class="fa fa-check"></i><b>15.4.1</b> Target stats for nodefactor(race) dissolution</a></li>
+<li class="chapter" data-level="15.4.2" data-path="decisions.html"><a href="decisions.html#hitting-cohab-duration-targets"><i class="fa fa-check"></i><b>15.4.2</b> Hitting cohab duration targets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="ergms.html"><a href="ergms.html"><i class="fa fa-check"></i><b>16</b> Modeling: Overview</a><ul>
+<li class="chapter" data-level="16.1" data-path="ergms.html"><a href="ergms.html#final-models"><i class="fa fa-check"></i><b>16.1</b> Final models</a></li>
+<li class="chapter" data-level="16.2" data-path="ergms.html"><a href="ergms.html#history"><i class="fa fa-check"></i><b>16.2</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="duration.html"><a href="duration.html"><i class="fa fa-check"></i><b>17</b> Modeling: Durations</a></li>
+<li class="chapter" data-level="18" data-path="cohaberg.html"><a href="cohaberg.html"><i class="fa fa-check"></i><b>18</b> Modeling: Cohab ERGM</a><ul>
+<li class="chapter" data-level="18.1" data-path="cohaberg.html"><a href="cohaberg.html#model-info"><i class="fa fa-check"></i><b>18.1</b> Model info</a></li>
+<li class="chapter" data-level="18.2" data-path="cohaberg.html"><a href="cohaberg.html#fit-results"><i class="fa fa-check"></i><b>18.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="18.2.1" data-path="cohaberg.html"><a href="cohaberg.html#target-statistics-includes-base0"><i class="fa fa-check"></i><b>18.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="18.2.2" data-path="cohaberg.html"><a href="cohaberg.html#fit-call-summary"><i class="fa fa-check"></i><b>18.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="18.2.3" data-path="cohaberg.html"><a href="cohaberg.html#mcmc-diagnostics"><i class="fa fa-check"></i><b>18.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="cohaberg.html"><a href="cohaberg.html#goodness-of-fit"><i class="fa fa-check"></i><b>18.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="cohaberg.html"><a href="cohaberg.html#model"><i class="fa fa-check"></i><b>18.3.1</b> Model</a></li>
+<li class="chapter" data-level="18.3.2" data-path="cohaberg.html"><a href="cohaberg.html#degree-1"><i class="fa fa-check"></i><b>18.3.2</b> Degree</a></li>
+<li class="chapter" data-level="18.3.3" data-path="cohaberg.html"><a href="cohaberg.html#degree-by-ego-attributes"><i class="fa fa-check"></i><b>18.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="18.3.4" data-path="cohaberg.html"><a href="cohaberg.html#degree-by-ego-attributes-historical-model-comparison"><i class="fa fa-check"></i><b>18.3.4</b> Degree, by ego attributes, historical model comparison</a></li>
+<li class="chapter" data-level="18.3.5" data-path="cohaberg.html"><a href="cohaberg.html#component-size-concurrency"><i class="fa fa-check"></i><b>18.3.5</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="cohaberg.html"><a href="cohaberg.html#static-netdx"><i class="fa fa-check"></i><b>18.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="18.4.1" data-path="cohaberg.html"><a href="cohaberg.html#settings"><i class="fa fa-check"></i><b>18.4.1</b> Settings</a></li>
+<li class="chapter" data-level="18.4.2" data-path="cohaberg.html"><a href="cohaberg.html#results"><i class="fa fa-check"></i><b>18.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="cohaberg.html"><a href="cohaberg.html#dynamic-netdx-homogeneous-dissolution"><i class="fa fa-check"></i><b>18.5</b> Dynamic netdx, homogeneous dissolution</a><ul>
+<li class="chapter" data-level="18.5.1" data-path="cohaberg.html"><a href="cohaberg.html#settings-1"><i class="fa fa-check"></i><b>18.5.1</b> Settings</a></li>
+<li class="chapter" data-level="18.5.2" data-path="cohaberg.html"><a href="cohaberg.html#results-1"><i class="fa fa-check"></i><b>18.5.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="cohaberg.html"><a href="cohaberg.html#historical-static-and-dynamic-homogeneous-netdx"><i class="fa fa-check"></i><b>18.6</b> Historical static and dynamic homogeneous netdx</a></li>
+<li class="chapter" data-level="18.7" data-path="cohaberg.html"><a href="cohaberg.html#historical-dynamic-netdx-nodefactorrace-dissolution"><i class="fa fa-check"></i><b>18.7</b> Historical dynamic netdx, nodefactor(race) dissolution</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="perserg.html"><a href="perserg.html"><i class="fa fa-check"></i><b>19</b> Modeling: Pers ERGM</a><ul>
+<li class="chapter" data-level="19.1" data-path="perserg.html"><a href="perserg.html#model-info-1"><i class="fa fa-check"></i><b>19.1</b> Model info</a></li>
+<li class="chapter" data-level="19.2" data-path="perserg.html"><a href="perserg.html#fit-results-1"><i class="fa fa-check"></i><b>19.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="19.2.1" data-path="perserg.html"><a href="perserg.html#target-statistics-includes-base0-1"><i class="fa fa-check"></i><b>19.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="19.2.2" data-path="perserg.html"><a href="perserg.html#fit-call-summary-1"><i class="fa fa-check"></i><b>19.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="19.2.3" data-path="perserg.html"><a href="perserg.html#mcmc-diagnostics-1"><i class="fa fa-check"></i><b>19.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="19.3" data-path="perserg.html"><a href="perserg.html#goodness-of-fit-1"><i class="fa fa-check"></i><b>19.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="19.3.1" data-path="perserg.html"><a href="perserg.html#model-1"><i class="fa fa-check"></i><b>19.3.1</b> Model</a></li>
+<li class="chapter" data-level="19.3.2" data-path="perserg.html"><a href="perserg.html#degree-2"><i class="fa fa-check"></i><b>19.3.2</b> Degree</a></li>
+<li class="chapter" data-level="19.3.3" data-path="perserg.html"><a href="perserg.html#degree-by-ego-attributes-1"><i class="fa fa-check"></i><b>19.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="19.3.4" data-path="perserg.html"><a href="perserg.html#degree-by-ego-attributes-historical-model-comparison-1"><i class="fa fa-check"></i><b>19.3.4</b> Degree, by ego attributes, historical model comparison</a></li>
+<li class="chapter" data-level="19.3.5" data-path="perserg.html"><a href="perserg.html#component-size-concurrency-1"><i class="fa fa-check"></i><b>19.3.5</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="19.4" data-path="perserg.html"><a href="perserg.html#static-netdx-1"><i class="fa fa-check"></i><b>19.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="19.4.1" data-path="perserg.html"><a href="perserg.html#settings-2"><i class="fa fa-check"></i><b>19.4.1</b> Settings</a></li>
+<li class="chapter" data-level="19.4.2" data-path="perserg.html"><a href="perserg.html#results-2"><i class="fa fa-check"></i><b>19.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.5" data-path="perserg.html"><a href="perserg.html#dynamic-netdx-homogeneous-dissolution-1"><i class="fa fa-check"></i><b>19.5</b> Dynamic netdx, homogeneous dissolution</a><ul>
+<li class="chapter" data-level="19.5.1" data-path="perserg.html"><a href="perserg.html#settings-3"><i class="fa fa-check"></i><b>19.5.1</b> Settings</a></li>
+<li class="chapter" data-level="19.5.2" data-path="perserg.html"><a href="perserg.html#results-3"><i class="fa fa-check"></i><b>19.5.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.6" data-path="perserg.html"><a href="perserg.html#dynamic-netdx-nodefactorrace-dissolution"><i class="fa fa-check"></i><b>19.6</b> Dynamic netdx, nodefactor(race) dissolution</a><ul>
+<li class="chapter" data-level="19.6.1" data-path="perserg.html"><a href="perserg.html#settings-4"><i class="fa fa-check"></i><b>19.6.1</b> Settings</a></li>
+<li class="chapter" data-level="19.6.2" data-path="perserg.html"><a href="perserg.html#results-4"><i class="fa fa-check"></i><b>19.6.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="19.7" data-path="perserg.html"><a href="perserg.html#historical-static-and-dynamic-homogeneous-netdx-1"><i class="fa fa-check"></i><b>19.7</b> Historical static and dynamic homogeneous netdx</a></li>
+<li class="chapter" data-level="19.8" data-path="perserg.html"><a href="perserg.html#historical-dynamic-netdx-nodefactorrace-dissolution-1"><i class="fa fa-check"></i><b>19.8</b> Historical dynamic netdx, nodefactor(race) dissolution</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="oterg.html"><a href="oterg.html"><i class="fa fa-check"></i><b>20</b> Modeling: One-Time ERGM</a><ul>
+<li class="chapter" data-level="20.1" data-path="oterg.html"><a href="oterg.html#model-info-2"><i class="fa fa-check"></i><b>20.1</b> Model info</a></li>
+<li class="chapter" data-level="20.2" data-path="oterg.html"><a href="oterg.html#fit-results-2"><i class="fa fa-check"></i><b>20.2</b> Fit Results</a><ul>
+<li class="chapter" data-level="20.2.1" data-path="oterg.html"><a href="oterg.html#target-statistics-includes-base0-2"><i class="fa fa-check"></i><b>20.2.1</b> Target Statistics (includes base=0)</a></li>
+<li class="chapter" data-level="20.2.2" data-path="oterg.html"><a href="oterg.html#fit-call-summary-2"><i class="fa fa-check"></i><b>20.2.2</b> Fit Call &amp; Summary</a></li>
+<li class="chapter" data-level="20.2.3" data-path="oterg.html"><a href="oterg.html#mcmc-diagnostics-2"><i class="fa fa-check"></i><b>20.2.3</b> MCMC Diagnostics</a></li>
+</ul></li>
+<li class="chapter" data-level="20.3" data-path="oterg.html"><a href="oterg.html#goodness-of-fit-2"><i class="fa fa-check"></i><b>20.3</b> Goodness of Fit</a><ul>
+<li class="chapter" data-level="20.3.1" data-path="oterg.html"><a href="oterg.html#model-2"><i class="fa fa-check"></i><b>20.3.1</b> Model</a></li>
+<li class="chapter" data-level="20.3.2" data-path="oterg.html"><a href="oterg.html#degree-3"><i class="fa fa-check"></i><b>20.3.2</b> Degree</a></li>
+<li class="chapter" data-level="20.3.3" data-path="oterg.html"><a href="oterg.html#degree-by-ego-attributes-2"><i class="fa fa-check"></i><b>20.3.3</b> Degree, by ego attributes</a></li>
+<li class="chapter" data-level="20.3.4" data-path="oterg.html"><a href="oterg.html#component-size-concurrency-2"><i class="fa fa-check"></i><b>20.3.4</b> Component Size &amp; Concurrency</a></li>
+</ul></li>
+<li class="chapter" data-level="20.4" data-path="oterg.html"><a href="oterg.html#static-netdx-2"><i class="fa fa-check"></i><b>20.4</b> Static netdx</a><ul>
+<li class="chapter" data-level="20.4.1" data-path="oterg.html"><a href="oterg.html#settings-5"><i class="fa fa-check"></i><b>20.4.1</b> Settings</a></li>
+<li class="chapter" data-level="20.4.2" data-path="oterg.html"><a href="oterg.html#results-5"><i class="fa fa-check"></i><b>20.4.2</b> Results</a></li>
+</ul></li>
+<li class="chapter" data-level="20.5" data-path="oterg.html"><a href="oterg.html#historical-static-netdx"><i class="fa fa-check"></i><b>20.5</b> Historical static netdx</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="params.html"><a href="params.html"><i class="fa fa-check"></i><b>21</b> Modeling: Epidemic Parameters</a></li>
+<li class="chapter" data-level="22" data-path="future.html"><a href="future.html"><i class="fa fa-check"></i><b>22</b> Future Work</a><ul>
+<li class="chapter" data-level="22.1" data-path="future.html"><a href="future.html#nsfg-high-risk-population"><i class="fa fa-check"></i><b>22.1</b> NSFG / High-risk population</a></li>
+<li class="chapter" data-level="22.2" data-path="future.html"><a href="future.html#modelling-immigrant-spouses-who-live-in-home-country"><i class="fa fa-check"></i><b>22.2</b> Modelling immigrant spouses who live in home country</a></li>
+<li class="chapter" data-level="22.3" data-path="future.html"><a href="future.html#life-expectancy-for-hiv"><i class="fa fa-check"></i><b>22.3</b> Life expectancy for HIV +</a></li>
+<li class="chapter" data-level="22.4" data-path="future.html"><a href="future.html#nodematched-cohabs-too-low-for-bbihhi"><i class="fa fa-check"></i><b>22.4</b> Nodematched Cohabs too low for B/BI/H/HI</a></li>
+<li class="chapter" data-level="22.5" data-path="future.html"><a href="future.html#age-related-within-and-cross-net-concurrency"><i class="fa fa-check"></i><b>22.5</b> Age related within and cross-net concurrency</a></li>
+<li class="chapter" data-level="22.6" data-path="future.html"><a href="future.html#removing-alters-with-missing-data"><i class="fa fa-check"></i><b>22.6</b> Removing alters with missing data</a></li>
+<li class="chapter" data-level="22.7" data-path="future.html"><a href="future.html#add-10-year-death-rate-data"><i class="fa fa-check"></i><b>22.7</b> Add 10 year death rate data</a></li>
+<li class="chapter" data-level="22.8" data-path="future.html"><a href="future.html#simulation-run-limitations"><i class="fa fa-check"></i><b>22.8</b> Simulation run limitations</a></li>
+<li class="chapter" data-level="22.9" data-path="future.html"><a href="future.html#dynamic-epimodel-parameter-application"><i class="fa fa-check"></i><b>22.9</b> Dynamic EpiModel Parameter application</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SHAMP: Seattle HIV/AIDS Modeling Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="perserg" class="section level1">
+<h1><span class="header-section-number">Chapter 19</span> Modeling: Pers ERGM</h1>
+<div class="alert alert-warning">
+<h3>
+Please see Model Info section below to know which model the results refer to.
+</h3>
+</div>
+<div id="model-info-1" class="section level2">
+<h2><span class="header-section-number">19.1</span> Model info</h2>
+<p>This model was run on 2019-06-03 08:18:44 with modifications on 2019-08-24 10:01:35. Please see the results script for more details.</p>
+</div>
+<div id="fit-results-1" class="section level2">
+<h2><span class="header-section-number">19.2</span> Fit Results</h2>
+<p>Results generated by <code>SHAMP/egonet/analyses/ergms_final/model-fits/pers-bbi-conc-Gb245.Rmd/html</code></p>
+<p><em>Summary (3/27/19)</em>: Model was re-estimated with current ergm.ego-private/dev, unparallelized.</p>
+<p><em>Summary (12/20/18)</em>: After we increased the burnin to 1e6 and the MCMC interval to 1e5, all model terms converged with pretty good to excellent MCMC diagnostics except for the nodematch race terms in the cohab model. Those terms are ok, not terrible.</p>
+<p>To model pers relationship formation depending on the interaction between race, sex and cohab status, we created two categorical variables indicating certain ego characteristics:</p>
+<ol style="list-style-type: decimal">
+<li><a href="degree.html#degree-1way-sb"><em>sb</em></a>: the cross of sex (M or F) and black race (B=Black, N=Non-Black). Levels are F.B, F.NB, M.B, and M.NB</li>
+<li><a href="degree.html#degree-1way-dsb.cohab"><em>dsb.cohab</em></a>: the cross of cohab degree (deg0 or deg1pl, sorry for the “pl” part, it just means deg1), sex (M or F), and black race (B=Black, NB=Non-Black). Levels are deg0, deg1pl.F.B, deg1pl.F.NB, deg1pl.M.B, and deg1pl.M.NB.</li>
+</ol>
+<div id="target-statistics-includes-base0-1" class="section level3">
+<h3><span class="header-section-number">19.2.1</span> Target Statistics (includes base=0)</h3>
+<pre><code>
+Original weights summary:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0429   4.2370  11.5156  22.9393  27.3059 355.4855 
+
+Unweighted weights summary:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      1       1       1       1       1       1 
+
+----------------------------------------
+All stats scaled to popsize of  48210 
+----------------------------------------
+                                  Weighted Unweighted RatioWtoUW
+edges                               4496.8     6795.0        0.7
+nodefactor.sex.ident.f              4173.0     7314.5        0.6
+nodefactor.sex.ident.msf            4755.9     6190.3        0.8
+nodefactor.sex.ident.msmf             64.8       85.1        0.8
+nodecov.age                       256104.7   384226.7        0.7
+nodecov.agesq                    7871208.2 11738983.7        0.7
+nodefactor.race.B                    735.2     3907.9        0.2
+nodefactor.race.BI                   354.2      581.1        0.6
+nodefactor.race.H                    672.9     1670.9        0.4
+nodefactor.race.HI                   483.4      988.5        0.5
+nodefactor.race.W                   6747.9     6441.6        1.0
+nodefactor.dsb.cohab.deg0           8814.0    13331.8        0.7
+nodefactor.dsb.cohab.deg1pl.F.B        4.4       31.1        0.1
+nodefactor.dsb.cohab.deg1pl.F.NB      57.3       77.0        0.7
+nodefactor.dsb.cohab.deg1pl.M.B       10.5       40.5        0.3
+nodefactor.dsb.cohab.deg1pl.M.NB     107.5      109.5        1.0
+deg1.sbF.B                           308.4     2247.2        0.1
+deg1.sbF.NB                         3661.6     4551.1        0.8
+deg1.sbM.B                           297.7     1317.5        0.2
+deg1.sbM.NB                         4000.6     3953.9        1.0
+nodematch.race.B                     257.6     1561.4        0.2
+nodematch.race.BI                     97.6       89.9        1.1
+nodematch.race.H                      99.8      346.6        0.3
+nodematch.race.HI                    125.0      257.4        0.5
+nodematch.race.W                    3040.5     2680.3        1.1
+absdiff.sqrt.age.adj                1407.7     2255.3        0.6</code></pre>
+</div>
+<div id="fit-call-summary-1" class="section level3">
+<h3><span class="header-section-number">19.2.2</span> Fit Call &amp; Summary</h3>
+<pre><code>
+==========================
+Summary of model fit
+==========================
+
+Formula:   nsfg.obj_p ~ edges + nodefactor(&quot;sex.ident&quot;, base = 1:2) + nodecov(&quot;age&quot;) + 
+    nodecov(&quot;agesq&quot;) + nodefactor(&quot;race&quot;, base = 5) + nodefactor(&quot;dsb.cohab&quot;, 
+    base = 1) + degree(1, by = &quot;sb&quot;) + nodematch(&quot;race&quot;, diff = TRUE) + 
+    absdiff(&quot;sqrt.age.adj&quot;) + offset(nodematch(&quot;sex&quot;, diff = FALSE))
+
+Iterations:  108 out of 400 
+
+Monte Carlo MLE Results:
+                                   Estimate Std. Error MCMC % z value
+offset(netsize.adj)              -1.082e+01  0.000e+00      0    -Inf
+edges                             6.065e+00  9.895e-01      0   6.129
+nodefactor.sex.ident.msmf        -1.050e+00  2.880e-01      0  -3.647
+nodecov.age                      -2.565e-01  3.470e-02      0  -7.394
+nodecov.agesq                     4.096e-03  5.724e-04      0   7.156
+nodefactor.race.B                 1.360e+00  1.526e-01      0   8.909
+nodefactor.race.BI                1.762e+00  1.802e-01      0   9.775
+nodefactor.race.H                 2.112e+00  1.114e-01      0  18.958
+nodefactor.race.HI                1.219e+00  1.212e-01      0  10.057
+nodefactor.dsb.cohab.deg1pl.F.B  -4.481e+00  3.324e-01      0 -13.479
+nodefactor.dsb.cohab.deg1pl.F.NB -5.325e+00  1.809e-01      0 -29.438
+nodefactor.dsb.cohab.deg1pl.M.B  -4.320e+00  2.967e-01      0 -14.560
+nodefactor.dsb.cohab.deg1pl.M.NB -4.752e+00  1.805e-01      0 -26.331
+deg1.sbF.B                        1.106e+00  1.171e-01      0   9.441
+deg1.sbF.NB                       1.163e+00  1.172e-01      0   9.926
+deg1.sbM.B                        1.252e+00  1.789e-01      0   6.995
+deg1.sbM.NB                       1.632e+00  2.806e-01      0   5.816
+nodematch.race.B                  3.231e+00  1.610e-01      0  20.060
+nodematch.race.BI                 2.849e+00  2.056e-01      0  13.857
+nodematch.race.H                  2.707e-01  1.363e-01      0   1.985
+nodematch.race.HI                 2.298e+00  1.729e-01      0  13.288
+nodematch.race.W                  2.172e+00  1.081e-01      0  20.089
+absdiff.sqrt.age.adj             -2.600e+00  6.448e-02      0 -40.320
+offset(nodematch.sex)                  -Inf  0.000e+00      0    -Inf
+                                 Pr(&gt;|z|)    
+offset(netsize.adj)               &lt; 1e-04 ***
+edges                             &lt; 1e-04 ***
+nodefactor.sex.ident.msmf        0.000265 ***
+nodecov.age                       &lt; 1e-04 ***
+nodecov.agesq                     &lt; 1e-04 ***
+nodefactor.race.B                 &lt; 1e-04 ***
+nodefactor.race.BI                &lt; 1e-04 ***
+nodefactor.race.H                 &lt; 1e-04 ***
+nodefactor.race.HI                &lt; 1e-04 ***
+nodefactor.dsb.cohab.deg1pl.F.B   &lt; 1e-04 ***
+nodefactor.dsb.cohab.deg1pl.F.NB  &lt; 1e-04 ***
+nodefactor.dsb.cohab.deg1pl.M.B   &lt; 1e-04 ***
+nodefactor.dsb.cohab.deg1pl.M.NB  &lt; 1e-04 ***
+deg1.sbF.B                        &lt; 1e-04 ***
+deg1.sbF.NB                       &lt; 1e-04 ***
+deg1.sbM.B                        &lt; 1e-04 ***
+deg1.sbM.NB                       &lt; 1e-04 ***
+nodematch.race.B                  &lt; 1e-04 ***
+nodematch.race.BI                 &lt; 1e-04 ***
+nodematch.race.H                 0.047102 *  
+nodematch.race.HI                 &lt; 1e-04 ***
+nodematch.race.W                  &lt; 1e-04 ***
+absdiff.sqrt.age.adj              &lt; 1e-04 ***
+offset(nodematch.sex)             &lt; 1e-04 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+
+ The following terms are fixed by offset and are not estimated:
+  offset(netsize.adj) offset(nodematch.sex) </code></pre>
+<p><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_coefs.png" width="75%" /></p>
+</div>
+<div id="mcmc-diagnostics-1" class="section level3">
+<h3><span class="header-section-number">19.2.3</span> MCMC Diagnostics</h3>
+<p><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc001.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc002.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc003.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc004.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc005.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc006.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc007.png" width="50%" /><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_mcmc008.png" width="50%" /></p>
+</div>
+</div>
+<div id="goodness-of-fit-1" class="section level2">
+<h2><span class="header-section-number">19.3</span> Goodness of Fit</h2>
+<div id="model-1" class="section level3">
+<h3><span class="header-section-number">19.3.1</span> Model</h3>
+<p><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_gof_mod.png" width="70%" /></p>
+</div>
+<div id="degree-2" class="section level3">
+<h3><span class="header-section-number">19.3.2</span> Degree</h3>
+<p><img src="../ergms_final/model-fits/pers_bbi_conc_Gb245_gof_deg.png" width="70%" /></p>
+</div>
+<div id="degree-by-ego-attributes-1" class="section level3">
+<h3><span class="header-section-number">19.3.3</span> Degree, by ego attributes</h3>
+<p>Results generated by <code>SHAMP/egonet/analyses/ergms_final/degree-gof/pers-bbi-conc-Gb245-gof.Rmd/html</code>. Simulation settings were as follows:</p>
+<pre><code># Specify simulation settings (must do at least 2 sims)
+numsims &lt;- 100
+mcmc.burn &lt;- 1e5
+mcmc.int &lt;- 1e5 </code></pre>
+<p><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_agecat.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_sex.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_sexi.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_race.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_racesex.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_degx.png" width="60%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_degx2.png" width="60%" /></p>
+</div>
+<div id="degree-by-ego-attributes-historical-model-comparison-1" class="section level3">
+<h3><span class="header-section-number">19.3.4</span> Degree, by ego attributes, historical model comparison</h3>
+<p>Results generated by <code>SHAMP/egonet/analyses/ergms/model-comparisons/pers-bbi-mix-G-conc-Gb.html</code></p>
+<p>This is included just for historical context. It shows 1) that the gof scripts are able to compare models and 2) that you can include an entire script if you wish.</p>
+<p>The file below shows GOF for three models, our final pers model “conc-Gb” and the prior models “mix-G” that did not have the nodefactor for dsb.cohab and mix-F that additionally did not have the deg1 term.</p>
+<iframe src="input/ergm_gof/pers-bbi-mix-G-conc-Gb.html" width="672" height="400px">
+</iframe>
+</div>
+<div id="component-size-concurrency-1" class="section level3">
+<h3><span class="header-section-number">19.3.5</span> Component Size &amp; Concurrency</h3>
+<div id="component-size-1" class="section level4">
+<h4><span class="header-section-number">19.3.5.1</span> Component size</h4>
+<p>Note that the two graphs below have different denominators. The first shows the percentage distribution of sizes among <em>components</em>. The second shows the percent of <em>nodes</em>, by race, that have components of size 3+.</p>
+<p><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_csize.png" width="75%" /><img src="../ergms_final/degree-gof/pers_bbi_conc_Gb245_csizesubgrp.png" width="75%" /></p>
+</div>
+<div id="concurrency-1" class="section level4">
+<h4><span class="header-section-number">19.3.5.2</span> Concurrency</h4>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:pers-raceconc">Table 19.1: </span>% within-network concurrency, by race
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+race
+</th>
+<th style="text-align:right;">
+Observed
+</th>
+<th style="text-align:right;">
+bbi_concGb
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+3.1
+</td>
+<td style="text-align:right;">
+3.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BI
+</td>
+<td style="text-align:right;">
+0.7
+</td>
+<td style="text-align:right;">
+1.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:right;">
+1.2
+</td>
+<td style="text-align:right;">
+1.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HI
+</td>
+<td style="text-align:right;">
+0.4
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:right;">
+0.6
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="static-netdx-1" class="section level2">
+<h2><span class="header-section-number">19.4</span> Static netdx</h2>
+<p>See <code>[SHAMP/egonet/analyses/ergms_final/netdx/pers_static_b1i1e6.Rmd/html]</code>. Some notes about using this script:</p>
+<ul>
+<li><p>You should go through the Rmd script line by line, and then look at the corresponding html output, to understand what it does. I don’t think there is a fast-track way to circumvent this step.</p></li>
+<li><p>It knits the results into an HTML file as well as saves key output to be read in by this GitBook. If you want to do a new netdx run without overwriting prior results, copy the Rmd file using a new name. In the new file, edit the following file names on the following lines so that they match your new file name in some way:</p>
+<ul>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_static_b1i1e6.Rmd#L36">The .R file name on line 36</a></li>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_static_b1i1e6.Rmd#L252">The .txt file name suffix on lines 252-253</a></li>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_static_b1i1e6.Rmd#L262">The .png file name suffix on line 262</a></li>
+</ul></li>
+</ul>
+<p>Issue <a href="https://github.com/statnet/SHAMP/issues/134">#134</a> summarizes some problems encountered and corresponding solutions in the first post. The TOC links to in-depth investigations of the internals of static and dynamic netdx calls. Two important takeaways:</p>
+<ol style="list-style-type: decimal">
+<li>The default starting net for netdx simulations is the empty network.</li>
+<li>Using sequential=TRUE is like running a dynamic sim in that each sim depends on the previous one, sort of like a time step. However there is no dissolution.</li>
+</ol>
+<div id="settings-2" class="section level3">
+<h3><span class="header-section-number">19.4.1</span> Settings</h3>
+<pre><code>net &lt;- &#39;Pers&#39;
+
+static.sims &lt;- 5000
+burnin &lt;- 1
+mcmcint &lt;- 1e6
+seq &lt;- TRUE</code></pre>
+</div>
+<div id="results-2" class="section level3">
+<h3><span class="header-section-number">19.4.2</span> Results</h3>
+<pre><code>EpiModel Network Diagnostics
+=======================
+Diagnostic Method: Static
+Simulations: 5000
+
+Formation Diagnostics
+----------------------- 
+                                      Target    Sim Mean Pct Diff
+edges                               4663.808    4658.959   -0.001
+nodefactor.sex.ident.msmf             67.191      66.526   -0.010
+nodecov.age                       265613.702  265373.217   -0.001
+nodecov.agesq                    8163460.034 8156894.182   -0.001
+nodefactor.race.B                    762.474     760.567   -0.003
+nodefactor.race.BI                   367.379     364.829   -0.007
+nodefactor.race.H                    697.919     696.594   -0.002
+nodefactor.race.HI                   501.353     501.262    0.000
+nodefactor.dsb.cohab.deg1pl.F.B        4.577       4.504   -0.016
+nodefactor.dsb.cohab.deg1pl.F.NB      59.410      59.502    0.002
+nodefactor.dsb.cohab.deg1pl.M.B       10.923      10.771   -0.014
+nodefactor.dsb.cohab.deg1pl.M.NB     111.477     111.803    0.003
+deg1.sbF.B                           319.887     319.582   -0.001
+deg1.sbF.NB                         3797.576    3795.144   -0.001
+deg1.sbM.B                           308.734     308.214   -0.002
+deg1.sbM.NB                         4149.113    4145.473   -0.001
+nodematch.race.B                     267.117     266.524   -0.002
+nodematch.race.BI                    101.257      99.443   -0.018
+nodematch.race.H                     103.470     102.667   -0.008
+nodematch.race.HI                    129.677     129.667    0.000
+nodematch.race.W                    3153.401    3150.283   -0.001
+absdiff.sqrt.age.adj                1459.923    1459.085   -0.001
+offset(nodematch.sex)                     NA       0.000       NA
+                                    Sim SD
+edges                               42.961
+nodefactor.sex.ident.msmf            7.182
+nodecov.age                       2571.793
+nodecov.agesq                    87473.131
+nodefactor.race.B                   22.492
+nodefactor.race.BI                  14.174
+nodefactor.race.H                   19.146
+nodefactor.race.HI                  18.641
+nodefactor.dsb.cohab.deg1pl.F.B      2.095
+nodefactor.dsb.cohab.deg1pl.F.NB     7.713
+nodefactor.dsb.cohab.deg1pl.M.B      3.213
+nodefactor.dsb.cohab.deg1pl.M.NB    10.459
+deg1.sbF.B                          11.853
+deg1.sbF.NB                         40.354
+deg1.sbM.B                          11.111
+deg1.sbM.NB                         41.629
+nodematch.race.B                    11.411
+nodematch.race.BI                    6.990
+nodematch.race.H                     8.614
+nodematch.race.HI                    8.990
+nodematch.race.W                    38.272
+absdiff.sqrt.age.adj                25.113
+offset(nodematch.sex)                0.000</code></pre>
+<p><img src="../ergms_final/netdx/pers_bbi_conc_Gb245_netdx-static.png" width="100%" /></p>
+</div>
+</div>
+<div id="dynamic-netdx-homogeneous-dissolution-1" class="section level2">
+<h2><span class="header-section-number">19.5</span> Dynamic netdx, homogeneous dissolution</h2>
+<p>See <code>[SHAMP/egonet/analyses/ergms_final/netdx/pers_dynamic_MCMC.burnin_setbasis.Rmd/html]</code>. Some notes about using this script:</p>
+<ul>
+<li><p>You should go through the Rmd script line by line, and then look at the corresponding html output, to understand what it does. I don’t think there is a fast-track way to circumvent this step.</p></li>
+<li><p>It knits the results into an HTML file as well as saves key output to be read in by this GitBook. If you want to do a new netdx run without overwriting prior results, copy the Rmd file using a new name. In the new file, edit the following file names on the following lines so that they match your new file name in some way:</p>
+<ul>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_dynamic_MCMC.burnin_setbasis.Rmd#L38">The .R file name on line 38</a></li>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_dynamic_MCMC.burnin_setbasis.Rmd#L255">The .txt file name suffix on lines 255-256</a></li>
+<li><a href="https://github.com/statnet/SHAMP/blob/master/egonet/analyses/ergms_final/netdx/pers_dynamic_MCMC.burnin_setbasis.Rmd#L274">The .png file name suffix on line 274</a></li>
+</ul></li>
+</ul>
+<p>Issue <a href="https://github.com/statnet/SHAMP/issues/134">#134</a> summarizes some problems encountered and corresponding solutions in the first post. The TOC links to in-depth investigations of the internals of static and dynamic netdx calls. There were two important takeways:</p>
+<ol style="list-style-type: decimal">
+<li>The default starting net for the netdx simulations was the empty network. We used ee.netest to use the fitted net instead.</li>
+<li>The MCMC.burnin parameter essentially controls the MCMC interval for dynamic sims, since it is a “burnin per time step.”</li>
+</ol>
+<p><a href="https://github.com/statnet/SHAMP/issues/134#issuecomment-413910396">This post (as part of Issue #134)</a> gives the overview of netdx vs ee.netdx - we used the latter function to achieve #1.</p>
+<p>Issue <a href="https://github.com/statnet/SHAMP/issues/146">#146</a> summarizes both homogeneous and heterogeneous dissolution diagnostics pretty thoroughly. For homogeneous dissolution, diagonstics look good except for nodematched terms in the cohab model, which plateau too low. This is noted in <a href="https://github.com/statnet/SHAMP/issues/134#issuecomment-417759234">this #134 post</a> as well.</p>
+<p>A few nodematch terms plateau low. We opened Issue <a href="https://github.com/statnet/SHAMP/issues/149">#149</a> to track progress.</p>
+<div id="settings-3" class="section level3">
+<h3><span class="header-section-number">19.5.1</span> Settings</h3>
+<pre><code>net &lt;- &#39;Pers&#39;
+
+ergm.sims &lt;- 1
+set.basis &lt;- TRUE
+dynamic.sims &lt;- 10
+dynamic.steps &lt;- 5000
+burnin &lt;- 1e6
+mcmcint &lt;- 1e6</code></pre>
+</div>
+<div id="results-3" class="section level3">
+<h3><span class="header-section-number">19.5.2</span> Results</h3>
+<pre><code>EpiModel Network Diagnostics
+=======================
+Diagnostic Method: Dynamic
+Simulations: 10
+Time Steps per Sim: 5000
+
+Formation Diagnostics
+----------------------- 
+                                      Target    Sim Mean Pct Diff
+edges                               4663.808    4638.768   -0.005
+nodefactor.sex.ident.msmf             67.191      66.545   -0.010
+nodecov.age                       265613.702  264316.882   -0.005
+nodecov.agesq                    8163460.034 8126419.727   -0.005
+nodefactor.race.B                    762.474     752.260   -0.013
+nodefactor.race.BI                   367.379     356.017   -0.031
+nodefactor.race.H                    697.919     692.722   -0.007
+nodefactor.race.HI                   501.353     498.524   -0.006
+nodefactor.dsb.cohab.deg1pl.F.B        4.577       4.631    0.012
+nodefactor.dsb.cohab.deg1pl.F.NB      59.410      59.722    0.005
+nodefactor.dsb.cohab.deg1pl.M.B       10.923      11.002    0.007
+nodefactor.dsb.cohab.deg1pl.M.NB     111.477     112.345    0.008
+deg1.sbF.B                           319.887     315.373   -0.014
+deg1.sbF.NB                         3797.576    3776.814   -0.005
+deg1.sbM.B                           308.734     303.085   -0.018
+deg1.sbM.NB                         4149.113    4128.863   -0.005
+nodematch.race.B                     267.117     260.309   -0.025
+nodematch.race.BI                    101.257      91.902   -0.092
+nodematch.race.H                     103.470     100.474   -0.029
+nodematch.race.HI                    129.677     128.183   -0.012
+nodematch.race.W                    3153.401    3140.624   -0.004
+absdiff.sqrt.age.adj                1459.923    1459.280    0.000
+offset(nodematch.sex)                     NA       0.000       NA
+                                    Sim SD
+edges                               42.378
+nodefactor.sex.ident.msmf            7.108
+nodecov.age                       2557.045
+nodecov.agesq                    87735.618
+nodefactor.race.B                   22.103
+nodefactor.race.BI                  14.569
+nodefactor.race.H                   19.475
+nodefactor.race.HI                  18.725
+nodefactor.dsb.cohab.deg1pl.F.B      2.152
+nodefactor.dsb.cohab.deg1pl.F.NB     8.126
+nodefactor.dsb.cohab.deg1pl.M.B      3.333
+nodefactor.dsb.cohab.deg1pl.M.NB    10.618
+deg1.sbF.B                          11.640
+deg1.sbF.NB                         40.487
+deg1.sbM.B                          10.790
+deg1.sbM.NB                         40.855
+nodematch.race.B                    11.234
+nodematch.race.BI                    7.263
+nodematch.race.H                     8.852
+nodematch.race.HI                    8.690
+nodematch.race.W                    38.217
+absdiff.sqrt.age.adj                24.579
+offset(nodematch.sex)                0.000
+
+Dissolution Diagnostics
+----------------------- 
+               Target Sim Mean Pct Diff Sim SD
+Edge Duration  81.500   80.247   -0.015 79.661
+Pct Edges Diss  0.012    0.012   -0.001  0.002</code></pre>
+<p><img src="../ergms_final/netdx/pers_bbi_conc_Gb245_netdx-dynamic-homogeneous-formation.png" width="100%" /></p>
+<p><img src="../ergms_final/netdx/pers_bbi_conc_Gb245_netdx-dynamic-homogeneous-dissolution.png" width="100%" /></p>
+</div>
+</div>
+<div id="dynamic-netdx-nodefactorrace-dissolution" class="section level2">
+<h2><span class="header-section-number">19.6</span> Dynamic netdx, nodefactor(race) dissolution</h2>
+<p>Issue <a href="https://github.com/statnet/SHAMP/issues/129">#129</a> goes over how we calculated the target stats, resolving questions regarding weights and the exponential mean implied by the median.</p>
+<p>See below in the Historical section for comments from our prior race-specific dissolution netdx runs.</p>
+<div id="settings-4" class="section level3">
+<h3><span class="header-section-number">19.6.1</span> Settings</h3>
+<pre><code>net &lt;- &#39;Pers&#39;
+
+ergm.sims &lt;- 1
+set.basis &lt;- TRUE
+dynamic.sims &lt;- 10
+dynamic.steps &lt;- 5000
+burnin &lt;- 1e6
+mcmcint &lt;- 1e6</code></pre>
+</div>
+<div id="results-4" class="section level3">
+<h3><span class="header-section-number">19.6.2</span> Results</h3>
+<pre><code>EpiModel Network Diagnostics
+=======================
+Diagnostic Method: Dynamic
+Simulations: 2
+Time Steps per Sim: 2
+
+Formation Diagnostics
+----------------------- 
+                                      Target    Sim Mean Pct Diff
+edges                               4663.808    4696.750    0.007
+nodefactor.sex.ident.msmf             67.191      64.750   -0.036
+nodecov.age                       265613.702  266863.250    0.005
+nodecov.agesq                    8163460.034 8182061.250    0.002
+nodefactor.race.B                    762.474     756.500   -0.008
+nodefactor.race.BI                   367.379     368.250    0.002
+nodefactor.race.H                    697.919     708.000    0.014
+nodefactor.race.HI                   501.353     487.250   -0.028
+nodefactor.dsb.cohab.deg1pl.F.B        4.577       6.000    0.311
+nodefactor.dsb.cohab.deg1pl.F.NB      59.410      56.000   -0.057
+nodefactor.dsb.cohab.deg1pl.M.B       10.923      14.000    0.282
+nodefactor.dsb.cohab.deg1pl.M.NB     111.477     124.500    0.117
+deg1.sbF.B                           319.887     317.250   -0.008
+deg1.sbF.NB                         3797.576    3780.250   -0.005
+deg1.sbM.B                           308.734     318.750    0.032
+deg1.sbM.NB                         4149.113    4186.750    0.009
+nodematch.race.B                     267.117     266.000   -0.004
+nodematch.race.BI                    101.257      98.000   -0.032
+nodematch.race.H                     103.470     104.000    0.005
+nodematch.race.HI                    129.677     121.500   -0.063
+nodematch.race.W                    3153.401    3175.000    0.007
+absdiff.sqrt.age.adj                1459.923    1449.096   -0.007
+offset(nodematch.sex)                     NA       0.000       NA
+                                    Sim SD
+edges                               18.482
+nodefactor.sex.ident.msmf            0.957
+nodecov.age                       1012.073
+nodecov.agesq                    30386.130
+nodefactor.race.B                    3.000
+nodefactor.race.BI                   0.957
+nodefactor.race.H                    2.708
+nodefactor.race.HI                   3.304
+nodefactor.dsb.cohab.deg1pl.F.B      0.000
+nodefactor.dsb.cohab.deg1pl.F.NB     0.000
+nodefactor.dsb.cohab.deg1pl.M.B      0.000
+nodefactor.dsb.cohab.deg1pl.M.NB     1.915
+deg1.sbF.B                           0.500
+deg1.sbF.NB                         14.127
+deg1.sbM.B                           1.258
+deg1.sbM.NB                         16.540
+nodematch.race.B                     1.414
+nodematch.race.BI                    0.000
+nodematch.race.H                     0.000
+nodematch.race.HI                    1.732
+nodematch.race.W                    13.976
+absdiff.sqrt.age.adj                 6.234
+offset(nodematch.sex)                0.000
+
+Dissolution Diagnostics
+----------------------- 
+               Target Sim Mean Pct Diff Sim SD
+Edge Duration  81.500      NaN      NaN     NA
+Pct Edges Diss  0.012    0.008   -0.388  0.001
+----------------------- 
+* Heterogeneous dissolution model results averaged over</code></pre>
+<p><img src="../ergms_final/netdx/pers_bbi_conc_Gb245_netdx-dynamic-racediss-formation.png" width="100%" /></p>
+<p><img src="../ergms_final/netdx/pers_bbi_conc_Gb245_netdx-dynamic-racediss-dissolution.png" width="100%" /></p>
+</div>
+</div>
+<div id="historical-static-and-dynamic-homogeneous-netdx-1" class="section level2">
+<h2><span class="header-section-number">19.7</span> Historical static and dynamic homogeneous netdx</h2>
+<p>See <code>[SHAMP/Epidemics/netdx_diagnostics/current/netdx_static_b1i1e6_pers.html]</code> and <code>[SHAMP/Epidemics/netdx_diagnostics/current/netdx_dynamic_pers_MCMC.burnin_setbasis.html</code>].</p>
+</div>
+<div id="historical-dynamic-netdx-nodefactorrace-dissolution-1" class="section level2">
+<h2><span class="header-section-number">19.8</span> Historical dynamic netdx, nodefactor(race) dissolution</h2>
+<p>Issue <a href="https://github.com/statnet/SHAMP/issues/146">#146</a> summarizes both homogeneous and heterogeneous dissolution diagnostics pretty thoroughly. For both networks, the percent errors are higher for some terms than in the homogeneous dissolution diagnostics. We hit the cohab durations by race pretty well except for Hispanics - too high. Pers durations are good for H and HI but too high for B and BI, and too high overall.</p>
+<p>See <code>[SHAMP/Epidemics/netdx_diagnostics/current/netdx_racediss_pers_MCMC.burnin_setbasis.html]</code>.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="cohaberg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="oterg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["SHAMP.pdf", "SHAMP.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

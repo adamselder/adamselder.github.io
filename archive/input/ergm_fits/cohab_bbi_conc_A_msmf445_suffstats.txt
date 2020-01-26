@@ -1,0 +1,12 @@
+
+Original weights summary:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0429   4.2370  11.5156  22.9393  27.3059 355.4855 
+
+Unweighted weights summary:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      1       1       1       1       1       1 
+
+----------------------------------------
+All stats scaled to popsize of  48210 
+----------------------------------------

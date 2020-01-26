@@ -1,0 +1,29 @@
+
+Original weights summary:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+  0.0429   4.2370  11.5156  22.9393  27.3059 355.4855 
+
+Unweighted weights summary:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+      1       1       1       1       1       1 
+
+----------------------------------------
+All stats scaled to popsize of  48210 
+----------------------------------------
+                           Weighted Unweighted RatioWtoUW
+edges                         968.4     1281.0        0.8
+nodefactor.sex.ident.f        237.2      395.9        0.6
+nodefactor.sex.ident.msf     1669.7     2120.2        0.8
+nodefactor.sex.ident.msmf      29.9       45.9        0.7
+nodecov.age                 49886.2    65501.8        0.8
+nodecov.agesq             1375178.5  1799477.4        0.8
+nodefactor.race.B             127.9      520.9        0.2
+nodefactor.race.BI             23.3       25.0        0.9
+nodefactor.race.H             210.1      452.7        0.5
+nodefactor.race.HI             46.9       93.2        0.5
+nodefactor.race.W            1528.6     1470.2        1.0
+nodefactor.deg.cohab.c.0     1819.5     2414.8        0.8
+nodefactor.deg.cohab.c.1      117.3      147.3        0.8
+nodefactor.deg.pers.c.0      1253.7     1602.6        0.8
+nodefactor.deg.pers.c.1       683.1      959.4        0.7
+absdiff.sqrt.age.adj          308.2      407.1        0.8

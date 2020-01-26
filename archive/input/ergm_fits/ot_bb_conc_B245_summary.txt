@@ -1,0 +1,48 @@
+
+==========================
+Summary of model fit
+==========================
+
+Formula:   nsfg.obj_i ~ edges + nodefactor("sex.ident", base = 1:2) + nodecov("age") + 
+    nodecov("agesq") + nodefactor("race", base = 5) + nodefactor("deg.cohab.c", 
+    base = 1) + nodefactor("deg.pers.c", base = 1) + absdiff("sqrt.age.adj") + 
+    offset(nodematch("sex", diff = FALSE))
+
+Iterations:  90 out of 400 
+
+Monte Carlo MLE Results:
+                            Estimate Std. Error MCMC % z value Pr(>|z|)
+offset(netsize.adj)       -1.082e+01  0.000e+00      0    -Inf  < 1e-04
+edges                      6.020e+00  1.017e+00      0   5.919  < 1e-04
+nodefactor.sex.ident.msmf  5.817e-02  3.379e-01      0   0.172 0.863301
+nodecov.age               -1.475e-01  3.655e-02      0  -4.035  < 1e-04
+nodecov.agesq              1.920e-03  6.196e-04      0   3.098 0.001946
+nodefactor.race.B          1.699e-01  9.522e-02      0   1.784 0.074468
+nodefactor.race.BI        -6.849e-01  2.721e-01      0  -2.517 0.011836
+nodefactor.race.H          5.372e-01  1.034e-01      0   5.194  < 1e-04
+nodefactor.race.HI        -6.548e-01  1.773e-01      0  -3.693 0.000222
+nodefactor.deg.cohab.c.1  -3.148e+00  1.700e-01      0 -18.518  < 1e-04
+nodefactor.deg.pers.c.1   -5.406e-01  9.440e-02      0  -5.727  < 1e-04
+absdiff.sqrt.age.adj      -2.388e+00  1.312e-01      0 -18.207  < 1e-04
+offset(nodematch.sex)           -Inf  0.000e+00      0    -Inf  < 1e-04
+                             
+offset(netsize.adj)       ***
+edges                     ***
+nodefactor.sex.ident.msmf    
+nodecov.age               ***
+nodecov.agesq             ** 
+nodefactor.race.B         .  
+nodefactor.race.BI        *  
+nodefactor.race.H         ***
+nodefactor.race.HI        ***
+nodefactor.deg.cohab.c.1  ***
+nodefactor.deg.pers.c.1   ***
+absdiff.sqrt.age.adj      ***
+offset(nodematch.sex)     ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+ The following terms are fixed by offset and are not estimated:
+  offset(netsize.adj) offset(nodematch.sex) 
+

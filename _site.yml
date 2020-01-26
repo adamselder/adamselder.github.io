@@ -1,0 +1,17 @@
+name: "Seattle HIV/AIDS Modeling Project"
+navbar:
+  title: "SHAMP"
+  left:
+    - text: "Introduction"
+      href: introduction.html
+    - text: "Project Cost Breakdown"
+      href: cost_breakdown.html
+    - text: "Permiting and Inspection Times"
+      href: permit_times.html
+output_dir: "."
+output:
+  html_document:
+    theme: yeti
+    highlight: textmate
+#    include:
+#      after_body: _footer.html
