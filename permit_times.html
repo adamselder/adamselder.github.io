@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Adam" />
+<meta name="author" content="Russel Willems and Adam Elder" />
 
 
-<title>SummaryofData</title>
+<title>Summary of Data</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -381,119 +381,26 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">SummaryofData</h1>
-<h4 class="author">Adam</h4>
+<h1 class="title toc-ignore">Summary of Data</h1>
+<h4 class="author">Russel Willems and Adam Elder</h4>
 <h4 class="date">1/22/2020</h4>
 
 </div>
 
 
-<pre class="r"><code>library(&quot;wesanderson&quot;)
-library(&quot;tidyverse&quot;)
-library(&quot;DescTools&quot;)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;DescTools&#39;:
-##   method        from       
-##   print.palette wesanderson</code></pre>
-<pre class="r"><code>library(&quot;ggplot2&quot;)
-library(&quot;cowplot&quot;)</code></pre>
-<pre><code>## 
-## ********************************************************</code></pre>
-<pre><code>## Note: As of version 1.0.0, cowplot does not change the</code></pre>
-<pre><code>##   default ggplot2 theme anymore. To recover the previous</code></pre>
-<pre><code>##   behavior, execute:
-##   theme_set(theme_cowplot())</code></pre>
-<pre><code>## ********************************************************</code></pre>
-<pre class="r"><code>theme_set(theme_cowplot())
-
-d &lt;- read.csv(&quot;expanded_dat.csv&quot;, stringsAsFactors = FALSE)
-
-d$ap_date &lt;- as.Date(d$Application.Completed.Date..1,
-                     &quot;%m/%d/%Y&quot;)
-d$pi_date &lt;- as.Date(d$Permit.Issued.Date..1,
-                     &quot;%m/%d/%Y&quot;)
-d$ic_date &lt;- as.Date(d$Inspections.Completed.Date..1,
-                     &quot;%m/%d/%Y&quot;)
-
-d &lt;- d[order(d$ap_date, decreasing = FALSE), ]
-long &lt;- d
-d &lt;- d[-(1:10), ]
-d &lt;- d[!is.na(d$ap_date), ]
-
-
-make_some_lines &lt;- function(row, num){
-  app_done &lt;- as.numeric(row[&quot;ap_date&quot;])
-  perm_prv &lt;- as.numeric(row[&quot;pi_date&quot;])
-  inspec   &lt;- as.numeric(row[&quot;ic_date&quot;])
-  if(is.na(perm_prv)){
-    if(!is.na(app_done)){
-      lines(x = c(app_done, app_done + 1),
-            y = rep(num, 2), col = &quot;blue&quot;)
-    }
-  }else{
-    if(!is.na(app_done)){
-      lines(x = c(app_done, perm_prv),
-            y = rep(num, 2),
-            col = &quot;blue&quot;)
-    }
-  }
-  if(is.na(inspec)){
-    if(!is.na(perm_prv)){
-      lines(x = c(perm_prv, perm_prv + 1),
-            y = rep(num, 2),
-             col = &quot;red&quot;)
-    }
-  }else{
-    if(!is.na(app_done)){
-      lines(x = c(perm_prv, inspec),
-            y = rep(num, 2),
-            col = &quot;red&quot;)
-    }
-  }
-}</code></pre>
-<div id="fun-line-plot" class="section level2">
-<h2><span class="header-section-number">0.1</span> Fun Line Plot</h2>
-<pre class="r"><code>bounds &lt;- c(d$ap_date[1], max(c(d$pi_date, d$pi_date,
-                                 d$ic_date), na.rm = TRUE))
-
-plot(bounds, c(nrow(d), 1), type = &quot;b&quot;, col = &quot;white&quot;,
-     bty = &quot;n&quot;, ylab = &quot;Observation Number&quot;,
-     &quot;xlab&quot; = &quot;Date&quot;, axes = FALSE)
-some_dates &lt;- seq(from = bounds[1], to = bounds[2], length.out = 40)
-axis(1, at = some_dates, labels = format(some_dates, &quot;%Y-%m&quot;))
-for(bb in 1:nrow(d)){
-  make_some_lines(d[bb, ], nrow(d) - bb)
-}</code></pre>
+<pre class="r"><code>knitr::opts_chunk$set(warning = FALSE, echo = FALSE, message = FALSE)</code></pre>
+<div id="time-from-application-to-aproval" class="section level1">
+<h1><span class="header-section-number">1</span> Time from Application to Aproval</h1>
+<p><img src="permit_times_files/figure-html/ap_to_aprov-1.png" width="672" /><img src="permit_times_files/figure-html/ap_to_aprov-2.png" width="672" /></p>
+</div>
+<div id="time-from-aproval-to-inspections" class="section level1">
+<h1><span class="header-section-number">2</span> Time from Aproval to Inspections</h1>
+<p><img src="permit_times_files/figure-html/aprov_to_inspec-1.png" width="672" /><img src="permit_times_files/figure-html/aprov_to_inspec-2.png" width="672" /></p>
+</div>
+<div id="fun-line-plot" class="section level1">
+<h1><span class="header-section-number">3</span> Fun Line Plot</h1>
+<p>Each horrizontal line is a single project. The blue part of the line is the time from the application being completed to the permit being issued. The red line is the time from the permit being issued to the inspections being completed.</p>
 <p><img src="permit_times_files/figure-html/fun_line_plot-1.png" width="672" /></p>
-</div>
-<div id="time-from-application-to-aproval" class="section level2">
-<h2><span class="header-section-number">0.2</span> Time from Application to Aproval</h2>
-<pre class="r"><code>d$d_diff &lt;- difftime(d$pi_date, d$ap_date, units = &quot;day&quot;)
-d$d_diff_ic &lt;- difftime(d$ic_date, d$pi_date, units = &quot;day&quot;)
-d$l_tdiff &lt;- pmax(0, log(as.numeric(d$d_diff)))
-d$un_grp &lt;- cut(d$HousingUnits,  
-                unique(quantile(d$HousingUnits, seq(0, 1, length.out = 40))),
-                include.lowest = TRUE)
-
-ggplot(d) + aes(x = d_diff) + geom_histogram(bins = 30) + xlab(&quot;Time in Days from Application to Aproval&quot;)</code></pre>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
-<pre><code>## Warning: Removed 780 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="permit_times_files/figure-html/ap_to_aprov-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(d) + aes(x = un_grp, y = d_diff) + geom_boxplot() + ylab(&quot;Time in Days from Application to Aproval&quot;) + xlab(&quot;Number Housing Units&quot;)</code></pre>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
-<pre><code>## Warning: Removed 780 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="permit_times_files/figure-html/ap_to_aprov-2.png" width="672" /></p>
-</div>
-<div id="time-from-aproval-to-inspections" class="section level2">
-<h2><span class="header-section-number">0.3</span> Time from Aproval to Inspections</h2>
-<pre class="r"><code>ggplot(d) + aes(x = d_diff_ic) + geom_histogram() + xlab(&quot;Time in Days from Aproval to Inspection completion&quot;)</code></pre>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Removed 2457 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="permit_times_files/figure-html/aprov_to_inspec-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(d) + aes(x = un_grp, y = d_diff_ic) + geom_boxplot() + ylab(&quot;Time in Days from Application to Aproval&quot;) + xlab(&quot;Number Housing Units&quot;)</code></pre>
-<pre><code>## Don&#39;t know how to automatically pick scale for object of type difftime. Defaulting to continuous.</code></pre>
-<pre><code>## Warning: Removed 2457 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="permit_times_files/figure-html/aprov_to_inspec-2.png" width="672" /></p>
 </div>
 
 

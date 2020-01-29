@@ -1,6 +1,6 @@
 ---
-title: "SummaryofData"
-author: "Adam"
+title: "Summary of Data"
+author: "Russel Willems and Adam Elder"
 date: "1/22/2020"
 output: 
     html_document:
@@ -10,6 +10,10 @@ output:
         toc_float: true
         number_sections: true
 ---
+
+```{r set_opts}
+knitr::opts_chunk$set(warning = FALSE, echo = FALSE, message = FALSE)
+```
 
 ```{r read_in_data}
 library("wesanderson")
@@ -66,23 +70,8 @@ make_some_lines <- function(row, num){
 }
 ```
 
-## Fun Line Plot
 
-```{r fun_line_plot}
-bounds <- c(d$ap_date[1], max(c(d$pi_date, d$pi_date,
-                                 d$ic_date), na.rm = TRUE))
-
-plot(bounds, c(nrow(d), 1), type = "b", col = "white",
-     bty = "n", ylab = "Observation Number",
-     "xlab" = "Date", axes = FALSE)
-some_dates <- seq(from = bounds[1], to = bounds[2], length.out = 40)
-axis(1, at = some_dates, labels = format(some_dates, "%Y-%m"))
-for(bb in 1:nrow(d)){
-  make_some_lines(d[bb, ], nrow(d) - bb)
-}
-```
-
-## Time from Application to Aproval
+# Time from Application to Aproval
 
 ```{r ap_to_aprov}
 d$d_diff <- difftime(d$pi_date, d$ap_date, units = "day")
@@ -97,15 +86,32 @@ ggplot(d) + aes(x = d_diff) + geom_histogram(bins = 30) + xlab("Time in Days fro
 ggplot(d) + aes(x = un_grp, y = d_diff) + geom_boxplot() + ylab("Time in Days from Application to Aproval") + xlab("Number Housing Units")
 ```
 
-## Time from Aproval to Inspections
+# Time from Aproval to Inspections
 
 ```{r aprov_to_inspec}
 ggplot(d) + aes(x = d_diff_ic) + geom_histogram() + xlab("Time in Days from Aproval to Inspection completion")
 
-ggplot(d) + aes(x = un_grp, y = d_diff_ic) + geom_boxplot() + ylab("Time in Days from Application to Aproval") + xlab("Number Housing Units")
+ggplot(d) + aes(x = un_grp, y = d_diff_ic) + geom_boxplot() + ylab("Time in Days from Aproval to Inspection") + xlab("Number Housing Units")
 ```
 
 
+# Fun Line Plot
+
+Each horrizontal line is a single project.  The blue part of the line is the time from the application being completed to the permit being issued.  The red line is the time from the permit being issued to the inspections being completed.
+
+```{r fun_line_plot}
+bounds <- c(d$ap_date[1], max(c(d$pi_date, d$pi_date,
+                                 d$ic_date), na.rm = TRUE))
+
+plot(bounds, c(nrow(d), 1), type = "b", col = "white",
+     bty = "n", ylab = "Observation Number",
+     "xlab" = "Date", axes = FALSE)
+some_dates <- seq(from = bounds[1], to = bounds[2], length.out = 40)
+axis(1, at = some_dates, labels = format(some_dates, "%Y-%m"))
+for(bb in 1:nrow(d)){
+  make_some_lines(d[bb, ], nrow(d) - bb)
+}
+```
 
 
 

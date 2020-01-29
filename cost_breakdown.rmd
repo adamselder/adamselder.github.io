@@ -103,9 +103,9 @@ make_row_c <- function(data_f, list, list_idx, proj_num){
 }
 ```
 
-# Fine Detail Cost Breakdowns
+<!-- # Fine Detail Cost Breakdowns -->
 
-```{r cars, warning = FALSE}
+```{r cars, warning=FALSE, include=FALSE}
 for(l_idx in 1:length(sub_info)){
   for(p_idx in 1:5){
     if(exists("fin_mat")){
@@ -145,15 +145,15 @@ plot_ly(fin_df, x = ~Project, y = ~Expense, type = 'bar',
   layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
-# Rough Cost Breakdown
+<!-- # Rough Cost Breakdown -->
 
-```{r pressure, echo=FALSE, warning = FALSE}
+```{r pressure, echo=FALSE, warning = FALSE, eval=FALSE, include=FALSE}
 plot_ly(fin_df, x = ~Project, y = ~Expense, type = 'bar', 
         name = ~Category, color = ~Category) %>%
   layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
-# Other Way
+# Ten Largest Expenses
 
 ```{r barplots}
 sub_df <- fin_df %>% group_by(Category, Project) %>% 
@@ -161,17 +161,41 @@ sub_df <- fin_df %>% group_by(Category, Project) %>%
     
 my_cols <- wesanderson::wes_palettes$Zissou1
 
-ggplot2::ggplot(data = sub_df, aes(x = Category, y = Cost,
+sub_df <- left_join(sub_df,
+                    sub_df %>% group_by(Category) %>%
+                      summarize(avg_cost = mean(Cost)))
+
+sub_df <- sub_df[order(sub_df$avg_cost, decreasing = TRUE),]
+largest_avg_cost <- unique(sort(sub_df$avg_cost, decreasing = TRUE))[1:10]
+
+largest_cost <- sub_df[sub_df$avg_cost %in% largest_avg_cost, ]
+
+ggplot2::ggplot(data = largest_cost, aes(x = reorder(Category, -avg_cost), y = Cost,
                                    fill = Project)) +
   geom_bar(stat="identity", position=position_dodge()) +
-  ylab("Percent of Population (Within Race)") + theme_minimal() +
-  theme(axis.text.x=element_text(angle = 45, hjust = 1)) +
+  ylab("Cost in Dollars") + xlab("Cost Category") + theme_minimal() +
+  theme(axis.text.x=element_text(angle = 25, hjust = 1)) +
   scale_fill_manual(values = my_cols)
 ```
 
-# Costs that differ accross project types
+# Next Ten Largest Expenses
 
-```{r just_diffs, warning = FALSE}
+```{r next_ten}
+next_ten_avg <- unique(sort(sub_df$avg_cost, decreasing = TRUE))[11:20]
+next_ten <- sub_df[sub_df$avg_cost %in% next_ten_avg, ]
+
+ggplot2::ggplot(data = next_ten, aes(x = reorder(Category, -avg_cost), y = Cost,
+                                   fill = Project)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  ylab("Cost in Dollars") + xlab("Cost Category") + theme_minimal() +
+  theme(axis.text.x=element_text(angle = 25, hjust = 1)) +
+  scale_fill_manual(values = my_cols)
+```
+
+
+<!-- # Costs that differ accross project types -->
+
+```{r just_diffs, eval=FALSE, warning=FALSE, include=FALSE}
 is_dif <- function(df, cat_name){
   s_df <- df %>% subset(Category == cat_name)
   s_df$Expense[is.na(s_df$Expense)] <- 0
@@ -196,9 +220,9 @@ plot_ly(dif_mat, x = ~Project, y = ~Expense, type = 'bar',
   layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
-# Unchanging costs
+<!-- # Unchanging costs -->
 
-```{r same_costs, warning = FALSE}
+```{r same_costs, warning = FALSE, eval=FALSE, warning=FALSE, include=FALSE}
 rm("same_mat")
 for(l_idx in 1:length(sub_info)){
   v_name <- names(sub_info)[l_idx]
@@ -216,4 +240,3 @@ plot_ly(same_mat, x = ~Project, y = ~Expense, type = 'bar',
   layout(yaxis = list(title = 'Count'), barmode = 'stack')
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
