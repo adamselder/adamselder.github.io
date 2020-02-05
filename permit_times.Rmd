@@ -1,5 +1,5 @@
 ---
-title: "Summary of Data"
+title: "Permiting and Inspection Times"
 author: "Russel Willems and Adam Elder"
 date: "1/22/2020"
 output: 
@@ -81,17 +81,49 @@ d$un_grp <- cut(d$HousingUnits,
                 unique(quantile(d$HousingUnits, seq(0, 1, length.out = 40))),
                 include.lowest = TRUE)
 
-ggplot(d) + aes(x = d_diff) + geom_histogram(bins = 30) + xlab("Time in Days from Application to Aproval")
+ap_hist <- ggplot(d) + aes(x = d_diff) +
+  geom_histogram(bins = 30) +
+  xlab("Time in Days from Application to Aproval") + 
+  geom_vline(aes(xintercept = mean(d$d_diff, na.rm = TRUE)), col = "red",
+             size = 2) + 
+  annotate("text", x = mean(d$d_diff, na.rm = TRUE) + 10, y = 350,
+           label = paste0("Mean Value : ", round(mean(d$d_diff, na.rm = TRUE))),
+           col = "red", hjust = 0, size = 7) + 
+  geom_vline(aes(xintercept = median(d$d_diff, na.rm = TRUE)), col = "blue",
+             size = 2) + 
+  annotate("text", x = mean(d$d_diff, na.rm = TRUE) + 10, y = 200,
+           label = paste0("Median Value : ", round(median(d$d_diff, na.rm = TRUE))),
+           col = "blue", hjust = 0, size = 7)
 
-ggplot(d) + aes(x = un_grp, y = d_diff) + geom_boxplot() + ylab("Time in Days from Application to Aproval") + xlab("Number Housing Units")
+
+ap_hist
+
+ggplot(d) + aes(x = un_grp, y = d_diff) + geom_boxplot() + ylab("Time in Days from Application to Aproval") + xlab("Number Housing Units") + 
+  geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.1)
 ```
 
 # Time from Aproval to Inspections
 
 ```{r aprov_to_inspec}
-ggplot(d) + aes(x = d_diff_ic) + geom_histogram() + xlab("Time in Days from Aproval to Inspection completion")
+# ggplot(d) + aes(x = d_diff_ic) + geom_histogram() + xlab("Time in Days from Aproval to Inspection completion")
 
-ggplot(d) + aes(x = un_grp, y = d_diff_ic) + geom_boxplot() + ylab("Time in Days from Aproval to Inspection") + xlab("Number Housing Units")
+ic_hist <- ggplot(d) + aes(x = d_diff_ic) +
+  geom_histogram(bins = 30) +
+  xlab("Time in Days from Application to Aproval") + 
+  geom_vline(aes(xintercept = mean(d$d_diff_ic, na.rm = TRUE)), col = "red",
+             size = 2) + 
+  annotate("text", x = mean(d$d_diff_ic, na.rm = TRUE) + 40, y = 50,
+           label = paste0("Mean Value : ", round(mean(d$d_diff_ic, na.rm = TRUE))),
+           col = "red", hjust = 0, size = 7) + 
+  geom_vline(aes(xintercept = median(d$d_diff_ic, na.rm = TRUE)), col = "blue",
+             size = 2) + 
+  annotate("text", x = mean(d$d_diff_ic, na.rm = TRUE) + 10, y = 25,
+           label = paste0("Median Value : ", round(median(d$d_diff_ic, na.rm = TRUE))),
+           col = "blue", hjust = 0, size = 7)
+ic_hist
+
+ggplot(d) + aes(x = un_grp, y = d_diff_ic) + geom_boxplot() + ylab("Time in Days from Aproval to Inspection") + xlab("Number Housing Units") + 
+  geom_jitter(shape=16, position=position_jitter(0.2), alpha = 0.1)
 ```
 
 

@@ -15,5 +15,6 @@ The chapters included are:
 Chapter | Content
 -------------- | ------------------------------------------
 Introduction | Project purpose and rationale for data source selections
-
+Project Cost Breakdown | Estimates for the costs of projects based on various scenarios and exemptions.
+Permiting and Inspection times | Summary of data from the City of Seattle's data on permiting times both from request to permit issuing and permit issuing to inspection. 
 

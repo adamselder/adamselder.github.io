@@ -170,12 +170,13 @@ largest_avg_cost <- unique(sort(sub_df$avg_cost, decreasing = TRUE))[1:10]
 
 largest_cost <- sub_df[sub_df$avg_cost %in% largest_avg_cost, ]
 
-ggplot2::ggplot(data = largest_cost, aes(x = reorder(Category, -avg_cost), y = Cost,
-                                   fill = Project)) +
+large_p <- ggplot2::ggplot(data = largest_cost, aes(x = reorder(Category, -avg_cost), y = Cost/(10 ** 6),
+                                                   fill = Project)) +
   geom_bar(stat="identity", position=position_dodge()) +
-  ylab("Cost in Dollars") + xlab("Cost Category") + theme_minimal() +
+  ylab("Cost in Millions of Dollars") + xlab("Cost Category") + theme_minimal() +
   theme(axis.text.x=element_text(angle = 25, hjust = 1)) +
   scale_fill_manual(values = my_cols)
+plotly::ggplotly(large_p)
 ```
 
 # Next Ten Largest Expenses
@@ -184,12 +185,13 @@ ggplot2::ggplot(data = largest_cost, aes(x = reorder(Category, -avg_cost), y = C
 next_ten_avg <- unique(sort(sub_df$avg_cost, decreasing = TRUE))[11:20]
 next_ten <- sub_df[sub_df$avg_cost %in% next_ten_avg, ]
 
-ggplot2::ggplot(data = next_ten, aes(x = reorder(Category, -avg_cost), y = Cost,
-                                   fill = Project)) +
+next_p <- ggplot2::ggplot(data = next_ten, aes(x = reorder(Category, -avg_cost), y = Cost/1000,
+                                               fill = Project)) +
   geom_bar(stat="identity", position=position_dodge()) +
-  ylab("Cost in Dollars") + xlab("Cost Category") + theme_minimal() +
+  ylab("Cost in Thousands of Dollars") + xlab("Cost Category") + theme_minimal() +
   theme(axis.text.x=element_text(angle = 25, hjust = 1)) +
   scale_fill_manual(values = my_cols)
+plotly::ggplotly(next_p)
 ```
 
 
